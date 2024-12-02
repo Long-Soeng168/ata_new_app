@@ -121,7 +121,7 @@ Widget buildImage(String urlImage, int index) => Container(
             if (progress == null) {
               return child;
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }

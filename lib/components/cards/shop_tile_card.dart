@@ -1,6 +1,5 @@
 import 'package:ata_new_app/components/error_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ShopTileCard extends StatelessWidget {
   const ShopTileCard({
@@ -25,9 +24,9 @@ class ShopTileCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         elevation: 0,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             // side: BorderSide(
             //   width: 0.5,
             //   color: Theme.of(context).colorScheme.primary,
@@ -35,7 +34,7 @@ class ShopTileCard extends StatelessWidget {
             ),
         borderOnForeground: true,
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -77,7 +76,7 @@ class ShopTileCard extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Expanded(
@@ -91,7 +90,7 @@ class ShopTileCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),

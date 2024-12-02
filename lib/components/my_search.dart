@@ -50,6 +50,7 @@ class _MySearchState extends State<MySearch> {
           border: InputBorder.none,
           hintText: widget.placeholder,
           hintStyle: TextStyle(color: Colors.grey.shade400),
+          contentPadding: EdgeInsets.only(top: 12.0),
           suffixIcon: widget.searchController.text.isNotEmpty
               ? IconButton(
                   icon: const Icon(

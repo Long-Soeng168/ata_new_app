@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -55,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
           SnackBar(
             content: Text(
               response['message'],
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
             backgroundColor: Colors.red,
           ),
@@ -64,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(
             'An error occurred. Please try again.',
             style: TextStyle(color: Colors.white),
@@ -79,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: const Text('Register'),
         backgroundColor: Colors.transparent,
       ),
       body: Center(
@@ -93,14 +95,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 // Logo at the top
                 Center(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                    borderRadius: const BorderRadius.all(Radius.circular(100)),
                     child: Image.asset(
                       'lib/assets/icons/logo.png',
                       height: 150,
                     ),
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 // Name TextField with gray border
                 TextFormField(
                   controller: _nameController,
@@ -108,13 +110,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
-                    prefixIcon: Icon(Icons.person_outline),
+                    prefixIcon: const Icon(Icons.person_outline),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -123,7 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 // Phone TextField with gray border
                 TextFormField(
                   controller: _phoneController,
@@ -131,13 +133,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Phone',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
-                    prefixIcon: Icon(Icons.phone_outlined),
+                    prefixIcon: const Icon(Icons.phone_outlined),
                   ),
                   keyboardType: TextInputType.phone,
                   validator: (value) {
@@ -149,7 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 // Email TextField with gray border
                 TextFormField(
                   controller: _emailController,
@@ -157,13 +159,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Email',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
-                    prefixIcon: Icon(Icons.email_outlined),
+                    prefixIcon: const Icon(Icons.email_outlined),
                   ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
@@ -176,7 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 // Password TextField with gray border
                 TextFormField(
                   controller: _passwordController,
@@ -184,13 +186,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
-                    prefixIcon: Icon(Icons.lock_outline),
+                    prefixIcon: const Icon(Icons.lock_outline),
                   ),
                   obscureText: true,
                   validator: (value) {
@@ -202,27 +204,27 @@ class _RegisterPageState extends State<RegisterPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 // Register button or loading indicator
                 _isLoading
-                    ? Center(child: CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : MyElevatedButton(
                         onPressed: _register,
                         title: 'Register',
                       ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 // Link to login page
                 Center(
                   child: TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
                       );
                     },
                     style: TextButton.styleFrom(
                       padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                          const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                       backgroundColor: Theme.of(context)
                           .primaryColor
                           .withOpacity(0.1), // Subtle background
@@ -237,7 +239,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Icons.login,
                           color: Theme.of(context).primaryColor,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
                           'Already have an account? Log in here',
                           style: TextStyle(

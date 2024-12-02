@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:ata_new_app/config/env.dart';
 import 'package:ata_new_app/models/product.dart';
-import 'package:ata_new_app/pages/shops/shop_admin/admin_product_detail_page.dart';
 import 'package:ata_new_app/pages/shops/shop_admin/admin_shop_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -135,7 +134,7 @@ class ProductService {
   }
 
   final String _baseUrl = Env.baseApiUrl;
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   Future<Map<String, dynamic>> createProduct({
     context,

@@ -20,7 +20,7 @@ class AssetIconCard extends StatelessWidget {
           // color: Colors.amber,
         ),
         // margin: EdgeInsets.all(10),
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Column(
           children: [
             // Product Image

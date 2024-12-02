@@ -89,7 +89,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
 
                 // ========================= Start Detail =========================
                 isLoadingCourseDetail
-                    ? Container(
+                    ? SizedBox(
                         height: 400,
                         child: Center(
                           child: CircularProgressIndicator(),
@@ -124,14 +124,14 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                                 visible: courseDetail.start != '',
                                 child: DetailListCard(
                                   keyword: 'Start',
-                                  value: '${courseDetail.start}',
+                                  value: courseDetail.start,
                                 ),
                               ), 
                               Visibility(
                                 visible: courseDetail.end != '',
                                 child: DetailListCard(
                                   keyword: 'End',
-                                  value: '${courseDetail.end}',
+                                  value: courseDetail.end,
                                 ),
                               ), 
                               ListTile(

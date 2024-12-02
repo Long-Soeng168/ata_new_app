@@ -3,7 +3,7 @@ import 'package:ata_new_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class AccountPage extends StatefulWidget {
-  const AccountPage({Key? key}) : super(key: key);
+  const AccountPage({super.key});
 
   @override
   _AccountPageState createState() => _AccountPageState();
@@ -28,7 +28,7 @@ class _AccountPageState extends State<AccountPage> {
       // If no token, navigate to LoginPage
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     } else {
       // Fetch user info if logged in
@@ -54,7 +54,7 @@ class _AccountPageState extends State<AccountPage> {
     await _authService.logout();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
@@ -63,7 +63,7 @@ class _AccountPageState extends State<AccountPage> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(
+        title: const Text(
           'Account Settings',
           style: TextStyle(
             fontSize: 24,
@@ -72,13 +72,13 @@ class _AccountPageState extends State<AccountPage> {
         ),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildProfileHeader(),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildMenuItem(Icons.person, 'Profile', () {
                     // Navigate to profile screen
                   }),
@@ -94,7 +94,7 @@ class _AccountPageState extends State<AccountPage> {
                   _buildMenuItem(Icons.help, 'Help & Support', () {
                     // Navigate to help and support screen
                   }),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TextButton(
@@ -102,7 +102,7 @@ class _AccountPageState extends State<AccountPage> {
                         backgroundColor: Theme.of(context).colorScheme.primary,
                       ),
                       onPressed: _logout,
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.logout_outlined, color: Colors.white),
@@ -125,17 +125,17 @@ class _AccountPageState extends State<AccountPage> {
           CircleAvatar(
             radius: 50,
             backgroundColor: Colors.grey[200],
-            backgroundImage: AssetImage('assets/profile_picture.png'),
+            backgroundImage: const AssetImage('assets/profile_picture.png'),
             onBackgroundImageError: (exception, stackTrace) {
               // Handle the error by setting a placeholder image/icon
             },
-            child: Icon(
+            child: const Icon(
               Icons.person, // Display this icon if image fails
               size: 50,
               color: Colors.grey,
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

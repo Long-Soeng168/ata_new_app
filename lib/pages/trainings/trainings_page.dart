@@ -1,5 +1,3 @@
-import 'package:ata_new_app/components/cards/category_card_tile.dart';
-import 'package:ata_new_app/components/cards/folder_card.dart';
 import 'package:ata_new_app/components/cards/tab_card.dart';
 import 'package:ata_new_app/pages/trainings/courses/courses_page.dart';
 import 'package:ata_new_app/pages/trainings/documents/documents_page.dart';
@@ -16,8 +14,8 @@ class TrainingPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           foregroundColor: Theme.of(context).colorScheme.primary,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          title: Text(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          title: const Text(
             'Trainings',
             style: TextStyle(
               fontSize: 24,
@@ -31,7 +29,7 @@ class TrainingPage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: TabCard(
                       image: 'lib/assets/icons/document.png',
                       title: 'Documents',
@@ -44,7 +42,7 @@ class TrainingPage extends StatelessWidget {
                       title: 'Videos',
                       onTap: () {
                         final route = MaterialPageRoute(
-                            builder: (context) => VideoPlayListPage());
+                            builder: (context) => const VideoPlayListPage());
                         Navigator.push(context, route);
                       },
                     ),
@@ -55,7 +53,7 @@ class TrainingPage extends StatelessWidget {
                       title: 'Courses',
                       onTap: () {
                         final route = MaterialPageRoute(
-                            builder: (context) => CoursesPage());
+                            builder: (context) => const CoursesPage());
                         Navigator.push(context, route);
                       },
                     ),
@@ -63,9 +61,10 @@ class TrainingPage extends StatelessWidget {
                 ],
               ),
               // Start Epublications
-              Expanded(
+              const Expanded(
                 child: DocumentsPage(
                   isShowAppBar: false,
+                  path: 'documents',
                 ),
               ),
               // Expanded(

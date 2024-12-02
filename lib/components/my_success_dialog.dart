@@ -5,11 +5,11 @@ class SuccessDialog extends StatelessWidget {
   final void Function()? onPressed;
 
   // Constructor with default onPressed to close the dialog
-  SuccessDialog({
+  const SuccessDialog({
     required this.message,
     this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class SuccessDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.check_circle, color: Colors.green, size: 60),
+            const Icon(Icons.check_circle, color: Colors.green, size: 60),
             const SizedBox(height: 16),
             Text(
               'Success!',

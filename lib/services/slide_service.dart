@@ -20,7 +20,7 @@ class SlideService {
       }).toList();
       
       List<String> slideList = slideObject.map((e) {
-        return '${Env.baseImageUrl}slides/thumb/' + e.image;
+        return '${Env.baseImageUrl}slides/thumb/${e.image}';
       }).toList();
 
       return slideList;

@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:ata_new_app/components/buttons/my_elevated_button.dart';
 import 'package:ata_new_app/components/cards/video_playlist_card.dart';
 import 'package:ata_new_app/components/my_search.dart';
 import 'package:ata_new_app/models/video_playlist.dart';
@@ -165,7 +164,7 @@ class _VideoPlayListPageState extends State<VideoPlayListPage> {
                   ),
             Visibility(
               visible: isLoadingVideoPlaylistsError,
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: Center(

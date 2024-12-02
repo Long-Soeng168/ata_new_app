@@ -59,7 +59,7 @@ class GarageService {
   }
 
   final String _baseUrl = Env.baseApiUrl;
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   Future<Map<String, dynamic>> createGarage({
     required BuildContext context,

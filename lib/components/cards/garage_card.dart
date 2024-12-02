@@ -37,7 +37,7 @@ class GarageCard extends StatelessWidget {
         child: Container(
           width: width,
           // padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             // borderRadius: BorderRadius.circular(12),
             color: Colors.transparent,
             // border: Border.all(
@@ -51,7 +51,7 @@ class GarageCard extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(bottom: 20),
+                    padding: const EdgeInsets.only(bottom: 20),
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -111,7 +111,7 @@ class GarageCard extends StatelessWidget {
                     left: 8,
                     bottom: 4,
                     child: Container(
-                      padding: EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(4),
                       child: Row(
                         children: [
                           Container(
@@ -122,7 +122,7 @@ class GarageCard extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               borderRadius: BorderRadius.circular(9),
-                              color: Theme.of(context).colorScheme.background,
+                              color: Theme.of(context).colorScheme.surface,
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
@@ -147,7 +147,7 @@ class GarageCard extends StatelessWidget {
                               name,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold
@@ -160,7 +160,7 @@ class GarageCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 height: 60,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

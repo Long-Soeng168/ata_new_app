@@ -20,7 +20,7 @@ class CategoryCard extends StatelessWidget {
           // color: Colors.amber,
         ),
         // margin: EdgeInsets.all(10),
-        padding: EdgeInsets.all(2),
+        padding: const EdgeInsets.all(2),
         child: Column(
           children: [
             // Product Image
@@ -50,7 +50,7 @@ class CategoryCard extends StatelessWidget {
                             if (progress == null) {
                               return child;
                             } else {
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }

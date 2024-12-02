@@ -20,7 +20,7 @@ class DatabaseCard extends StatelessWidget {
           // color: Colors.amber,
         ),
         // margin: EdgeInsets.all(10),
-        padding: EdgeInsets.only(left: 4, right: 4, bottom: 4),
+        padding: const EdgeInsets.only(left: 4, right: 4, bottom: 4),
         child: Column(
           children: [
             // Product Image
@@ -50,7 +50,7 @@ class DatabaseCard extends StatelessWidget {
                             if (progress == null) {
                               return child;
                             } else {
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }

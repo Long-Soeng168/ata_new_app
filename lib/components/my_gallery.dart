@@ -45,7 +45,7 @@ class MyGallery extends StatelessWidget {
             child: Hero(
               tag: imageUrls[0],
               child: ConstrainedBox(
-                constraints: BoxConstraints(
+                constraints: const BoxConstraints(
                   maxHeight: 400, // Set your desired maximum height here
                 ),
                 child: Image.network(
@@ -59,7 +59,7 @@ class MyGallery extends StatelessWidget {
                     if (progress == null) {
                       return child;
                     } else {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
@@ -74,7 +74,7 @@ class MyGallery extends StatelessWidget {
           if (imageUrls.length > 1)
             Container(
               height: 160,
-              padding: EdgeInsets.only(top: 4, bottom: 4),
+              padding: const EdgeInsets.only(top: 4, bottom: 4),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: imageUrls.length - 1,
@@ -111,7 +111,7 @@ class MyGallery extends StatelessWidget {
                               if (progress == null) {
                                 return child;
                               } else {
-                                return Center(
+                                return const Center(
                                   child: CircularProgressIndicator(),
                                 );
                               }

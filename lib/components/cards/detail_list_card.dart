@@ -15,7 +15,7 @@ class DetailListCard extends StatelessWidget {
       ),
       borderOnForeground: true,
       child: Container(
-        padding: EdgeInsets.all(2),
+        padding: const EdgeInsets.all(2),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -31,12 +31,12 @@ class DetailListCard extends StatelessWidget {
               width: 100,
               child: Text(
                 keyword,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
                 value,

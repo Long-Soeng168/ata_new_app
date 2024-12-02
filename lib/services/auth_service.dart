@@ -7,7 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
   final String _baseUrl = Env.baseApiUrl; // Replace with your Laravel API URL
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   // Login function
   Future<Map<String, dynamic>> login(String email, String password) async {

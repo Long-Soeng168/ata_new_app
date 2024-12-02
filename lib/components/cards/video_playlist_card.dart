@@ -1,6 +1,5 @@
 import 'package:ata_new_app/components/error_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class VideoPlayListCard extends StatelessWidget {
   const VideoPlayListCard({
@@ -51,13 +50,13 @@ class VideoPlayListCard extends StatelessWidget {
                       border: Border.all(
                         color: Colors.grey.shade200,
                       ),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(9),
                         topRight: Radius.circular(8),
                       ),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(9),
                         topRight: Radius.circular(8),
                       ),
@@ -92,21 +91,21 @@ class VideoPlayListCard extends StatelessWidget {
                     right: 4,
                     bottom: 4,
                     child: Container(
-                      padding: EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(163, 0, 0, 0),
+                          color: const Color.fromARGB(163, 0, 0, 0),
                           borderRadius: BorderRadius.circular(4)),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.video_library_outlined,
                             size: 16,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
                             '$videosCount Videos',
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ],
                       ),

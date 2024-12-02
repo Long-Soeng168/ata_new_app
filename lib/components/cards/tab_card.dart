@@ -28,7 +28,7 @@ class TabCard extends StatelessWidget {
                     : Colors.grey.shade400),
           ),
         ),
-        padding: EdgeInsets.only(top: 12, bottom: 12),
+        padding: const EdgeInsets.only(top: 12, bottom: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -41,7 +41,7 @@ class TabCard extends StatelessWidget {
                 return const ErrorImage(size: 20);
               },
             ),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             Text(
               title,
               style: TextStyle(

@@ -8,7 +8,7 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (_) => CartProvider(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }

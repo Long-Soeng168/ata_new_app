@@ -80,14 +80,14 @@ class _ShopEditPageState extends State<ShopEditPage> {
 
       if (response['success']) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Shop Update successfully")));
+            .showSnackBar(const SnackBar(content: Text("Shop Update successfully")));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response['message'])));
       }
     } else {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Please complete all fields")));
+          .showSnackBar(const SnackBar(content: Text("Please complete all fields")));
     }
   }
 
@@ -95,16 +95,16 @@ class _ShopEditPageState extends State<ShopEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Shop"),
+        title: const Text("Edit Shop"),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Form(
           key: _shopFormKey,
           child: ListView(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               // Shop name input
@@ -112,7 +112,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 controller: _shopNameController,
                 decoration: InputDecoration(
                   labelText: "Name",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -122,14 +122,14 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 ),
                 validator: (value) => value!.isEmpty ? "Enter Shop name" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Phone number input
               TextFormField(
                 controller: _phoneController,
                 decoration: InputDecoration(
                   labelText: "Phone",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -140,7 +140,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 validator: (value) =>
                     value!.isEmpty ? "Enter Shop Phone" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Address input
               TextFormField(
@@ -149,7 +149,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
                   labelText: "Address",
                   hintText: 'Shop Address',
                   alignLabelWithHint: true,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -161,7 +161,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 validator: (value) =>
                     value!.isEmpty ? "Enter Shop Address" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Shop description input
               TextFormField(
@@ -170,7 +170,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
                   labelText: "Description",
                   hintText: 'Shop Description',
                   alignLabelWithHint: true,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -182,9 +182,9 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 validator: (value) =>
                     value!.isEmpty ? "Enter Shop description" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Logo image picker with preview
               GestureDetector(
@@ -192,10 +192,10 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Logo Image",
+                    const Text("Logo Image",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     _logoImage == null
                         ? Icon(Icons.image, size: 100, color: Colors.grey.shade400)
                         : Image.file(File(_logoImage!.path), height: 100),
@@ -214,10 +214,10 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Banner Image",
+                    const Text("Banner Image",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     _bannerImage == null
                         ? Icon(Icons.image, size: 100, color: Colors.grey.shade400)
                         : Image.file(File(_bannerImage!.path), height: 100),
@@ -231,11 +231,11 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Submit button with loading indicator
               _isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
                       onPressed: _updateShop, title: "Update Shop"),
             ],

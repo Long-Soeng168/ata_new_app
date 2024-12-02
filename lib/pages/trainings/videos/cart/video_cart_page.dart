@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VideoCartPage extends StatelessWidget {
-  const VideoCartPage({Key? key}) : super(key: key);
+  const VideoCartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class VideoCartPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.primary,
-        title: Row(
+        title: const Row(
           children: [
             Icon(
               Icons.shopping_cart_outlined,
@@ -29,7 +29,7 @@ class VideoCartPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: cartItems.isEmpty
-          ? Center(
+          ? const Center(
               child: Text(
                 'Your cart is empty.',
                 style: TextStyle(fontSize: 18),
@@ -54,19 +54,19 @@ class VideoCartPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Total:',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             '\$${cartProvider.totalPrice().toStringAsFixed(2)}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -78,11 +78,11 @@ class VideoCartPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           final route = MaterialPageRoute(
-                            builder: (context) => VideoCheckoutPage(),
+                            builder: (context) => const VideoCheckoutPage(),
                           );
                           Navigator.push(context, route);
                         },
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.shopping_cart_checkout,
@@ -99,7 +99,7 @@ class VideoCartPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),

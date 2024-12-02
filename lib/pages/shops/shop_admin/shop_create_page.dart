@@ -5,6 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ata_new_app/services/shop_service.dart';
 
 class ShopCreatePage extends StatefulWidget {
+  const ShopCreatePage({super.key});
+
   @override
   _ShopCreatePageState createState() => _ShopCreatePageState();
 }
@@ -66,13 +68,13 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
 
       if (response['success']) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Shop created successfully")));
+            .showSnackBar(const SnackBar(content: Text("Shop created successfully")));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response['message'])));
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Please complete all fields and upload images")));
     }
   }
@@ -81,16 +83,16 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Shop"),
+        title: const Text("Create Shop"),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _shopFormKey,
           child: ListView(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               // Shop name input
@@ -98,7 +100,7 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                 controller: _shopNameController,
                 decoration: InputDecoration(
                   labelText: "Name",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -108,14 +110,14 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                 ),
                 validator: (value) => value!.isEmpty ? "Enter Shop name" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Phone number input
               TextFormField(
                 controller: _phoneController,
                 decoration: InputDecoration(
                   labelText: "Phone",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -126,7 +128,7 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                 validator: (value) =>
                     value!.isEmpty ? "Enter Shop Phone" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Address input
               TextFormField(
@@ -135,7 +137,7 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                   labelText: "Address",
                   hintText: 'Shop Address',
                   alignLabelWithHint: true,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -147,7 +149,7 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                 validator: (value) =>
                     value!.isEmpty ? "Enter Shop Address" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Shop description input
               TextFormField(
@@ -156,7 +158,7 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                   labelText: "Description",
                   hintText: 'Shop Description',
                   alignLabelWithHint: true,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -168,9 +170,9 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                 validator: (value) =>
                     value!.isEmpty ? "Enter Shop description" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Logo image picker with preview
               GestureDetector(
@@ -178,10 +180,10 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Logo Image",
+                    const Text("Logo Image",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     _logoImage == null
                         ? Icon(Icons.image,
                             size: 100, color: Colors.grey.shade400)
@@ -201,10 +203,10 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Banner Image",
+                    const Text("Banner Image",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     _bannerImage == null
                         ? Icon(Icons.image,
                             size: 100, color: Colors.grey.shade400)
@@ -219,11 +221,11 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Submit button with loading indicator
               _isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
                       onPressed: _createShop, title: "Create Shop"),
             ],

@@ -87,11 +87,11 @@ class _MyVideoPlayerState extends State<MyVideoPlayer> {
     }
 
     if (_hasError) {
-  return Center(
+  return const Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Failed to load video'),
+        Text('Failed to load video'),
         // ElevatedButton(
         //   onPressed: _initializeVideoPlayer,
         //   child: const Text('Retry'),

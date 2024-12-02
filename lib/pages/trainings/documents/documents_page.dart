@@ -60,9 +60,9 @@ class _DocumentsPageState extends State<DocumentsPage> {
         appBar: widget.isShowAppBar
             ? AppBar(
                 foregroundColor: Theme.of(context).colorScheme.primary,
-                backgroundColor: Theme.of(context).colorScheme.background,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 title: Text(
-                  widget.path.isNotEmpty ? widget.path.split('-').last : 'Documents',
+                  widget.path.isNotEmpty ? widget.path.split('~').last : 'Documents',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
                             onTap: () {
                               final route = MaterialPageRoute(
                                 builder: (context) => DocumentsPage(
-                                  path: item.replaceAll('/', '-'),
+                                  path: item.replaceAll('/', '~'),
                                 ),
                               );
                               Navigator.push(context, route);

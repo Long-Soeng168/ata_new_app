@@ -1,6 +1,5 @@
 import 'package:ata_new_app/components/error_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class VideoCard extends StatelessWidget {
   const VideoCard({
@@ -30,13 +29,13 @@ class VideoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(ownPlaylist);
+    // print(ownPlaylist);
     return Opacity(
       opacity: (isFree || ownPlaylist) ? 1 : 0.65,
       child: GestureDetector(
         onTap: onTap,
         child: Padding(
-          padding: EdgeInsets.only(top: 2, right: 4, left: 4),
+          padding: const EdgeInsets.only(top: 2, right: 4, left: 4),
           child: Card(
             color: isPlaying
                 ? Theme.of(context).colorScheme.primary.withOpacity(0.15)
@@ -88,7 +87,7 @@ class VideoCard extends StatelessWidget {
                             title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14),
                           ),
                         ),
                         Row(

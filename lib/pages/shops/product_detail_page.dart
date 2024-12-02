@@ -156,8 +156,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         child: Text(
                           widget.product.name,
                           style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            // fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -251,7 +251,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 // ========================= Start Related Product =========================
                 SizedBox(height: 24),
 
-                if (relatedProducts.length > 0)
+                if (relatedProducts.isNotEmpty)
                   Column(
                     children: [
                       MyListHeader(
@@ -355,7 +355,7 @@ class ContactButton extends StatelessWidget {
   final String phoneNumber;
   final String label;
 
-  const ContactButton({required this.phoneNumber, required this.label});
+  const ContactButton({super.key, required this.phoneNumber, required this.label});
 
   @override
   Widget build(BuildContext context) {

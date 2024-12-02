@@ -20,14 +20,14 @@ class _CategoryCardTileState extends State<CategoryCardTile> {
                 ),
                 borderOnForeground: true,
                 child: Container(
-                  padding: EdgeInsets.all(8),
-                  child: Row(
+                  padding: const EdgeInsets.all(8),
+                  child: const Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
                         child: Text('សៀវភៅសម្រាប់អ្នកចុះឈ្មោះបោះឆ្នោត'),
                       ),
-                      Container(
+                      SizedBox(
                         width: 24,
                         child: Icon(Icons.chevron_right)),
                     ],

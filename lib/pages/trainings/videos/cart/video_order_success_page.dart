@@ -1,4 +1,3 @@
-import 'package:ata_new_app/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
 
 class OrderSuccessPage extends StatelessWidget {
@@ -27,8 +26,8 @@ class OrderSuccessPage extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   size: 100,
                 ),
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'In Review',
                   style: TextStyle(
                     fontSize: 28,
@@ -37,7 +36,7 @@ class OrderSuccessPage extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   'Thank you for your purchase. we’ll notify you once the admin approves it and the video course is ready for you to access.',
                   style: TextStyle(
@@ -46,7 +45,7 @@ class OrderSuccessPage extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -65,7 +64,7 @@ class OrderSuccessPage extends StatelessWidget {
                     ),
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
-                  child: Text(
+                  child: const Text(
                     'Back',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),

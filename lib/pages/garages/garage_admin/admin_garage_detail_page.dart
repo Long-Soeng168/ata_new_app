@@ -74,7 +74,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: Colors.transparent,
@@ -105,7 +105,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
           ),
         ],
       ),
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         height: 70.0, // Custom height
         width: 70.0, // Custom width
         child: FloatingActionButton(
@@ -152,7 +152,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 Row(
                   children: [
                     SizedBox(

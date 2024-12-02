@@ -107,7 +107,7 @@ class _CoursesPageState extends State<CoursesPage> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.primary,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(
           'Courses',
           style: TextStyle(

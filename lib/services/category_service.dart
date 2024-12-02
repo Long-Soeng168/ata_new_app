@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class CategoryService {
   static Future<List<Category>> fetchCategories() async {
-    final url = '${Env.baseApiUrl}categories?';
+    const url = '${Env.baseApiUrl}categories?';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 

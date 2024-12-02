@@ -299,11 +299,11 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: [
+                        children: const [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
                           Text("Other"),
@@ -354,11 +354,11 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: [
+                        children: const [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
                           Text("Other"),
@@ -414,11 +414,11 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: [
+                        children: const [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
                           Text("Other"),
@@ -473,11 +473,11 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: [
+                        children: const [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
                           Text("Other"),

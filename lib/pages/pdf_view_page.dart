@@ -7,8 +7,8 @@ import 'package:path_provider/path_provider.dart';
 class PdfViewPage extends StatefulWidget {
   final String url;
 
-  PdfViewPage(
-      {this.url =
+  const PdfViewPage(
+      {super.key, this.url =
           'https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf'});
 
   @override
@@ -54,7 +54,7 @@ class _PdfViewPageState extends State<PdfViewPage> {
       _pageController.clear();
       _pdfViewController.setPage(page);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Invalid page number.'),
       ));
     }
@@ -84,7 +84,7 @@ class _PdfViewPageState extends State<PdfViewPage> {
             child: TextField(
               controller: _pageController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 hintText: "Page",
@@ -98,26 +98,26 @@ class _PdfViewPageState extends State<PdfViewPage> {
               if (page != null) {
                 _jumpToPage(page - 1);
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('Please enter a valid number.'),
                 ));
               }
             },
-            child: Text('Go'),
+            child: const Text('Go'),
           ),
         ],
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : _localFilePath != null
               ? PDFView(
                   enableSwipe: true,
                   autoSpacing: false,
                   pageFling: false,
                   filePath: _localFilePath,
-                  onRender: (_pages) {
+                  onRender: (pages) {
                     setState(() {
-                      _totalPages = _pages!;
+                      _totalPages = pages!;
                     });
                   },
                   onViewCreated: (PDFViewController vc) {
@@ -129,7 +129,7 @@ class _PdfViewPageState extends State<PdfViewPage> {
                     });
                   },
                 )
-              : Center(child: Text("Failed to load PDF")),
+              : const Center(child: Text("Failed to load PDF")),
     );
   }
 }

@@ -8,7 +8,7 @@ import 'package:ata_new_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
-  MyDrawer({Key? key}) : super(key: key);
+  MyDrawer({super.key});
   final AuthService _authService = AuthService();
 
   Future<void> _logout(BuildContext context) async {
@@ -16,7 +16,7 @@ class MyDrawer extends StatelessWidget {
     Navigator.pop(context);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
@@ -42,7 +42,7 @@ class MyDrawer extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Show loading indicator while fetching data
-          return Drawer(
+          return const Drawer(
             child: Center(child: CircularProgressIndicator()),
           );
         }
@@ -51,18 +51,18 @@ class MyDrawer extends StatelessWidget {
           // If there's an error or no valid user, display an error message
           return Drawer(
             child: Container(
-              margin: EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
               child: Center(
                 child: TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      MaterialPageRoute(builder: (context) => const LoginPage()),
                     );
                   },
                   style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                     backgroundColor: Theme.of(context)
                         .primaryColor
                         .withOpacity(0.1), // Subtle background
@@ -77,7 +77,7 @@ class MyDrawer extends StatelessWidget {
                         Icons.login,
                         color: Theme.of(context).primaryColor,
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
                         'Login',
                         style: TextStyle(
@@ -162,12 +162,12 @@ class MyDrawer extends StatelessWidget {
             if (user != null) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ShopCreatePage()),
+                MaterialPageRoute(builder: (context) => const ShopCreatePage()),
               );
             } else {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
+                MaterialPageRoute(builder: (context) => const LoginPage()),
               );
             }
           } else {
@@ -196,12 +196,12 @@ class MyDrawer extends StatelessWidget {
             if (user != null) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => GarageCreatePage()),
+                MaterialPageRoute(builder: (context) => const GarageCreatePage()),
               );
             } else {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
+                MaterialPageRoute(builder: (context) => const LoginPage()),
               );
             }
           } else {
@@ -239,9 +239,9 @@ class MyDrawer extends StatelessWidget {
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () => _logout(context),
-          child: Row(
+          child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(Icons.logout_outlined, color: Colors.white),
               SizedBox(width: 8.0),
               Text('Logout', style: TextStyle(color: Colors.white)),

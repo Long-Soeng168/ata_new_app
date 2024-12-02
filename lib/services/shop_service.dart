@@ -64,7 +64,7 @@ class ShopService {
   }
 
   final String _baseUrl = Env.baseApiUrl;
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   Future<Map<String, dynamic>> createShop({
     context,

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class PaymentService {
   static Future<Payment> fetchPayment() async {
-    final url = '${Env.baseApiUrl}payment';
+    const url = '${Env.baseApiUrl}payment';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 

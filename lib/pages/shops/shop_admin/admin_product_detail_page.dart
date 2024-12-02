@@ -338,7 +338,7 @@ class ContactButton extends StatelessWidget {
   final String phoneNumber;
   final String label;
 
-  const ContactButton({required this.phoneNumber, required this.label});
+  const ContactButton({super.key, required this.phoneNumber, required this.label});
 
   @override
   Widget build(BuildContext context) {

@@ -91,8 +91,8 @@ class VideoService {
   }
 
   static Future<List<dynamic>> fetchUserPlaylists() async {
-    final FlutterSecureStorage _storage = FlutterSecureStorage();
-    final token = await _storage.read(key: 'auth_token');
+    const FlutterSecureStorage storage = FlutterSecureStorage();
+    final token = await storage.read(key: 'auth_token');
     String url = '${Env.baseApiUrl}playlists_user/';
     final uri = Uri.parse(url);
 
@@ -124,12 +124,12 @@ class VideoService {
     required BuildContext context,
     required XFile image,
   }) async {
-    final String _baseUrl = Env.baseApiUrl;
-    final FlutterSecureStorage _storage = FlutterSecureStorage();
+    const String baseUrl = Env.baseApiUrl;
+    const FlutterSecureStorage storage = FlutterSecureStorage();
 
     try {
       // Retrieve the token
-      final token = await _storage.read(key: 'auth_token');
+      final token = await storage.read(key: 'auth_token');
       if (token == null) {
         return {'success': false, 'message': 'Authentication token not found'};
       }
@@ -144,7 +144,7 @@ class VideoService {
       print("Playlist IDs: $ids");
 
       // Set up the request URL and headers
-      var uri = Uri.parse('${_baseUrl}submit_order_video_playlist');
+      var uri = Uri.parse('${baseUrl}submit_order_video_playlist');
       var request = http.MultipartRequest('POST', uri);
       request.headers.addAll({
         'Content-Type': 'multipart/form-data',
@@ -170,7 +170,7 @@ class VideoService {
         Navigator.pop(context);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => OrderSuccessPage()),
+          MaterialPageRoute(builder: (context) => const OrderSuccessPage()),
         );
         return {'success': true, 'message': jsonDecode(responseData)};
       } else {

@@ -18,7 +18,7 @@ class MyElevatedButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
           fontSize: 16,
           fontWeight: FontWeight.bold,

@@ -57,7 +57,7 @@ class _GarageEditPostState extends State<GarageEditPost> {
         garage: widget.garage,
         postId: widget.garagePost.id.toString(),
         description: _descriptionController.text, // Pass updated description
-        image: _postImage != null ? _postImage : null,
+        image: _postImage,
       );
 
       setState(() {

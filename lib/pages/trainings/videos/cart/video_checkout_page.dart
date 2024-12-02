@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VideoCheckoutPage extends StatefulWidget {
+  const VideoCheckoutPage({super.key});
+
   @override
   _VideoCheckoutPageState createState() => _VideoCheckoutPageState();
 }
@@ -61,7 +63,7 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
     if (_transactionImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please upload transaction image.'),
+          content: const Text('Please upload transaction image.'),
           backgroundColor: Colors.red.shade400, // Red background color
         ),
       );
@@ -105,7 +107,7 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.primary,
-        title: Text('Checkout'),
+        title: const Text('Checkout'),
         backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
@@ -114,11 +116,11 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Total:',
+                  const Text('Total:',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   Text('\$$totalPrice',
@@ -128,11 +130,11 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
                           color: Colors.red.shade400)),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Payment QR Code Image
               isLoadingPayment
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : GestureDetector(
                       onTap: _openLinkPayment,
                       child: Center(
@@ -155,7 +157,7 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
                                       size: 50,
                                       color: Colors.grey.shade400,
                                     ),
-                                    Text('Loading Image Error!')
+                                    const Text('Loading Image Error!')
                                   ],
                                 );
                               },
@@ -164,7 +166,7 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
                         ),
                       ),
                     ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Payment Instructions Link
               Center(
@@ -180,7 +182,7 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
                             fontWeight: FontWeight.w600,
                             fontSize: 18),
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Icon(
                         Icons.arrow_outward_rounded,
                         size: 24,
@@ -190,14 +192,14 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
 
               // Image upload section
-              Text(
+              const Text(
                 'Upload Payment Transaction Image:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               GestureDetector(
                 onTap: _pickImage,
                 child: Container(
@@ -226,11 +228,11 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
                       : null,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Submit Button
               if (isSubmitting)
-                Center(child: CircularProgressIndicator())
+                const Center(child: CircularProgressIndicator())
               else
                 Center(
                   child: ElevatedButton(
@@ -242,7 +244,7 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
                       ),
                     ),
                     onPressed: submitTransaction,
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -257,7 +259,7 @@ class _VideoCheckoutPageState extends State<VideoCheckoutPage> {
                     ),
                   ),
                 ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
             ],
           ),
         ),

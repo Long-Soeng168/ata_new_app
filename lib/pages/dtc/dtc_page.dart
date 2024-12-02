@@ -28,7 +28,7 @@ class _DtcPageState extends State<DtcPage> {
         isLoadingDtcDetail = false; // Stop loading after fetching data
         isLoadingDtcDetailError = false; // Reset error state if successful
       });
-      print(dtcDetail);
+      // print(dtcDetail);
     } catch (error) {
       // Handle any errors that occur during the fetch
       setState(() {
@@ -123,7 +123,7 @@ class _DtcPageState extends State<DtcPage> {
                 ),
               ),
             if (isLoadingDtcDetailError)
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: Center(

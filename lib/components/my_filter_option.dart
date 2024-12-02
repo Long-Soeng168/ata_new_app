@@ -36,12 +36,12 @@ class _MyFilterOptionState extends State<MyFilterOption> {
       children: [
         Text(
           widget.title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal, // Enable horizontal scrolling
           child: Row(children: [
@@ -69,7 +69,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
                   .primary, // Background color when selected
               backgroundColor: Theme.of(context)
                   .colorScheme
-                  .background, // Background color when not selected
+                  .surface, // Background color when not selected
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0), // Rounded corners
                 side: BorderSide(
@@ -91,7 +91,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
               },
             ), 
 
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             ...widget.options.map((option) {
@@ -116,7 +116,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
                             if (progress == null) {
                               return child;
                             } else {
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
@@ -140,7 +140,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
                       .primary, // Background color when selected
                   backgroundColor: Theme.of(context)
                       .colorScheme
-                      .background, // Background color when not selected
+                      .surface, // Background color when not selected
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0), // Rounded corners
                     side: BorderSide(
@@ -162,7 +162,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
                   },
                 ),
               );
-            }).toList(),
+            }),
           ]),
         )
       ],

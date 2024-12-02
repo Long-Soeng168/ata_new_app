@@ -240,7 +240,7 @@ class _GaragesPageState extends State<GaragesPage> {
                           ),
                           SliverToBoxAdapter(
                             child: Column(
-                              children: [
+                              children: const [
                                 SizedBox(
                                   height: 12,
                                 ),
@@ -285,7 +285,7 @@ class _GaragesPageState extends State<GaragesPage> {
                           ),
                           SliverToBoxAdapter(
                             child: Column(
-                              children: [
+                              children: const [
                                 SizedBox(
                                   height: 16,
                                 ),

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class BrandService {
   static Future<List<Brand>> fetchBrands() async {
-    final url = '${Env.baseApiUrl}brands?';
+    const url = '${Env.baseApiUrl}brands?';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 

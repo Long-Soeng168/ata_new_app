@@ -380,7 +380,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                       ),
                 Visibility(
                   visible: isLoadingVideoError,
-                  child: Container(
+                  child: SizedBox(
                     width: double.infinity,
                     height: 50,
                     child: Center(
@@ -462,7 +462,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Icon(Icons.play_circle_outline_outlined,
                                 color: Colors.white),
                             SizedBox(width: 8),

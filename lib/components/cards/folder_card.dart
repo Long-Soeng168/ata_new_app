@@ -14,7 +14,7 @@ class FolderCard extends StatelessWidget {
       child: Card(
         elevation: 0,
         color: Colors.transparent,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             // side: BorderSide(
             //   width: 0.5,
             //   color: Theme.of(context).colorScheme.primary,
@@ -22,7 +22,7 @@ class FolderCard extends StatelessWidget {
             ),
         borderOnForeground: true,
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -38,16 +38,16 @@ class FolderCard extends StatelessWidget {
                       width: 28,
                       height: 28,
                     ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Expanded(
                 child: Text(
                   name,
-                  style: TextStyle(),
+                  style: const TextStyle(),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 24,
                 child: Icon(
                   isFolder

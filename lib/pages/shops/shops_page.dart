@@ -239,7 +239,7 @@ class _ShopsPageState extends State<ShopsPage> {
                           ),
                           SliverToBoxAdapter(
                             child: Column(
-                              children: [
+                              children: const [
                                 SizedBox(
                                   height: 12,
                                 ),

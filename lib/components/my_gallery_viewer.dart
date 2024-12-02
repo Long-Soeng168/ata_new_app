@@ -73,7 +73,7 @@ class _MyGalleryViewerState extends State<MyGalleryViewer> {
         alignment: Alignment.bottomCenter,
         children: [
           Container(
-            padding: EdgeInsets.only(bottom: 80),
+            padding: const EdgeInsets.only(bottom: 80),
             child: GestureDetector(
               onTap: toggleFullScreen,
               child: PhotoViewGallery.builder(
@@ -122,11 +122,11 @@ class ThumbnailStrip extends StatefulWidget {
   final ValueChanged<int> onTap;
 
   const ThumbnailStrip({
-    Key? key,
+    super.key,
     required this.imageUrls,
     required this.currentIndex,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   _ThumbnailStripState createState() => _ThumbnailStripState();
@@ -151,7 +151,7 @@ class _ThumbnailStripState extends State<ThumbnailStrip> {
 
   void _scrollToCurrentThumbnail() {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double itemWidth = 80.0 + 8.0; // Thumbnail width + margin
+    const double itemWidth = 80.0 + 8.0; // Thumbnail width + margin
 
     // Calculate the position where the current thumbnail should be centered
     final double targetPosition =

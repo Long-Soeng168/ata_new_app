@@ -29,6 +29,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
   final _addressController = TextEditingController();
   final _phoneController = TextEditingController();
 
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -107,7 +108,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
 
       if (response['success']) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Garage created successfully")),
+          const SnackBar(content: Text("Garage created successfully")),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -116,7 +117,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please complete all fields and upload images")),
+        const SnackBar(content: Text("Please complete all fields and upload images")),
       );
     }
   }
@@ -125,23 +126,23 @@ class _GarageEditPageState extends State<GarageEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Garage"),
+        title: const Text("Create Garage"),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _garageFormKey,
           child: ListView(
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Garage name input
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(
                   labelText: "Garage Name",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   hintText: 'Enter Garage Name',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -152,14 +153,14 @@ class _GarageEditPageState extends State<GarageEditPage> {
                 validator: (value) =>
                     value!.isEmpty ? "Garage name is required" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Phone number input
               TextFormField(
                 controller: _phoneController,
                 decoration: InputDecoration(
                   labelText: "Phone",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   hintText: 'Enter Phone Number',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -170,14 +171,14 @@ class _GarageEditPageState extends State<GarageEditPage> {
                 validator: (value) =>
                     value!.isEmpty ? "Phone number is required" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               if (!isLoadingBrands)
                 DropdownButtonFormField<int>(
                   value: brandId,
                   decoration: InputDecoration(
                     labelText: "Select Brand",
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color:
@@ -200,13 +201,13 @@ class _GarageEditPageState extends State<GarageEditPage> {
                                 fit: BoxFit.contain,
                               ),
                             ),
-                            SizedBox(width: 10), // Space between image and text
+                            const SizedBox(width: 10), // Space between image and text
                             Text(brand.name),
                           ],
                         ),
                       );
-                    }).toList(),
-                    DropdownMenuItem<int>(
+                    }),
+                    const DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
                         children: [
@@ -224,7 +225,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
                   },
                   validator: (value) => value == null ? "Select a Brand" : null,
                 ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Address input
               TextFormField(
@@ -233,7 +234,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
                   labelText: "Address",
                   hintText: 'Garage Address',
                   alignLabelWithHint: true,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -245,7 +246,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
                 validator: (value) =>
                     value!.isEmpty ? "Enter Garage Address" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               TextFormField(
                 controller: _descriptionController,
@@ -253,7 +254,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
                   labelText: "Description",
                   hintText: 'Garage Description',
                   alignLabelWithHint: true,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
@@ -265,17 +266,17 @@ class _GarageEditPageState extends State<GarageEditPage> {
                 validator: (value) =>
                     value!.isEmpty ? "Enter Shop description" : null,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Logo image picker with preview
               GestureDetector(
                 onTap: () => _pickImage(true),
                 child: Column(
                   children: [
-                    Text("Logo Image", style: TextStyle(fontSize: 16)),
-                    SizedBox(height: 8),
+                    const Text("Logo Image", style: TextStyle(fontSize: 16)),
+                    const SizedBox(height: 8),
                     _logoImage == null
-                        ? Icon(Icons.image, size: 100, color: Colors.grey)
+                        ? const Icon(Icons.image, size: 100, color: Colors.grey)
                         : Image.file(File(_logoImage!.path), height: 100),
                     TextButton(
                       onPressed: () => _pickImage(true),
@@ -291,10 +292,10 @@ class _GarageEditPageState extends State<GarageEditPage> {
                 onTap: () => _pickImage(false),
                 child: Column(
                   children: [
-                    Text("Banner Image", style: TextStyle(fontSize: 16)),
-                    SizedBox(height: 8),
+                    const Text("Banner Image", style: TextStyle(fontSize: 16)),
+                    const SizedBox(height: 8),
                     _bannerImage == null
-                        ? Icon(Icons.image, size: 100, color: Colors.grey)
+                        ? const Icon(Icons.image, size: 100, color: Colors.grey)
                         : Image.file(File(_bannerImage!.path), height: 100),
                     TextButton(
                       onPressed: () => _pickImage(false),
@@ -306,11 +307,11 @@ class _GarageEditPageState extends State<GarageEditPage> {
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Submit button with loading indicator
               _isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
                       onPressed: _updateGarage, title: "Create Garage"),
             ],
