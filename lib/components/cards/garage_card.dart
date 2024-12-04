@@ -161,7 +161,7 @@ class GarageCard extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 60,
+                height: 65,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
