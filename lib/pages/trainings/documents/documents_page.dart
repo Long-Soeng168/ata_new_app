@@ -16,7 +16,7 @@ class DocumentsPage extends StatefulWidget {
 }
 
 class _DocumentsPageState extends State<DocumentsPage> {
-  late Document documents;
+  late Document documentObjects = Document(folders: [], files: []);
   bool isLoadingDocuments = true;
   bool isLoadingDocumentsError = false;
 
@@ -36,9 +36,10 @@ class _DocumentsPageState extends State<DocumentsPage> {
       } else {
         fetchedPublications = await DocumentService.fetchDocuments();
       }
+      // print(fetchedPublications);
       // Update the state
       setState(() {
-        documents = fetchedPublications;
+        documentObjects = fetchedPublications;
         isLoadingDocuments = false;
       });
     } catch (error) {
@@ -84,11 +85,11 @@ class _DocumentsPageState extends State<DocumentsPage> {
                   ),
                 if (!isLoadingDocuments)
                   Visibility(
-                    visible: documents.folders.isNotEmpty,
+                    visible: documentObjects.folders.isNotEmpty,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: Column(
-                        children: documents.folders.map((item) {
+                        children: documentObjects.folders.map((item) {
                           return FolderCard(
                             isFolder: true,
                             name: item.split('/').last,
@@ -107,11 +108,11 @@ class _DocumentsPageState extends State<DocumentsPage> {
                   ),
                 if (!isLoadingDocuments)
                   Visibility(
-                    visible: documents.files.isNotEmpty,
+                    visible: documentObjects.files.isNotEmpty,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: Column(
-                        children: documents.files
+                        children: documentObjects.files
                             .where((item) => item.endsWith(
                                 '.pdf')) // Filter to include only PDF files
                             .map((item) {

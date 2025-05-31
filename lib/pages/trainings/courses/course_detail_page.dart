@@ -120,20 +120,20 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                             ),
                             const SizedBox(height: 8.0),
                             Column(children: [ 
-                              Visibility(
-                                visible: courseDetail.start != '',
-                                child: DetailListCard(
-                                  keyword: 'Start',
-                                  value: courseDetail.start,
-                                ),
-                              ), 
-                              Visibility(
-                                visible: courseDetail.end != '',
-                                child: DetailListCard(
-                                  keyword: 'End',
-                                  value: courseDetail.end,
-                                ),
-                              ), 
+                              // Visibility(
+                              //   visible: courseDetail.start != '',
+                              //   child: DetailListCard(
+                              //     keyword: 'Start',
+                              //     value: courseDetail.start,
+                              //   ),
+                              // ), 
+                              // Visibility(
+                              //   visible: courseDetail.end != '',
+                              //   child: DetailListCard(
+                              //     keyword: 'End',
+                              //     value: courseDetail.end,
+                              //   ),
+                              // ), 
                               ListTile(
                                 contentPadding: EdgeInsets.all(2),
                                 title: Text(

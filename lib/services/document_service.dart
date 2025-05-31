@@ -4,8 +4,8 @@ import 'package:ata_new_app/models/document.dart';
 import 'package:http/http.dart' as http;
 
 class DocumentService {
-  static Future<Document> fetchDocuments({String path = 'documents'}) async {
-    final url = '${Env.baseApiUrl}file-explorer/folder/$path';
+  static Future<Document> fetchDocuments({String path = 'Documents'}) async {
+    final url = 'https://ata-website.kampu.solutions/api/file-explorer/folder/$path';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 

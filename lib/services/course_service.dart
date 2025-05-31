@@ -1,12 +1,12 @@
 import 'dart:convert';
-
 import 'package:ata_new_app/config/env.dart';
 import 'package:ata_new_app/models/course.dart';
 import 'package:http/http.dart' as http;
 
 class CourseService {
   static Future<List<Course>> fetchCourses({int page = 1}) async {
-    final url = '${Env.baseApiUrl}courses?page=$page';
+    // final url = '${Env.baseApiUrl}courses?page=$page';
+    final url = 'https://ata-website.kampu.solutions/api/courses?page=$page';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -17,17 +17,17 @@ class CourseService {
         return Course(
           id: item['id'],
           name: item['title'] ?? '',
-          imageUrl: '${Env.baseImageUrl}courses/thumb/${item['image']}',
+          imageUrl:
+              'https://ata-website.kampu.solutions/assets/images/courses/thumb/${item['image']}',
         );
       }).toList();
-      
     } else {
       throw Exception('Failed to load Courses');
     }
   }
 
   static Future<Course> fetchCourseById({required int id}) async {
-    String url = '${Env.baseApiUrl}courses/$id';
+    String url = 'https://ata-website.kampu.solutions/api/courses/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -37,8 +37,8 @@ class CourseService {
       id: data['id'],
       name: data['title'] ?? '',
       price: data['price']?.toString() ?? '',
-      imageUrl: '${Env.baseImageUrl}products/thumb/${data['image']}',
-
+      imageUrl:
+          'https://ata-website.kampu.solutions/assets/images/courses/thumb/${data['image']}',
       description: data['description'] ?? '',
       start: data['start'] ?? '',
       end: data['end'] ?? '',

@@ -64,7 +64,7 @@ class TrainingPage extends StatelessWidget {
               const Expanded(
                 child: DocumentsPage(
                   isShowAppBar: false,
-                  path: 'documents',
+                  path: 'Documents',
                 ),
               ),
               // Expanded(
