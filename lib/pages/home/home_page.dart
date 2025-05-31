@@ -78,9 +78,9 @@ class _HomePageState extends State<HomePage> {
   Future<void> getSlides() async {
     try {
       // Fetch products outside of setState
-      final fetchedSlides = await SlideService.fetchSlides(position: 'home');
+      final fetchedSlides = await SlideService.fetchSlides(position: 'HOME-16/9');
       final fetchedSlidesMiddle =
-          await SlideService.fetchSlides(position: 'home_middle');
+          await SlideService.fetchSlides(position: 'HOME-21/9');
       // Update the state
       setState(() {
         slides = fetchedSlides;

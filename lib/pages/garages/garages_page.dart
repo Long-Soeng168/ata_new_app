@@ -62,7 +62,7 @@ class _GaragesPageState extends State<GaragesPage> {
   Future<void> getSlides() async {
     try {
       // Fetch garages outside of setState
-      final fetchedSlides = await SlideService.fetchSlides(position: 'garage');
+      final fetchedSlides = await SlideService.fetchSlides(position: 'Garage');
       // Update the state
       setState(() {
         slides = fetchedSlides;

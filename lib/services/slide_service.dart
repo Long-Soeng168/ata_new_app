@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class SlideService {
   static Future<List<String>> fetchSlides({String position = ''}) async {
-    final url = '${Env.baseApiUrl}slides?position=$position';
+    final url = 'https://ata-website.kampu.solutions/api/slides?position=$position';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -20,7 +20,7 @@ class SlideService {
       }).toList();
       
       List<String> slideList = slideObject.map((e) {
-        return '${Env.baseImageUrl}slides/thumb/${e.image}';
+        return 'https://ata-website.kampu.solutions/assets/images/banners/thumb/${e.image}';
       }).toList();
 
       return slideList;

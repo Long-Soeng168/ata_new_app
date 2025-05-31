@@ -62,7 +62,7 @@ class _ShopsPageState extends State<ShopsPage> {
   Future<void> getSlides() async {
     try {
       // Fetch products outside of setState
-      final fetchedSlides = await SlideService.fetchSlides(position: 'shop');
+      final fetchedSlides = await SlideService.fetchSlides(position: 'Shop');
       // Update the state
       setState(() {
         slides = fetchedSlides;
