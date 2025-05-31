@@ -63,37 +63,37 @@ class _VideoPlayListPageState extends State<VideoPlayListPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  final route = MaterialPageRoute(
-                    builder: (context) => VideoCartPage(),
-                  );
-                  Navigator.push(context, route);
-                },
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 32,
-                ),
-              ),
-              if (cartProvider.totalItems() > 0)
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: CircleAvatar(
-                    radius: 10,
-                    backgroundColor: Colors.red,
-                    child: Text(
-                      cartProvider.totalItems().toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.white),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ],
+        // actions: [
+        //   Stack(
+        //     children: [
+        //       IconButton(
+        //         onPressed: () {
+        //           final route = MaterialPageRoute(
+        //             builder: (context) => VideoCartPage(),
+        //           );
+        //           Navigator.push(context, route);
+        //         },
+        //         icon: Icon(
+        //           Icons.shopping_cart_outlined,
+        //           size: 32,
+        //         ),
+        //       ),
+        //       if (cartProvider.totalItems() > 0)
+        //         Positioned(
+        //           right: 0,
+        //           top: 0,
+        //           child: CircleAvatar(
+        //             radius: 10,
+        //             backgroundColor: Colors.red,
+        //             child: Text(
+        //               cartProvider.totalItems().toString(),
+        //               style: TextStyle(fontSize: 14, color: Colors.white),
+        //             ),
+        //           ),
+        //         ),
+        //     ],
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Column(

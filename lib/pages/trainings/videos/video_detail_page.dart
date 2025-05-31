@@ -60,7 +60,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
     try {
       final fetchedVideoDetail =
           await VideoService.fetchVideoById(id: videoPlay.id);
-      // print(fetchedVideos);
+      print(fetchedVideoDetail);
       setState(() {
         videoDetail = fetchedVideoDetail;
         isLoadingVideoDetail = false;
@@ -108,68 +108,68 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Purchase Training'),
+          title: Text('Buy to Watch'),
           content: Text(
-              'This Training requires a purchase. Would you like to add it to your cart or buy it now?'),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    side: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary), // Set border color here
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _addToCart(); // Call your add to cart method
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                        'Add',
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary), // Text color
-                      ),
-                      SizedBox(width: 4),
-                      Icon(
-                        Icons.add_shopping_cart_rounded,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 12),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    _addToCart(isShowDialog: false);
-                    final route = MaterialPageRoute(
-                      builder: (context) => VideoCartPage(),
-                    );
-                    Navigator.push(context, route);
-                  },
-                  child: Text(
-                    'Buy Now',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            )
-          ],
+              'You need to buy this course on our website to watch it.'),
+          // actions: [
+          //   Row(
+          //     mainAxisAlignment: MainAxisAlignment.end,
+          //     children: [
+          //       OutlinedButton(
+          //         style: OutlinedButton.styleFrom(
+          //           shape: RoundedRectangleBorder(
+          //             borderRadius: BorderRadius.circular(12),
+          //           ),
+          //           side: BorderSide(
+          //               color: Theme.of(context)
+          //                   .colorScheme
+          //                   .primary), // Set border color here
+          //         ),
+          //         onPressed: () {
+          //           Navigator.of(context).pop();
+          //           _addToCart(); // Call your add to cart method
+          //         },
+          //         child: Row(
+          //           children: [
+          //             Text(
+          //               'Add',
+          //               style: TextStyle(
+          //                   color: Theme.of(context)
+          //                       .colorScheme
+          //                       .primary), // Text color
+          //             ),
+          //             SizedBox(width: 4),
+          //             Icon(
+          //               Icons.add_shopping_cart_rounded,
+          //               color: Theme.of(context).colorScheme.primary,
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(width: 12),
+          //       ElevatedButton(
+          //         style: ElevatedButton.styleFrom(
+          //           backgroundColor: Theme.of(context).colorScheme.primary,
+          //           shape: RoundedRectangleBorder(
+          //             borderRadius: BorderRadius.circular(12),
+          //           ),
+          //         ),
+          //         onPressed: () {
+          //           Navigator.pop(context);
+          //           _addToCart(isShowDialog: false);
+          //           final route = MaterialPageRoute(
+          //             builder: (context) => VideoCartPage(),
+          //           );
+          //           Navigator.push(context, route);
+          //         },
+          //         child: Text(
+          //           'Buy Now',
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //     ],
+          //   )
+          // ],
         );
       },
     );
@@ -183,43 +183,43 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
         foregroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Video',
+          'Videos',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  final route = MaterialPageRoute(
-                    builder: (context) => VideoCartPage(),
-                  );
-                  Navigator.push(context, route);
-                },
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 32,
-                ),
-              ),
-              if (cartProvider.totalItems() > 0)
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: CircleAvatar(
-                    radius: 10,
-                    backgroundColor: Colors.red,
-                    child: Text(
-                      cartProvider.totalItems().toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.white),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ],
+        // actions: [
+        //   Stack(
+        //     children: [
+        //       IconButton(
+        //         onPressed: () {
+        //           final route = MaterialPageRoute(
+        //             builder: (context) => VideoCartPage(),
+        //           );
+        //           Navigator.push(context, route);
+        //         },
+        //         icon: Icon(
+        //           Icons.shopping_cart_outlined,
+        //           size: 32,
+        //         ),
+        //       ),
+        //       if (cartProvider.totalItems() > 0)
+        //         Positioned(
+        //           right: 0,
+        //           top: 0,
+        //           child: CircleAvatar(
+        //             radius: 10,
+        //             backgroundColor: Colors.red,
+        //             child: Text(
+        //               cartProvider.totalItems().toString(),
+        //               style: TextStyle(fontSize: 14, color: Colors.white),
+        //             ),
+        //           ),
+        //         ),
+        //     ],
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),

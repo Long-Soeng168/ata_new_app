@@ -6,12 +6,6 @@ class VideoPlaylist {
   final String price;
   final String videosCount;
 
-  final int teacherId;
-  final String teacherName;
-
-  final int categoryId;
-  final String categoryName;
-
   VideoPlaylist({
     required this.id, 
     required this.name, 
@@ -19,10 +13,6 @@ class VideoPlaylist {
     required this.description,
     required this.price,
     required this.videosCount, 
-    required this.teacherId, 
-    required this.teacherName, 
-    required this.categoryId, 
-    required this.categoryName,
   });
 
   // Convert a VideoPlaylist to a Map (for JSON encoding)
@@ -33,10 +23,6 @@ class VideoPlaylist {
     'description': description,
     'price': price,
     'videosCount': videosCount,
-    'teacherId': teacherId,
-    'teacherName': teacherName,
-    'categoryId': categoryId,
-    'categoryName': categoryName,
   };
 
   // Create a VideoPlaylist from a Map (for JSON decoding)
@@ -48,10 +34,6 @@ class VideoPlaylist {
       description: json['description'],
       price: json['price'],
       videosCount: json['videosCount'],
-      teacherId: json['teacherId'],
-      teacherName: json['teacherName'],
-      categoryId: json['categoryId'],
-      categoryName: json['categoryName'],
     );
   }
 }

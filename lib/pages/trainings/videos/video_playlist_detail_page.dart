@@ -139,68 +139,68 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Purchase Training'),
-          content: Text(
-              'This Training requires a purchase. Would you like to add it to your cart or buy it now?'),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    side: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary), // Set border color here
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _addToCart(); // Call your add to cart method
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                        'Add',
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary), // Text color
-                      ),
-                      SizedBox(width: 4),
-                      Icon(
-                        Icons.add_shopping_cart_rounded,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 12),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    _addToCart(isShowDialog: false);
-                    final route = MaterialPageRoute(
-                      builder: (context) => VideoCartPage(),
-                    );
-                    Navigator.push(context, route);
-                  },
-                  child: Text(
-                    'Buy Now',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            )
-          ],
+          title: Text('Buy to Watch'),
+          content:
+              Text('You need to buy this course on our website to watch it.'),
+          // actions: [
+          //   Row(
+          //     mainAxisAlignment: MainAxisAlignment.end,
+          //     children: [
+          //       OutlinedButton(
+          //         style: OutlinedButton.styleFrom(
+          //           shape: RoundedRectangleBorder(
+          //             borderRadius: BorderRadius.circular(12),
+          //           ),
+          //           side: BorderSide(
+          //               color: Theme.of(context)
+          //                   .colorScheme
+          //                   .primary), // Set border color here
+          //         ),
+          //         onPressed: () {
+          //           Navigator.of(context).pop();
+          //           _addToCart(); // Call your add to cart method
+          //         },
+          //         child: Row(
+          //           children: [
+          //             Text(
+          //               'Add',
+          //               style: TextStyle(
+          //                   color: Theme.of(context)
+          //                       .colorScheme
+          //                       .primary), // Text color
+          //             ),
+          //             SizedBox(width: 4),
+          //             Icon(
+          //               Icons.add_shopping_cart_rounded,
+          //               color: Theme.of(context).colorScheme.primary,
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(width: 12),
+          //       ElevatedButton(
+          //         style: ElevatedButton.styleFrom(
+          //           backgroundColor: Theme.of(context).colorScheme.primary,
+          //           shape: RoundedRectangleBorder(
+          //             borderRadius: BorderRadius.circular(12),
+          //           ),
+          //         ),
+          //         onPressed: () {
+          //           Navigator.pop(context);
+          //           _addToCart(isShowDialog: false);
+          //           final route = MaterialPageRoute(
+          //             builder: (context) => VideoCartPage(),
+          //           );
+          //           Navigator.push(context, route);
+          //         },
+          //         child: Text(
+          //           'Buy Now',
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //     ],
+          //   )
+          // ],
         );
       },
     );
@@ -220,37 +220,37 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  final route = MaterialPageRoute(
-                    builder: (context) => VideoCartPage(),
-                  );
-                  Navigator.push(context, route);
-                },
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 32,
-                ),
-              ),
-              if (cartProvider.totalItems() > 0)
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: CircleAvatar(
-                    radius: 10,
-                    backgroundColor: Colors.red,
-                    child: Text(
-                      cartProvider.totalItems().toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.white),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ],
+        // actions: [
+        //   Stack(
+        //     children: [
+        //       IconButton(
+        //         onPressed: () {
+        //           final route = MaterialPageRoute(
+        //             builder: (context) => VideoCartPage(),
+        //           );
+        //           Navigator.push(context, route);
+        //         },
+        //         icon: Icon(
+        //           Icons.shopping_cart_outlined,
+        //           size: 32,
+        //         ),
+        //       ),
+        //       if (cartProvider.totalItems() > 0)
+        //         Positioned(
+        //           right: 0,
+        //           top: 0,
+        //           child: CircleAvatar(
+        //             radius: 10,
+        //             backgroundColor: Colors.red,
+        //             child: Text(
+        //               cartProvider.totalItems().toString(),
+        //               style: TextStyle(fontSize: 14, color: Colors.white),
+        //             ),
+        //           ),
+        //         ),
+        //     ],
+        //   ),
+        // ],
       ),
       body: Stack(
         children: [
@@ -275,25 +275,25 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        '${videoPlaylist.price} \$',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.redAccent,
-                        ),
-                      ),
+                      // Text(
+                      //   '${videoPlaylist.price} \$',
+                      //   style: TextStyle(
+                      //     fontSize: 24,
+                      //     fontWeight: FontWeight.bold,
+                      //     color: Colors.redAccent,
+                      //   ),
+                      // ),
                       const SizedBox(height: 8.0),
                       Column(children: [
                         // Start Detail
-                        DetailListCard(
-                          keyword: 'Teacher',
-                          value: videoPlaylist.teacherName,
-                        ),
-                        DetailListCard(
-                          keyword: 'Category',
-                          value: videoPlaylist.categoryName,
-                        ),
+                        // DetailListCard(
+                        //   keyword: 'Teacher',
+                        //   value: videoPlaylist.teacherName,
+                        // ),
+                        // DetailListCard(
+                        //   keyword: 'Category',
+                        //   value: videoPlaylist.categoryName,
+                        // ),
                         DetailListCard(
                           keyword: 'Videos',
                           value: videoPlaylist.videosCount.toString(),
@@ -406,38 +406,38 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                 width: double.infinity,
                 child: Row(
                   children: [
-                    if (!ownPlaylist && !isLoadingUserPlayLists)
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              side: BorderSide(
-                                  color: Theme.of(context).colorScheme.primary),
-                            ),
-                          ),
-                          onPressed: _addToCart,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.add_shopping_cart_outlined,
-                                  color: Theme.of(context).colorScheme.primary),
-                              SizedBox(width: 8),
-                              Text(
-                                'Add To Cart',
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    SizedBox(width: 8),
+                    // if (!ownPlaylist && !isLoadingUserPlayLists)
+                    //   Expanded(
+                    //     child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //         backgroundColor: Colors.white,
+                    //         padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(10),
+                    //           side: BorderSide(
+                    //               color: Theme.of(context).colorScheme.primary),
+                    //         ),
+                    //       ),
+                    //       onPressed: _addToCart,
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: [
+                    //           Icon(Icons.add_shopping_cart_outlined,
+                    //               color: Theme.of(context).colorScheme.primary),
+                    //           SizedBox(width: 8),
+                    //           Text(
+                    //             'Add To Cart',
+                    //             style: TextStyle(
+                    //               color: Theme.of(context).colorScheme.primary,
+                    //               fontSize: 16,
+                    //               fontWeight: FontWeight.bold,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // SizedBox(width: 8),
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -467,7 +467,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                                 color: Colors.white),
                             SizedBox(width: 8),
                             Text(
-                              'Start Course',
+                              'Play Video',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,

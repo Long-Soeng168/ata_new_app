@@ -79,28 +79,28 @@ class _MyVideoPlayerState extends State<MyVideoPlayer> {
     // print(widget.url);
     if (_isLoading) {
       return AspectRatio(
-          aspectRatio: widget.aspectRatio,
-          child: const Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
+        aspectRatio: widget.aspectRatio,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }
 
     if (_hasError) {
-  return const Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('Failed to load video'),
-        // ElevatedButton(
-        //   onPressed: _initializeVideoPlayer,
-        //   child: const Text('Retry'),
-        // ),
-      ],
-    ),
-  );
-}
-
+      return const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AspectRatio(
+                aspectRatio: 16 / 9, child: Center(child: Text('Failed to load video'))),
+            // ElevatedButton(
+            //   onPressed: _initializeVideoPlayer,
+            //   child: const Text('Retry'),
+            // ),
+          ],
+        ),
+      );
+    }
 
     return AspectRatio(
       aspectRatio: widget.aspectRatio,

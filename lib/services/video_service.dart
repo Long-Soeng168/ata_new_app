@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 class VideoService {
   static Future<List<Video>> fetchVideos({int? playlistId}) async {
-    String url = '${Env.baseApiUrl}training_videos';
+    String url = 'https://ata-website.kampu.solutions/api/videos';
     if (playlistId != null) {
       url += '?playlistId=$playlistId';
     }
@@ -30,8 +30,9 @@ class VideoService {
           name: item['title'],
           viewsCount: item['views_count']?.toString() ?? '0',
           isFree: item['is_free'] == 0 ? false : true,
-          imageUrl: '${Env.baseImageUrl}videos/thumb/${item['image']}',
-          videoUrl: '${Env.baseVideoUrl}${item['video_name']}',
+          imageUrl:
+              'https://ata-website.kampu.solutions/assets/images/videos/thumb/${item['image']}',
+          videoUrl: 'https://ata-website.kampu.solutions/assets/files/videos/${item['video_name']}',
         );
       }).toList();
     } else {
@@ -40,7 +41,7 @@ class VideoService {
   }
 
   static Future<Video> fetchVideoById({required int id}) async {
-    String url = '${Env.baseApiUrl}videos/$id';
+    String url = 'https://ata-website.kampu.solutions/api/videos/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -49,17 +50,18 @@ class VideoService {
     return Video(
       id: data['id'],
       name: data['title'],
-      description: data['description'],
+      description: data['description'] ?? '',
       viewsCount: data['views_count']?.toString() ?? '0',
       isFree: data['is_free'] == 0 ? false : true,
-      imageUrl: '${Env.baseImageUrl}videos/thumb/${data['image']}',
-      videoUrl: '${Env.baseVideoUrl}${data['video_name']}',
+      imageUrl:
+          'https://ata-website.kampu.solutions/assets/images/videos/thumb/${data['image']}',
+      videoUrl: 'https://ata-website.kampu.solutions/assets/files/videos/${data['video_name']}',
     );
   }
 
   static Future<List<VideoPlaylist>> fetchVideoPlaylists(
       {String? search}) async {
-    String url = '${Env.baseApiUrl}videos_playlists';
+    String url = 'https://ata-website.kampu.solutions/api/videos_playlists';
 
     if (search != null) {
       url += '?search=$search';
@@ -75,14 +77,11 @@ class VideoService {
         return VideoPlaylist(
           id: item['id'],
           name: item['name'],
-          imageUrl: '${Env.baseImageUrl}video_playlists/${item['image']}',
-          description: item['description'],
+          imageUrl:
+              'https://ata-website.kampu.solutions/assets/images/video_play_lists/thumb/${item['image']}',
+          description: item['description'] ?? '',
           price: item['price']?.toString() ?? '',
           videosCount: item['videos_count']?.toString() ?? '',
-          teacherId: item['teacher']['id'] ?? 0,
-          teacherName: item['teacher']['name'],
-          categoryId: item['category']['id'] ?? 0,
-          categoryName: item['category']['name'],
         );
       }).toList();
     } else {

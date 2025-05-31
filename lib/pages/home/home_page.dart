@@ -343,7 +343,7 @@ class _HomePageState extends State<HomePage> {
                                   title: playlist.name,
                                   price: playlist.price,
                                   imageUrl: playlist.imageUrl,
-                                  teacherName: playlist.teacherName,
+                                  // teacherName: playlist.teacherName,
                                   videosCount: playlist.videosCount,
                                   onTap: () {
                                     final route = MaterialPageRoute(

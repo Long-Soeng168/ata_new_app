@@ -147,19 +147,31 @@ class VideoPlayListCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
+                        //  Expanded(
+                        //   child: Text(
+                        //     '$price \$',
+                        //     maxLines: 1,
+                        //     overflow: TextOverflow.ellipsis,
+                        //     style: TextStyle(
+                        //         fontSize: 14, color: Colors.redAccent),
+                        //   ),
+                        // ),
                         Expanded(
-                          child: Text(
-                            '$price \$',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.redAccent),
-                          ),
+                          child: Container(),
+                        ),
+
+                        Text(
+                          // '$price \$',
+                          'See More ',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 16, color: Colors.blue.shade500),
                         ),
                         Icon(
-                          Icons.shopping_cart_outlined,
+                          Icons.play_circle_outline_rounded,
                           size: 24,
-                          color: Colors.grey.shade500,
+                          color: Colors.blue.shade500,
                         ),
                       ],
                     ),
