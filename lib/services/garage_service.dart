@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 class GarageService {
   static Future<List<Garage>> fetchGarages(
       {int? expertId, int? page, String? search}) async {
-    String url = '${Env.baseApiUrl}garages';
+    String url = 'https://ata-website.kampu.solutions/api/garages';
 
     List<String> queryParams = [];
 
@@ -48,9 +48,10 @@ class GarageService {
           description: item['description'] ?? '',
           expertName: item['expert']?['name'] ?? '',
           expertId: item['expert']?['id'] ?? -1,
-          logoUrl: '${Env.baseImageUrl}garages/thumb/logo/${item['logo']}',
+          logoUrl:
+              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${item['logo']}',
           bannerUrl:
-              '${Env.baseImageUrl}garages/thumb/banner/${item['banner']}',
+              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${item['banner']}',
         );
       }).toList();
     } else {
@@ -403,7 +404,7 @@ class GarageService {
 
   static Future<List<GaragePost>> fetchGaragesPosts(
       {int? garageId, int? page}) async {
-    String url = '${Env.baseApiUrl}garages_posts';
+    String url = 'https://ata-website.kampu.solutions/api/garages_posts';
 
     List<String> queryParams = [];
 
@@ -427,8 +428,9 @@ class GarageService {
       return data.map((item) {
         return GaragePost(
           id: item['id'],
-          name: item['name'] ?? '',
-          imageUrl: '${Env.baseImageUrl}garageposts/thumb/${item['image']}',
+          name: item['title'] ?? '',
+          imageUrl:
+              'https://ata-website.kampu.solutions/assets/images/garage_posts/thumb/${item['images'][0]['image']}',
           description: item['description'] ?? '',
         );
       }).toList();

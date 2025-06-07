@@ -46,7 +46,7 @@ class ShopService {
   }
 
   static Future<Shop> fetchShopById({required int id}) async {
-    String url = '${Env.baseApiUrl}shops/$id';
+    String url = 'https://ata-website.kampu.solutions/api/shops/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -58,8 +58,8 @@ class ShopService {
       description: data['description'] ?? '',
       address: data['address'] ?? '',
       phone: data['phone'] ?? '',
-      logoUrl: '${Env.baseImageUrl}shops/logo/thumb/${data['logo']}',
-      bannerUrl: '${Env.baseImageUrl}shops/banner/thumb/${data['banner']}',
+      logoUrl: 'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['logo']}',
+      bannerUrl: 'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['banner']}',
     );
   }
 

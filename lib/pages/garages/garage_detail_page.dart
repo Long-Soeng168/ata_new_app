@@ -224,7 +224,7 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                                     child: GaragePostCard(
                                       aspectRatio: 16 / 9,
                                       id: garagePost.id,
-                                      title: garagePost.description,
+                                      title: garagePost.name,
                                       imageUrl: garagePost.imageUrl,
                                     ),
                                   );

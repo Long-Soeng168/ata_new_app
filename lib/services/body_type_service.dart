@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class BodyTypeService {
   static Future<List<BodyType>> fetchBodyTypes() async {
-    const url = '${Env.baseApiUrl}body_types?';
+    const url = 'https://ata-website.kampu.solutions/api/body_types?';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -16,7 +16,7 @@ class BodyTypeService {
           id: item['id'],
           name: item['name'] ?? '',
           nameKh: item['name_kh'] ?? '',
-          imageUrl: '${Env.baseImageUrl}body_types/${item['image']}',
+          imageUrl: 'https://ata-website.kampu.solutions/assets/images/item_body_types/${item['image']}',
         );
       }).toList();
        

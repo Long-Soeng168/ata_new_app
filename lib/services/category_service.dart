@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class CategoryService {
   static Future<List<Category>> fetchCategories() async {
-    const url = '${Env.baseApiUrl}categories?';
+    const url = 'https://ata-website.kampu.solutions/api/categories?';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -16,15 +16,14 @@ class CategoryService {
           id: item['id'],
           name: item['name'] ?? '',
           nameKh: item['name_kh'] ?? '',
-          imageUrl: '${Env.baseImageUrl}categories/${item['image']}',
+          imageUrl:
+              'https://ata-website.kampu.solutions/assets/images/item_categories/${item['image']}',
         );
       }).toList();
-       
-      return categories;
 
+      return categories;
     } else {
       throw Exception('Failed to load Categories');
     }
   }
-
 }

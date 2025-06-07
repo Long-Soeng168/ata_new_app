@@ -5,14 +5,16 @@ class MyFilterOption extends StatefulWidget {
   final String title;
   final List<Map<String, dynamic>> options;
   final Function handleSelect;
-  final int? selectedItem; 
+  final int? selectedItem;
+  final bool? showImage;
 
   const MyFilterOption({
     super.key,
     required this.title,
     required this.options,
     required this.handleSelect,
-    this.selectedItem, 
+    this.selectedItem,
+    this.showImage = true,
   });
 
   @override
@@ -49,7 +51,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
               showCheckmark: false,
               label: IntrinsicWidth(
                 child: SizedBox(
-                  height: 50,
+                  height: widget.showImage ?? true ? 50 : 22,
                   child: Center(
                     child: Text(
                       'All',
@@ -89,8 +91,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
                 });
                 widget.handleSelect(null);
               },
-            ), 
-
+            ),
             const SizedBox(
               width: 8,
             ),
@@ -104,23 +105,26 @@ class _MyFilterOptionState extends State<MyFilterOption> {
                   label: IntrinsicWidth(
                     child: Column(
                       children: [
-                        Image.network(
-                          option['image'],
-                          height: 32,
-                          width: 32,
-                          fit: BoxFit.contain,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const ErrorImage(size: 32);
-                          },
-                          loadingBuilder: (context, child, progress) {
-                            if (progress == null) {
-                              return child;
-                            } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
+                        Visibility(
+                          visible: widget.showImage ?? true,
+                          child: Image.network(
+                            option['image'],
+                            height: 32,
+                            width: 32,
+                            fit: BoxFit.contain,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const ErrorImage(size: 32);
+                            },
+                            loadingBuilder: (context, child, progress) {
+                              if (progress == null) {
+                                return child;
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
                         ),
                         Text(
                           option['title'].toString(),

@@ -217,15 +217,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                       value: productDetail.createdAt,
                                     ),
                                   ),
-
-                                  ListTile(
-                                    contentPadding: EdgeInsets.all(2),
-                                    title: Text(
-                                      'Description',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                  Visibility(
+                                    visible:
+                                        productDetail.description.isNotEmpty,
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.all(2),
+                                      title: Text(
+                                        'Description',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      subtitle: Text(productDetail.description),
                                     ),
-                                    subtitle: Text(productDetail.description),
                                   ),
                                 ])
                     ],
@@ -355,7 +358,8 @@ class ContactButton extends StatelessWidget {
   final String phoneNumber;
   final String label;
 
-  const ContactButton({super.key, required this.phoneNumber, required this.label});
+  const ContactButton(
+      {super.key, required this.phoneNumber, required this.label});
 
   @override
   Widget build(BuildContext context) {

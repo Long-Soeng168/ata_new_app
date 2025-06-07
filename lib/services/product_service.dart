@@ -19,7 +19,7 @@ class ProductService {
       int? brandModelId,
       int? page,
       String? search}) async {
-    String url = '${Env.baseApiUrl}products';
+    String url = 'https://ata-website.kampu.solutions/api/products';
 
     List<String> queryParams = [];
 
@@ -61,7 +61,8 @@ class ProductService {
           name: item['name'] ?? '',
           shopId: item['shop_id'] ?? 0,
           price: item['price']?.toString() ?? '',
-          imageUrl: '${Env.baseImageUrl}products/thumb/${item['image']}',
+          imageUrl:
+              'https://ata-website.kampu.solutions/assets/images/items/thumb/${item['image']}',
           isInstock: item['is_instock'] == 0 ? false : true,
         );
       }).toList();
@@ -71,7 +72,7 @@ class ProductService {
   }
 
   static Future<List<Product>> fetchRelatedProducts({required int id}) async {
-    String url = '${Env.baseApiUrl}related_products/$id';
+    String url = 'https://ata-website.kampu.solutions/api/related_products/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -84,7 +85,7 @@ class ProductService {
           name: item['name'] ?? '',
           shopId: item['shop_id'] ?? 0,
           price: item['price']?.toString() ?? '',
-          imageUrl: '${Env.baseImageUrl}products/thumb/${item['image']}',
+          imageUrl: 'https://ata-website.kampu.solutions/assets/images/items/thumb/${item['image']}',
           isInstock: item['is_instock'] == 0 ? false : true,
         );
       }).toList();
@@ -94,7 +95,7 @@ class ProductService {
   }
 
   static Future<Product> fetchProductById({required int id}) async {
-    String url = '${Env.baseApiUrl}products/$id';
+    String url = 'https://ata-website.kampu.solutions/api/products/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -102,7 +103,7 @@ class ProductService {
 
     List<dynamic> imagesObjects = data['images'];
     List<String> imagesUrls = imagesObjects.map((item) {
-      return '${Env.baseImageUrl}products/thumb/${item['image']}';
+      return 'https://ata-website.kampu.solutions/assets/images/items/thumb/${item['image']}';
     }).toList();
 
     String formatCreatedAt = '';
@@ -116,7 +117,7 @@ class ProductService {
       id: data['id'] ?? 0,
       name: data['name'] ?? '',
       price: data['price']?.toString() ?? '',
-      imageUrl: '${Env.baseImageUrl}products/thumb/${data['image']}',
+      imageUrl: 'https://ata-website.kampu.solutions/assets/images/items/thumb/${data['image']}',
       imagesUrls: imagesUrls,
       isInstock: data['is_instock'] == 0 ? false : true,
       description: data['description'] ?? '',

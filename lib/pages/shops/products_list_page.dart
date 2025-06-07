@@ -61,7 +61,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
   @override
   void initState() {
     super.initState();
-    if(widget.categoryId != null){
+    if (widget.categoryId != null) {
       setState(() {
         selectedCategoryId = widget.categoryId;
       });
@@ -132,6 +132,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
       print('Failed to load Catogries: $error');
     }
   }
+
   Future<void> getBodyTypes() async {
     try {
       // Fetch products outside of setState
@@ -375,6 +376,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
   MyFilterOption brandModelsFilterOption() {
     return MyFilterOption(
       title: 'Models',
+      showImage: false,
       selectedItem: selectedBrandModelId,
       options: brandModels.map((item) {
         return {
@@ -477,7 +479,12 @@ class _ProductsListPageState extends State<ProductsListPage> {
                         hasMoreProducts = true;
                       });
                       getProducts();
-                      getBrandModels();
+                      if (selectedBrandId != null) {
+                        getBrandModels();
+                      }
+                      if(selectedBrandModelId == null) {
+                        brandModels = [];
+                      }
                       Navigator.pop(context); // Close the bottom sheet
                     },
                     title: 'Filter',

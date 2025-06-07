@@ -41,15 +41,15 @@ class _ShopDetailPageState extends State<ShopDetailPage> {
     });
   }
 
-  final List<String> imageUrls = [
-    'https://thnal.com/assets/images/images/thumb/1724644805cYik37Kni4.jpg',
-    'https://thnal.com/assets/images/images/thumb/1724645207ijk4Luu0MV.jpg',
-    'https://thnal.com/assets/images/images/thumb/1724645220EdDXuHwoSG.jpg',
-    'https://thnal.com/assets/images/images/1724643818BFMdOmmg49.jpg',
-    'https://thnal.com/assets/images/images/1724643416EE7dhcbSp0.jpg',
-    'https://thnal.com/assets/images/images/1724248852GktzRMNaGc.jpg',
-    'https://thnal.com/assets/images/images/1724643605gcHCupf1yN.jpg',
-  ];
+  // final List<String> imageUrls = [
+  //   'https://thnal.com/assets/images/images/thumb/1724644805cYik37Kni4.jpg',
+  //   'https://thnal.com/assets/images/images/thumb/1724645207ijk4Luu0MV.jpg',
+  //   'https://thnal.com/assets/images/images/thumb/1724645220EdDXuHwoSG.jpg',
+  //   'https://thnal.com/assets/images/images/1724643818BFMdOmmg49.jpg',
+  //   'https://thnal.com/assets/images/images/1724643416EE7dhcbSp0.jpg',
+  //   'https://thnal.com/assets/images/images/1724248852GktzRMNaGc.jpg',
+  //   'https://thnal.com/assets/images/images/1724643605gcHCupf1yN.jpg',
+  // ];
 
   List<Product> products = [];
   bool isLoadingProducts = true;
