@@ -8,9 +8,9 @@ import 'package:ata_new_app/components/my_list_header.dart';
 import 'package:ata_new_app/components/my_slide_show.dart';
 import 'package:ata_new_app/models/product.dart';
 import 'package:ata_new_app/models/video_playlist.dart';
+import 'package:ata_new_app/pages/app_info/app_info_page.dart';
 import 'package:ata_new_app/pages/dtc/dtc_page.dart';
 import 'package:ata_new_app/pages/garages/garages_page.dart';
-import 'package:ata_new_app/pages/help_and_about/help_and_about_page.dart';
 import 'package:ata_new_app/pages/shops/product_detail_page.dart';
 import 'package:ata_new_app/pages/shops/products_list_page.dart';
 import 'package:ata_new_app/pages/shops/shops_page.dart';
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
           GestureDetector(
             onTap: () {
               final route =
-                  MaterialPageRoute(builder: (context) => HelpAndAboutPage());
+                  MaterialPageRoute(builder: (context) => AppInfoPage());
               Navigator.push(context, route);
             },
             child: Padding(

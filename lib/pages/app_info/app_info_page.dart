@@ -1,9 +1,9 @@
-import 'package:ata_new_app/pages/help_and_about/web_view_page.dart';
+import 'package:ata_new_app/pages/app_info/web_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HelpAndAboutPage extends StatelessWidget {
-  const HelpAndAboutPage({super.key});
+class AppInfoPage extends StatelessWidget {
+  const AppInfoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
