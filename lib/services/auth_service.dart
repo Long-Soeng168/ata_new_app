@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:ata_new_app/config/env.dart';
 import 'package:ata_new_app/models/garage.dart';
 import 'package:ata_new_app/models/shop.dart';
+import 'package:ata_new_app/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -11,7 +12,7 @@ class AuthService {
 
   // Login function
   Future<Map<String, dynamic>> login(String email, String password) async {
-    final url = Uri.parse('${_baseUrl}login');
+    final url = Uri.parse('https://ata-website.kampu.solutions/api/login');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -41,7 +42,7 @@ class AuthService {
   Future<Map<String, dynamic>> register(
       String name, String phone, String email, String password) async {
     final url = Uri.parse(
-        '${_baseUrl}register'); // Replace with your registration endpoint
+        'https://ata-website.kampu.solutions/api/register'); // Replace with your registration endpoint
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -95,7 +96,7 @@ class AuthService {
   // Fetch user info
   Future<Map<String, dynamic>> getUserInfo() async {
     final token = await getToken();
-    final url = Uri.parse('${_baseUrl}user');
+    final url = Uri.parse('https://ata-website.kampu.solutions/api/user');
 
     final response = await http.get(
       url,
@@ -107,7 +108,17 @@ class AuthService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      return {'success': true, 'user': data};
+      // final user = User(
+      //   id: data['id'],
+      //   name: data['user']['name'] ?? '',
+      //   email: data['user']['email'] ?? '',
+      //   phone: data['user']['phone'] ?? '',
+      //   image:
+      //       'https://ata-website.kampu.solutions/assets/images/users/thumb/${data['user']['image']}',
+      // );
+      // print(user);
+
+      return {'success': true, 'user': data['user']};
     } else {
       return {'success': false, 'message': 'Failed to fetch user info'};
     }
@@ -116,7 +127,7 @@ class AuthService {
   // Fetch user Shop
   Future<Map<String, dynamic>> getUserShop() async {
     final token = await getToken();
-    final url = Uri.parse('${_baseUrl}user_shop');
+    final url = Uri.parse('https://ata-website.kampu.solutions/api/user_shop');
 
     final response = await http.get(
       url,
@@ -131,11 +142,13 @@ class AuthService {
       final shop = Shop(
         id: data['id'],
         name: data['name'] ?? '',
-        description: data['description'] ?? '',
+        description: data['short_description'] ?? '',
         address: data['address'] ?? '',
         phone: data['phone'] ?? '',
-        logoUrl: '${Env.baseImageUrl}shops/logo/thumb/${data['logo']}',
-        bannerUrl: '${Env.baseImageUrl}shops/banner/thumb/${data['banner']}',
+        logoUrl:
+            'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['logo']}',
+        bannerUrl:
+            'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['banner']}',
       );
 
       return {'success': true, 'shop': shop};
@@ -146,7 +159,8 @@ class AuthService {
 
   Future<Map<String, dynamic>> getUserGarage() async {
     final token = await getToken();
-    final url = Uri.parse('${_baseUrl}user_garage');
+    final url =
+        Uri.parse('https://ata-website.kampu.solutions/api/user_garage');
 
     final response = await http.get(
       url,
@@ -163,12 +177,14 @@ class AuthService {
         id: data['id'],
         name: data['name'] ?? '',
         address: data['address'] ?? '',
-        description: data['description'] ?? '',
+        description: data['short_description'] ?? '',
         phone: data['phone'] ?? '',
         expertName: data['expert']?['name'] ?? '',
-        expertId: data['brand_id'] ?? -1,
-        logoUrl: '${Env.baseImageUrl}garages/thumb/logo/${data['logo']}',
-        bannerUrl: '${Env.baseImageUrl}garages/thumb/banner/${data['banner']}',
+        expertId: data['expert']?['id'] ?? -1,
+        logoUrl:
+            'https://ata-website.kampu.solutions/assets/images/garages/thumb/${data['logo']}',
+        bannerUrl:
+            'https://ata-website.kampu.solutions/assets/images/garages/thumb/${data['banner']}',
       );
 
       return {'success': true, 'garage': garage};

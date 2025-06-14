@@ -78,7 +78,8 @@ class _HomePageState extends State<HomePage> {
   Future<void> getSlides() async {
     try {
       // Fetch products outside of setState
-      final fetchedSlides = await SlideService.fetchSlides(position: 'HOME-16/9');
+      final fetchedSlides =
+          await SlideService.fetchSlides(position: 'HOME-16/9');
       final fetchedSlidesMiddle =
           await SlideService.fetchSlides(position: 'HOME-21/9');
       // Update the state
@@ -121,6 +122,25 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MyDrawer(),
       appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.person,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+        ),
+
         foregroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
           'ATA',

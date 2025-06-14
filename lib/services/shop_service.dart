@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ShopService {
   static Future<List<Shop>> fetchShops({int? page}) async {
-    String url = '${Env.baseApiUrl}shops';
+    String url = 'https://ata-website.kampu.solutions/api/shops';
 
     List<String> queryParams = [];
 
@@ -33,11 +33,13 @@ class ShopService {
         return Shop(
           id: item['id'],
           name: item['name'] ?? '',
-          description: item['description'] ?? '',
+          description: item['short_description'] ?? '',
           address: item['address'] ?? '',
           phone: item['phone'] ?? '',
-          logoUrl: '${Env.baseImageUrl}shops/logo/thumb/${item['logo']}',
-          bannerUrl: '${Env.baseImageUrl}shops/banner/thumb/${item['banner']}',
+          logoUrl:
+              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${item['logo']}',
+          bannerUrl:
+              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${item['banner']}',
         );
       }).toList();
     } else {
@@ -55,11 +57,13 @@ class ShopService {
     return Shop(
       id: data['id'],
       name: data['name'] ?? '',
-      description: data['description'] ?? '',
+      description: data['short_description'] ?? '',
       address: data['address'] ?? '',
       phone: data['phone'] ?? '',
-      logoUrl: 'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['logo']}',
-      bannerUrl: 'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['banner']}',
+      logoUrl:
+          'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['logo']}',
+      bannerUrl:
+          'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['banner']}',
     );
   }
 
@@ -78,7 +82,8 @@ class ShopService {
     final token = await _storage.read(key: 'auth_token');
 
     try {
-      var uri = Uri.parse('${_baseUrl}shops'); // API URL for creating a shop
+      var uri = Uri.parse(
+          'https://ata-website.kampu.solutions/api/shops'); // API URL for creating a shop
       var request = http.MultipartRequest('POST', uri);
 
       // Add the fields
@@ -115,12 +120,13 @@ class ShopService {
         final newShop = Shop(
           id: createdShop['id'],
           name: createdShop['name'] ?? '',
-          description: createdShop['description'] ?? '',
+          description: createdShop['short_description'] ?? '',
           address: createdShop['address'] ?? '',
           phone: createdShop['phone'] ?? '',
-          logoUrl: '${Env.baseImageUrl}shops/logo/thumb/${createdShop['logo']}',
+          logoUrl:
+              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${createdShop['logo']}',
           bannerUrl:
-              '${Env.baseImageUrl}shops/banner/thumb/${createdShop['banner']}',
+              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${createdShop['banner']}',
         );
         Navigator.pushReplacement(
           context,
@@ -157,7 +163,7 @@ class ShopService {
 
     try {
       var uri = Uri.parse(
-          '${_baseUrl}shops/${shop.id}'); // API URL for creating a shop
+          'https://ata-website.kampu.solutions/api/shops/${shop.id}'); // API URL for creating a shop
       var request = http.MultipartRequest('POST', uri);
 
       // Add the fields
@@ -198,12 +204,13 @@ class ShopService {
         final newShop = Shop(
           id: updatedShop['id'],
           name: updatedShop['name'] ?? '',
-          description: updatedShop['description'] ?? '',
+          description: updatedShop['short_description'] ?? '',
           address: updatedShop['address'] ?? '',
           phone: updatedShop['phone'] ?? '',
-          logoUrl: '${Env.baseImageUrl}shops/logo/thumb/${updatedShop['logo']}',
+          logoUrl:
+              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${updatedShop['logo']}',
           bannerUrl:
-              '${Env.baseImageUrl}shops/banner/thumb/${updatedShop['banner']}',
+              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${updatedShop['banner']}',
         );
         Navigator.pop(context);
         Navigator.pushReplacement(

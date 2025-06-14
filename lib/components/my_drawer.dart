@@ -1,5 +1,4 @@
 import 'package:ata_new_app/pages/auth/login_page.dart';
-import 'package:ata_new_app/pages/favorites/favorite_page.dart';
 import 'package:ata_new_app/pages/garages/garage_admin/admin_garage_detail_page.dart';
 import 'package:ata_new_app/pages/garages/garage_admin/garage_create_page.dart';
 import 'package:ata_new_app/pages/shops/shop_admin/admin_shop_page.dart';
@@ -24,6 +23,7 @@ class MyDrawer extends StatelessWidget {
     try {
       final userInfo = await _authService.getUserInfo();
       final userShop = await _authService.getUserShop();
+      print(userShop);
       final userGarage = await _authService.getUserGarage();
       return {
         'userInfo': userInfo,
@@ -58,11 +58,13 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pop(context);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const LoginPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
                     );
                   },
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 20),
                     backgroundColor: Theme.of(context)
                         .primaryColor
                         .withOpacity(0.1), // Subtle background
@@ -123,10 +125,13 @@ class MyDrawer extends StatelessWidget {
                 accountName: Text(user['name'] ?? 'Unknown User'),
                 accountEmail: Text(user['email'] ?? 'No email'),
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: user['avatar'] != null
-                      ? NetworkImage(user['avatar'])
+                  backgroundImage: (user['image'] != null &&
+                          user['image'].toString().isNotEmpty)
+                      ? NetworkImage(
+                          'https://ata-website.kampu.solutions/assets/images/users/thumb/${user['image']}')
                       : null,
-                  child: user['avatar'] == null
+                  child: (user['image'] == null ||
+                          user['image'].toString().isEmpty)
                       ? const Icon(Icons.account_circle, size: 42.0)
                       : null,
                 ),
@@ -196,7 +201,8 @@ class MyDrawer extends StatelessWidget {
             if (user != null) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const GarageCreatePage()),
+                MaterialPageRoute(
+                    builder: (context) => const GarageCreatePage()),
               );
             } else {
               Navigator.push(

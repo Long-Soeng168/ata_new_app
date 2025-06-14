@@ -85,7 +85,8 @@ class ProductService {
           name: item['name'] ?? '',
           shopId: item['shop_id'] ?? 0,
           price: item['price']?.toString() ?? '',
-          imageUrl: 'https://ata-website.kampu.solutions/assets/images/items/thumb/${item['image']}',
+          imageUrl:
+              'https://ata-website.kampu.solutions/assets/images/items/thumb/${item['image']}',
           isInstock: item['is_instock'] == 0 ? false : true,
         );
       }).toList();
@@ -113,11 +114,13 @@ class ProductService {
       formatCreatedAt = DateFormat('yyyy-MMM-dd').format(parsedDate);
     }
 
+    // print(data);
     return Product(
       id: data['id'] ?? 0,
       name: data['name'] ?? '',
       price: data['price']?.toString() ?? '',
-      imageUrl: 'https://ata-website.kampu.solutions/assets/images/items/thumb/${data['image']}',
+      imageUrl:
+          'https://ata-website.kampu.solutions/assets/images/items/thumb/${data['image']}',
       imagesUrls: imagesUrls,
       isInstock: data['is_instock'] == 0 ? false : true,
       description: data['description'] ?? '',
@@ -152,8 +155,8 @@ class ProductService {
     final token = await _storage.read(key: 'auth_token');
 
     try {
-      var uri =
-          Uri.parse('${_baseUrl}products'); // API URL for creating a product
+      var uri = Uri.parse(
+          'https://ata-website.kampu.solutions/api/products'); // API URL for creating a product
       var request = http.MultipartRequest('POST', uri);
 
       // Add headers
@@ -222,8 +225,9 @@ class ProductService {
 
     try {
       var uri = Uri.parse(
-          '${_baseUrl}products/${product.id}'); // API URL for creating a product
+          'https://ata-website.kampu.solutions/api/update_products/${product.id}'); // API URL for creating a product
       var request = http.MultipartRequest('POST', uri);
+      print(uri);
 
       // Add headers
       request.headers.addAll({
@@ -285,7 +289,7 @@ class ProductService {
 
     try {
       var uri = Uri.parse(
-          '${_baseUrl}products/$productId/delete'); // API URL for deleting a product
+          'https://ata-website.kampu.solutions/api/products/$productId/delete'); // API URL for deleting a product
       var request = http.Request('GET', uri);
 
       // Add headers

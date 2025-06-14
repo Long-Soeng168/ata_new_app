@@ -39,7 +39,7 @@ class CourseService {
       price: data['price']?.toString() ?? '',
       imageUrl:
           'https://ata-website.kampu.solutions/assets/images/courses/thumb/${data['image']}',
-      description: data['description'] ?? '',
+      description: data['short_description'] ?? '',
       start: data['start'] ?? '',
       end: data['end'] ?? '',
     );

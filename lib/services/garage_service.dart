@@ -45,7 +45,7 @@ class GarageService {
           name: item['name'] ?? '',
           phone: item['phone'] ?? '',
           address: item['address'] ?? '',
-          description: item['description'] ?? '',
+          description: item['short_description'] ?? '',
           expertName: item['expert']?['name'] ?? '',
           expertId: item['expert']?['id'] ?? -1,
           logoUrl:
@@ -75,8 +75,8 @@ class GarageService {
     final token = await _storage.read(key: 'auth_token');
 
     try {
-      var uri =
-          Uri.parse('${_baseUrl}garages'); // API URL for creating a garage
+      var uri = Uri.parse(
+          'https://ata-website.kampu.solutions/api/garages'); // API URL for creating a garage
       var request = http.MultipartRequest('POST', uri);
 
       // Add the fields
@@ -114,15 +114,15 @@ class GarageService {
         final newGarage = Garage(
           id: createdGarage['id'],
           name: createdGarage['name'] ?? '',
-          description: createdGarage['description'] ?? '',
+          description: createdGarage['short_description'] ?? '',
           address: createdGarage['address'] ?? '',
           phone: createdGarage['phone'] ?? '',
           expertId: createdGarage['expert']?['id'] ?? -1,
           expertName: createdGarage['expert']?['name'] ?? '',
           logoUrl:
-              '${Env.baseImageUrl}garages/thumb/logo/${createdGarage['logo']}',
+              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${createdGarage['logo']}',
           bannerUrl:
-              '${Env.baseImageUrl}garages/thumb/banner/${createdGarage['banner']}',
+              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${createdGarage['banner']}',
         );
         Navigator.pushReplacement(
           context,
@@ -161,7 +161,7 @@ class GarageService {
 
     try {
       var uri = Uri.parse(
-          '${_baseUrl}garages/$garageId'); // API URL for updating a garage
+          'https://ata-website.kampu.solutions/api/garages/$garageId'); // API URL for updating a garage
       var request = http.MultipartRequest(
           'POST', uri); // Change to PUT request for updating
 
@@ -206,15 +206,15 @@ class GarageService {
         final newGarage = Garage(
           id: updatedGarage['id'],
           name: updatedGarage['name'] ?? '',
-          description: updatedGarage['description'] ?? '',
+          description: updatedGarage['short_description'] ?? '',
           address: updatedGarage['address'] ?? '',
           phone: updatedGarage['phone'] ?? '',
           expertId: brandId,
           expertName: updatedGarage['expert']?['name'] ?? '',
           logoUrl:
-              '${Env.baseImageUrl}garages/thumb/logo/${updatedGarage['logo']}',
+              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${updatedGarage['logo']}',
           bannerUrl:
-              '${Env.baseImageUrl}garages/thumb/banner/${updatedGarage['banner']}',
+              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${updatedGarage['banner']}',
         );
         Navigator.pop(context);
         Navigator.pushReplacement(
@@ -248,7 +248,8 @@ class GarageService {
     final token = await _storage.read(key: 'auth_token');
 
     try {
-      var uri = Uri.parse('${_baseUrl}garages_posts');
+      var uri =
+          Uri.parse('https://ata-website.kampu.solutions/api/garages_posts');
       var request = http.MultipartRequest('POST', uri);
 
       request.headers.addAll({
@@ -307,7 +308,8 @@ class GarageService {
 
     try {
       // API endpoint for updating a post
-      var uri = Uri.parse('${_baseUrl}garages_posts/$postId');
+      var uri = Uri.parse(
+          'https://ata-website.kampu.solutions/api/garages_posts/$postId');
       var request = http.MultipartRequest('POST', uri); // Change to PUT request
 
       // Add headers
@@ -370,7 +372,8 @@ class GarageService {
 
     try {
       // API endpoint for deleting a post
-      var uri = Uri.parse('${_baseUrl}garages_posts/$postId/delete');
+      var uri = Uri.parse(
+          'https://ata-website.kampu.solutions/api/garages_posts/$postId/delete');
       print(uri);
       var request = http.Request('get', uri); // Use DELETE request
 
@@ -428,10 +431,10 @@ class GarageService {
       return data.map((item) {
         return GaragePost(
           id: item['id'],
-          name: item['title'] ?? '',
+          name: item['short_description'] ?? '',
           imageUrl:
               'https://ata-website.kampu.solutions/assets/images/garage_posts/thumb/${item['images'][0]['image']}',
-          description: item['description'] ?? '',
+          description: item['long_description'] ?? '',
         );
       }).toList();
     } else {

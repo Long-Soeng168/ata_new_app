@@ -32,7 +32,8 @@ class VideoService {
           isFree: item['is_free'] == 0 ? false : true,
           imageUrl:
               'https://ata-website.kampu.solutions/assets/images/videos/thumb/${item['image']}',
-          videoUrl: 'https://ata-website.kampu.solutions/assets/files/videos/${item['video_name']}',
+          videoUrl:
+              'https://ata-website.kampu.solutions/assets/files/videos/${item['video_name']}',
         );
       }).toList();
     } else {
@@ -50,12 +51,13 @@ class VideoService {
     return Video(
       id: data['id'],
       name: data['title'],
-      description: data['description'] ?? '',
+      description: data['short_description'] ?? '',
       viewsCount: data['views_count']?.toString() ?? '0',
       isFree: data['is_free'] == 0 ? false : true,
       imageUrl:
           'https://ata-website.kampu.solutions/assets/images/videos/thumb/${data['image']}',
-      videoUrl: 'https://ata-website.kampu.solutions/assets/files/videos/${data['video_name']}',
+      videoUrl:
+          'https://ata-website.kampu.solutions/assets/files/videos/${data['video_name']}',
     );
   }
 
@@ -79,7 +81,7 @@ class VideoService {
           name: item['name'],
           imageUrl:
               'https://ata-website.kampu.solutions/assets/images/video_play_lists/thumb/${item['image']}',
-          description: item['description'] ?? '',
+          description: item['short_description'] ?? '',
           price: item['price']?.toString() ?? '',
           videosCount: item['videos_count']?.toString() ?? '',
         );

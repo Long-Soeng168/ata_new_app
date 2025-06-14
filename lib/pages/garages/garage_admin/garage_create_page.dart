@@ -172,7 +172,7 @@ class _GarageCreatePageState extends State<GarageCreatePage> {
                 DropdownButtonFormField<int>(
                   value: brandId,
                   decoration: InputDecoration(
-                    labelText: "Select Brand",
+                    labelText: "Select Brand Expert",
                     border: const OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
