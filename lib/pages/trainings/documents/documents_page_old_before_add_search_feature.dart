@@ -20,9 +20,6 @@ class _DocumentsPageState extends State<DocumentsPage> {
   bool isLoadingDocuments = true;
   bool isLoadingDocumentsError = false;
 
-  final TextEditingController _searchController = TextEditingController();
-  String searchQuery = '';
-
   @override
   void initState() {
     super.initState();
@@ -31,6 +28,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
 
   Future<void> getDocuments() async {
     try {
+      // Fetch publications outside of setState
       final Document fetchedPublications;
       if (widget.path != '') {
         fetchedPublications =
@@ -38,54 +36,34 @@ class _DocumentsPageState extends State<DocumentsPage> {
       } else {
         fetchedPublications = await DocumentService.fetchDocuments();
       }
+      // print(fetchedPublications);
+      // Update the state
       setState(() {
         documentObjects = fetchedPublications;
         isLoadingDocuments = false;
       });
     } catch (error) {
+      // Handle any errors that occur during the fetch
       setState(() {
         isLoadingDocuments = false;
         isLoadingDocumentsError = true;
       });
+      // You can also show an error message to the user
       print('Failed to load Documents: $error');
     }
-  }
-
-  List<String> get filteredFolders {
-    if (searchQuery.isEmpty) return documentObjects.folders;
-    return documentObjects.folders
-        .where((item) => item
-            .split('/')
-            .last
-            .toLowerCase()
-            .contains(searchQuery.toLowerCase()))
-        .toList();
-  }
-
-  List<String> get filteredFiles {
-    if (searchQuery.isEmpty) return documentObjects.files;
-    return documentObjects.files
-        .where((item) => item
-            .split('/')
-            .last
-            .toLowerCase()
-            .contains(searchQuery.toLowerCase()))
-        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 8,
+      length: 8, // Updated to match the number of tabs
       child: Scaffold(
         appBar: widget.isShowAppBar
             ? AppBar(
                 foregroundColor: Theme.of(context).colorScheme.primary,
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 title: Text(
-                  widget.path.isNotEmpty
-                      ? widget.path.split('~').last
-                      : 'Documents',
+                  widget.path.isNotEmpty ? widget.path.split('~').last : 'Documents',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -98,43 +76,6 @@ class _DocumentsPageState extends State<DocumentsPage> {
             padding: const EdgeInsets.only(top: 4, bottom: 20),
             child: Column(
               children: [
-                // Search input
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
-                  child: TextFormField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      labelText: 'Search Folders or Files',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: searchQuery.isNotEmpty
-                          ? IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {
-                                _searchController.clear();
-                                setState(() {
-                                  searchQuery = '';
-                                });
-                              },
-                            )
-                          : null,
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        searchQuery = value;
-                      });
-                    },
-                  ),
-                ),
-
                 if (isLoadingDocuments)
                   const SizedBox(
                     height: 200,
@@ -142,14 +83,13 @@ class _DocumentsPageState extends State<DocumentsPage> {
                       child: CircularProgressIndicator(),
                     ),
                   ),
-
                 if (!isLoadingDocuments)
                   Visibility(
-                    visible: filteredFolders.isNotEmpty,
+                    visible: documentObjects.folders.isNotEmpty,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: Column(
-                        children: filteredFolders.map((item) {
+                        children: documentObjects.folders.map((item) {
                           return FolderCard(
                             isFolder: true,
                             name: item.split('/').last,
@@ -162,19 +102,19 @@ class _DocumentsPageState extends State<DocumentsPage> {
                               Navigator.push(context, route);
                             },
                           );
-                        }).toList(),
+                        }).toList(), // Convert the Iterable to a List of Widgets
                       ),
                     ),
                   ),
-
                 if (!isLoadingDocuments)
                   Visibility(
-                    visible: filteredFiles.isNotEmpty,
+                    visible: documentObjects.files.isNotEmpty,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: Column(
-                        children: filteredFiles
-                            .where((item) => item.endsWith('.pdf'))
+                        children: documentObjects.files
+                            .where((item) => item.endsWith(
+                                '.pdf')) // Filter to include only PDF files
                             .map((item) {
                           return FolderCard(
                             isFolder: false,
@@ -188,10 +128,10 @@ class _DocumentsPageState extends State<DocumentsPage> {
                               Navigator.push(context, route);
                             },
                           );
-                        }).toList(),
+                        }).toList(), // Convert the Iterable to a List of Widgets
                       ),
                     ),
-                  ),
+                  )
               ],
             ),
           ),
