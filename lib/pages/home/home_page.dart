@@ -10,6 +10,7 @@ import 'package:ata_new_app/models/product.dart';
 import 'package:ata_new_app/models/video_playlist.dart';
 import 'package:ata_new_app/pages/dtc/dtc_page.dart';
 import 'package:ata_new_app/pages/garages/garages_page.dart';
+import 'package:ata_new_app/pages/help_and_about/help_and_about_page.dart';
 import 'package:ata_new_app/pages/shops/product_detail_page.dart';
 import 'package:ata_new_app/pages/shops/products_list_page.dart';
 import 'package:ata_new_app/pages/shops/shops_page.dart';
@@ -122,6 +123,22 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       drawer: MyDrawer(),
       appBar: AppBar(
+        actions: [
+          GestureDetector(
+            onTap: () {
+              final route =
+                  MaterialPageRoute(builder: (context) => HelpAndAboutPage());
+              Navigator.push(context, route);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 4.0),
+              child: const Icon(
+                Icons.info_outline,
+                size: 32,
+              ),
+            ),
+          )
+        ],
         leading: Builder(
           builder: (context) => IconButton(
             onPressed: () {
@@ -143,7 +160,7 @@ class _HomePageState extends State<HomePage> {
 
         foregroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
-          'ATA',
+          'ATech-Auto',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
