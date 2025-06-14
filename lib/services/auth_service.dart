@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'package:ata_new_app/config/env.dart';
 import 'package:ata_new_app/models/garage.dart';
 import 'package:ata_new_app/models/shop.dart';
-import 'package:ata_new_app/models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http_parser/http_parser.dart';
 
 class AuthService {
   final String _baseUrl = Env.baseApiUrl; // Replace with your Laravel API URL
@@ -121,6 +123,119 @@ class AuthService {
       return {'success': true, 'user': data['user']};
     } else {
       return {'success': false, 'message': 'Failed to fetch user info'};
+    }
+  }
+
+  Future<Map<String, dynamic>> updateUser({
+    required BuildContext context,
+    required int userId,
+    required String name,
+    required String email,
+    required String phone,
+    String? currentPassword,
+    String? newPassword,
+    String? confirmPassword,
+    XFile? imageFile,
+  }) async {
+    final token = await getToken();
+
+    try {
+      var uri = Uri.parse(
+          'https://ata-website.kampu.solutions/api/update_users/$userId');
+      var request = http.MultipartRequest('POST', uri);
+
+      // Headers
+      request.headers.addAll({
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $token',
+      });
+
+      // Add required fields
+      request.fields['name'] = name;
+      request.fields['email'] = email;
+      request.fields['phone'] = phone;
+
+      // Password fields if provided
+      if (currentPassword != null && currentPassword.isNotEmpty) {
+        request.fields['current_password'] = currentPassword;
+      }
+      if (newPassword != null && newPassword.isNotEmpty) {
+        request.fields['password'] = newPassword;
+        request.fields['password_confirmation'] = confirmPassword ?? '';
+      }
+
+      // Image upload if provided
+      if (imageFile != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'image',
+          imageFile.path,
+          contentType: MediaType('image', 'jpeg'),
+        ));
+      }
+
+      // Send the request
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseData = await response.stream.bytesToString();
+        final data = jsonDecode(responseData);
+
+        return {'success': true, 'data': data};
+      } else {
+        final responseData = await response.stream.bytesToString();
+        return {
+          'success': false,
+          'message': 'Failed to update user: $responseData'
+        };
+      }
+    } catch (e) {
+      print(e);
+      return {
+        'success': false,
+        'message': 'Error occurred while updating user'
+      };
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteAccount({
+    required int userId,
+    required String password,
+  }) async {
+    final token = await getToken();
+
+    try {
+      var uri = Uri.parse(
+          'https://ata-website.kampu.solutions/api/delete_users/$userId');
+
+      var request = http.MultipartRequest('POST', uri);
+
+      request.headers.addAll({
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $token',
+      });
+
+      request.fields['password'] = password;
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseData = await response.stream.bytesToString();
+        final data = jsonDecode(responseData);
+        return {'success': true, 'message': data['message']};
+      } else {
+        final responseData = await response.stream.bytesToString();
+        final data = jsonDecode(responseData);
+        return {
+          'success': false,
+          'message': data['message'] ?? 'Failed to delete account',
+        };
+      }
+    } catch (e) {
+      print(e);
+      return {
+        'success': false,
+        'message': 'An error occurred while deleting the account',
+      };
     }
   }
 

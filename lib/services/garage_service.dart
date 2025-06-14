@@ -39,13 +39,14 @@ class GarageService {
     if (response.statusCode == 200) {
       Map<String, dynamic> result = jsonDecode(response.body);
       List<dynamic> data = result['data'];
+      print(data);
       return data.map((item) {
         return Garage(
           id: item['id'],
           name: item['name'] ?? '',
           phone: item['phone'] ?? '',
           address: item['address'] ?? '',
-          description: item['short_description'] ?? '',
+          description: item['description'] ?? '',
           expertName: item['expert']?['name'] ?? '',
           expertId: item['expert']?['id'] ?? -1,
           logoUrl:

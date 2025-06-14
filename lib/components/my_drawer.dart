@@ -1,3 +1,4 @@
+import 'package:ata_new_app/pages/accounts/account_settings_page.dart';
 import 'package:ata_new_app/pages/auth/login_page.dart';
 import 'package:ata_new_app/pages/garages/garage_admin/admin_garage_detail_page.dart';
 import 'package:ata_new_app/pages/garages/garage_admin/garage_create_page.dart';
@@ -151,6 +152,24 @@ class MyDrawer extends StatelessWidget {
     Map<String, dynamic>? user,
   ) {
     return [
+      ListTile(
+        title: Text('Account Settings'),
+        leading: Icon(
+          Icons.account_circle_outlined,
+          size: 28,
+        ),
+        onTap: () {
+          Navigator.pop(context);
+          if (user != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AccountSettingsPage(user: user),
+              ),
+            );
+          }
+        },
+      ),
       ListTile(
         title: Text(userShop == null || !(userShop['success'] ?? false)
             ? 'Create Shop'
