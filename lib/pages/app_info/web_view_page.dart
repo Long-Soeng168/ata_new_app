@@ -59,6 +59,7 @@ class _WebViewPageState extends State<WebViewPage> {
     super.initState();
 
     controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted) // 👈 Add this here
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (url) {

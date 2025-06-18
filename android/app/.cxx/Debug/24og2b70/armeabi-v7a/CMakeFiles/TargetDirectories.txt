@@ -1,0 +1,2 @@
+/Users/longsoeng/Desktop/Projects/Flutter/ata_new_app/android/app/.cxx/Debug/24og2b70/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/longsoeng/Desktop/Projects/Flutter/ata_new_app/android/app/.cxx/Debug/24og2b70/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,2 @@
+/Users/longsoeng/Desktop/Projects/Flutter/ata_new_app/android/app/.cxx/RelWithDebInfo/4e4975d1/x86_64/CMakeFiles/edit_cache.dir
+/Users/longsoeng/Desktop/Projects/Flutter/ata_new_app/android/app/.cxx/RelWithDebInfo/4e4975d1/x86_64/CMakeFiles/rebuild_cache.dir
