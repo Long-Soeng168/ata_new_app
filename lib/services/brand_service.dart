@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class BrandService {
   static Future<List<Brand>> fetchBrands() async {
-    const url = 'https://ata-website.kampu.solutions/api/brands';
+    const url = 'https://atech-auto.com/api/brands';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -17,7 +17,7 @@ class BrandService {
           name: item['name'] ?? '',
           nameKh: item['name_kh'] ?? '',
           imageUrl:
-              'https://ata-website.kampu.solutions/assets/images/item_brands/${item['image']}',
+              'https://atech-auto.com/assets/images/item_brands/${item['image']}',
         );
       }).toList();
 

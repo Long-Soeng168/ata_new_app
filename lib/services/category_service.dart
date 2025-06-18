@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class CategoryService {
   static Future<List<Category>> fetchCategories() async {
-    const url = 'https://ata-website.kampu.solutions/api/categories?';
+    const url = 'https://atech-auto.com/api/categories?';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -17,7 +17,7 @@ class CategoryService {
           name: item['name'] ?? '',
           nameKh: item['name_kh'] ?? '',
           imageUrl:
-              'https://ata-website.kampu.solutions/assets/images/item_categories/${item['image']}',
+              'https://atech-auto.com/assets/images/item_categories/${item['image']}',
         );
       }).toList();
 

@@ -129,7 +129,7 @@ class MyDrawer extends StatelessWidget {
                   backgroundImage: (user['image'] != null &&
                           user['image'].toString().isNotEmpty)
                       ? NetworkImage(
-                          'https://ata-website.kampu.solutions/assets/images/users/thumb/${user['image']}')
+                          'https://atech-auto.com/assets/images/users/thumb/${user['image']}')
                       : null,
                   child: (user['image'] == null ||
                           user['image'].toString().isEmpty)

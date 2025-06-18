@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class DocumentService {
   static Future<Document> fetchDocuments({String path = 'Documents'}) async {
-    final url = 'https://ata-website.kampu.solutions/api/file-explorer/folder/$path';
+    final url = 'https://atech-auto.com/api/file-explorer/folder/$path';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 

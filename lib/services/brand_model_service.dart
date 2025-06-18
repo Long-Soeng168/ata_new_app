@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class BrandModelService {
   static Future<List<BrandModel>> fetchBrandModels({int? brandId}) async {
-    String url = 'https://ata-website.kampu.solutions/api/models';
+    String url = 'https://atech-auto.com/api/models';
 
     List<String> queryParams = [];
     if (brandId != null) {
@@ -28,7 +28,7 @@ class BrandModelService {
           name: item['name'] ?? '',
           nameKh: item['name_kh'] ?? '',
           imageUrl:
-              'https://ata-website.kampu.solutions/assets/images/item_models/${item['image']}',
+              'https://atech-auto.com/assets/images/item_models/${item['image']}',
         );
       }).toList();
 

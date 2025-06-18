@@ -3,7 +3,7 @@ class Env {
   static const String baseImageUrl = 'https://bunjun.brolong.pro/assets/images/';
   static const String baseVideoUrl = 'https://bunjun.brolong.pro/assets/videos/original/';
   static const String baseVideoStreamUrl = 'https://bunjun.brolong.pro/show_video_file/';
-  static const String basePdfUrl = 'https://ata-website.kampu.solutions/show_pdf_file/'; 
+  static const String basePdfUrl = 'https://atech-auto.com/show_pdf_file/'; 
 
-  static const String forgotPasswordUrl = 'https://ata-website.kampu.solutions/forgot-password';
+  static const String forgotPasswordUrl = 'https://atech-auto.com/forgot-password';
 }

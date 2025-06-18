@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 class GarageService {
   static Future<List<Garage>> fetchGarages(
       {int? expertId, int? page, String? search}) async {
-    String url = 'https://ata-website.kampu.solutions/api/garages';
+    String url = 'https://atech-auto.com/api/garages';
 
     List<String> queryParams = [];
 
@@ -50,9 +50,9 @@ class GarageService {
           expertName: item['expert']?['name'] ?? '',
           expertId: item['expert']?['id'] ?? -1,
           logoUrl:
-              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${item['logo']}',
+              'https://atech-auto.com/assets/images/garages/thumb/${item['logo']}',
           bannerUrl:
-              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${item['banner']}',
+              'https://atech-auto.com/assets/images/garages/thumb/${item['banner']}',
         );
       }).toList();
     } else {
@@ -77,7 +77,7 @@ class GarageService {
 
     try {
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/garages'); // API URL for creating a garage
+          'https://atech-auto.com/api/garages'); // API URL for creating a garage
       var request = http.MultipartRequest('POST', uri);
 
       // Add the fields
@@ -121,9 +121,9 @@ class GarageService {
           expertId: createdGarage['expert']?['id'] ?? -1,
           expertName: createdGarage['expert']?['name'] ?? '',
           logoUrl:
-              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${createdGarage['logo']}',
+              'https://atech-auto.com/assets/images/garages/thumb/${createdGarage['logo']}',
           bannerUrl:
-              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${createdGarage['banner']}',
+              'https://atech-auto.com/assets/images/garages/thumb/${createdGarage['banner']}',
         );
         Navigator.pushReplacement(
           context,
@@ -162,7 +162,7 @@ class GarageService {
 
     try {
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/garages/$garageId'); // API URL for updating a garage
+          'https://atech-auto.com/api/garages/$garageId'); // API URL for updating a garage
       var request = http.MultipartRequest(
           'POST', uri); // Change to PUT request for updating
 
@@ -213,9 +213,9 @@ class GarageService {
           expertId: brandId,
           expertName: updatedGarage['expert']?['name'] ?? '',
           logoUrl:
-              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${updatedGarage['logo']}',
+              'https://atech-auto.com/assets/images/garages/thumb/${updatedGarage['logo']}',
           bannerUrl:
-              'https://ata-website.kampu.solutions/assets/images/garages/thumb/${updatedGarage['banner']}',
+              'https://atech-auto.com/assets/images/garages/thumb/${updatedGarage['banner']}',
         );
         Navigator.pop(context);
         Navigator.pushReplacement(
@@ -250,7 +250,7 @@ class GarageService {
 
     try {
       var uri =
-          Uri.parse('https://ata-website.kampu.solutions/api/garages_posts');
+          Uri.parse('https://atech-auto.com/api/garages_posts');
       var request = http.MultipartRequest('POST', uri);
 
       request.headers.addAll({
@@ -310,7 +310,7 @@ class GarageService {
     try {
       // API endpoint for updating a post
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/garages_posts/$postId');
+          'https://atech-auto.com/api/garages_posts/$postId');
       var request = http.MultipartRequest('POST', uri); // Change to PUT request
 
       // Add headers
@@ -374,7 +374,7 @@ class GarageService {
     try {
       // API endpoint for deleting a post
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/garages_posts/$postId/delete');
+          'https://atech-auto.com/api/garages_posts/$postId/delete');
       print(uri);
       var request = http.Request('get', uri); // Use DELETE request
 
@@ -408,7 +408,7 @@ class GarageService {
 
   static Future<List<GaragePost>> fetchGaragesPosts(
       {int? garageId, int? page}) async {
-    String url = 'https://ata-website.kampu.solutions/api/garages_posts';
+    String url = 'https://atech-auto.com/api/garages_posts';
 
     List<String> queryParams = [];
 
@@ -434,7 +434,7 @@ class GarageService {
           id: item['id'],
           name: item['short_description'] ?? '',
           imageUrl:
-              'https://ata-website.kampu.solutions/assets/images/garage_posts/thumb/${item['images'][0]['image']}',
+              'https://atech-auto.com/assets/images/garage_posts/thumb/${item['images'][0]['image']}',
           description: item['long_description'] ?? '',
         );
       }).toList();

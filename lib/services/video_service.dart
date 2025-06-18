@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 class VideoService {
   static Future<List<Video>> fetchVideos({int? playlistId}) async {
-    String url = 'https://ata-website.kampu.solutions/api/videos';
+    String url = 'https://atech-auto.com/api/videos';
     if (playlistId != null) {
       url += '?playlistId=$playlistId';
     }
@@ -31,9 +31,9 @@ class VideoService {
           viewsCount: item['views_count']?.toString() ?? '0',
           isFree: item['is_free'] == 0 ? false : true,
           imageUrl:
-              'https://ata-website.kampu.solutions/assets/images/videos/thumb/${item['image']}',
+              'https://atech-auto.com/assets/images/videos/thumb/${item['image']}',
           videoUrl:
-              'https://ata-website.kampu.solutions/assets/files/videos/${item['video_name']}',
+              'https://atech-auto.com/assets/files/videos/${item['video_name']}',
         );
       }).toList();
     } else {
@@ -42,7 +42,7 @@ class VideoService {
   }
 
   static Future<Video> fetchVideoById({required int id}) async {
-    String url = 'https://ata-website.kampu.solutions/api/videos/$id';
+    String url = 'https://atech-auto.com/api/videos/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -55,15 +55,15 @@ class VideoService {
       viewsCount: data['views_count']?.toString() ?? '0',
       isFree: data['is_free'] == 0 ? false : true,
       imageUrl:
-          'https://ata-website.kampu.solutions/assets/images/videos/thumb/${data['image']}',
+          'https://atech-auto.com/assets/images/videos/thumb/${data['image']}',
       videoUrl:
-          'https://ata-website.kampu.solutions/assets/files/videos/${data['video_name']}',
+          'https://atech-auto.com/assets/files/videos/${data['video_name']}',
     );
   }
 
   static Future<List<VideoPlaylist>> fetchVideoPlaylists(
       {String? search}) async {
-    String url = 'https://ata-website.kampu.solutions/api/videos_playlists';
+    String url = 'https://atech-auto.com/api/videos_playlists';
 
     if (search != null) {
       url += '?search=$search';
@@ -80,7 +80,7 @@ class VideoService {
           id: item['id'],
           name: item['name'],
           imageUrl:
-              'https://ata-website.kampu.solutions/assets/images/video_play_lists/thumb/${item['image']}',
+              'https://atech-auto.com/assets/images/video_play_lists/thumb/${item['image']}',
           description: item['description'] ?? '',
           price: item['price']?.toString() ?? '',
           videosCount: item['videos_count']?.toString() ?? '',

@@ -17,7 +17,7 @@ class Menu extends StatelessWidget {
       onSelected: (value) async {
         switch (value) {
           case _MenuOptions.openWebsite:
-            final url = Uri.parse('https://ata-website.kampu.solutions');
+            final url = Uri.parse('https://atech-auto.com');
             if (await canLaunchUrl(url)) {
               await launchUrl(url, mode: LaunchMode.externalApplication);
             } else {

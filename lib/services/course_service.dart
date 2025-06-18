@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class CourseService {
   static Future<List<Course>> fetchCourses({int page = 1}) async {
     // final url = '${Env.baseApiUrl}courses?page=$page';
-    final url = 'https://ata-website.kampu.solutions/api/courses?page=$page';
+    final url = 'https://atech-auto.com/api/courses?page=$page';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -18,7 +18,7 @@ class CourseService {
           id: item['id'],
           name: item['title'] ?? '',
           imageUrl:
-              'https://ata-website.kampu.solutions/assets/images/courses/thumb/${item['image']}',
+              'https://atech-auto.com/assets/images/courses/thumb/${item['image']}',
         );
       }).toList();
     } else {
@@ -27,7 +27,7 @@ class CourseService {
   }
 
   static Future<Course> fetchCourseById({required int id}) async {
-    String url = 'https://ata-website.kampu.solutions/api/courses/$id';
+    String url = 'https://atech-auto.com/api/courses/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -38,7 +38,7 @@ class CourseService {
       name: data['title'] ?? '',
       price: data['price']?.toString() ?? '',
       imageUrl:
-          'https://ata-website.kampu.solutions/assets/images/courses/thumb/${data['image']}',
+          'https://atech-auto.com/assets/images/courses/thumb/${data['image']}',
       description: data['description'] ?? '',
       start: data['start'] ?? '',
       end: data['end'] ?? '',

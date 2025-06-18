@@ -19,7 +19,7 @@ class ProductService {
       int? brandModelId,
       int? page,
       String? search}) async {
-    String url = 'https://ata-website.kampu.solutions/api/products';
+    String url = 'https://atech-auto.com/api/products';
 
     List<String> queryParams = [];
 
@@ -62,7 +62,7 @@ class ProductService {
           shopId: item['shop_id'] ?? 0,
           price: item['price']?.toString() ?? '',
           imageUrl:
-              'https://ata-website.kampu.solutions/assets/images/items/thumb/${item['image']}',
+              'https://atech-auto.com/assets/images/items/thumb/${item['image']}',
           isInstock: item['is_instock'] == 0 ? false : true,
         );
       }).toList();
@@ -72,7 +72,7 @@ class ProductService {
   }
 
   static Future<List<Product>> fetchRelatedProducts({required int id}) async {
-    String url = 'https://ata-website.kampu.solutions/api/related_products/$id';
+    String url = 'https://atech-auto.com/api/related_products/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -86,7 +86,7 @@ class ProductService {
           shopId: item['shop_id'] ?? 0,
           price: item['price']?.toString() ?? '',
           imageUrl:
-              'https://ata-website.kampu.solutions/assets/images/items/thumb/${item['image']}',
+              'https://atech-auto.com/assets/images/items/thumb/${item['image']}',
           isInstock: item['is_instock'] == 0 ? false : true,
         );
       }).toList();
@@ -96,7 +96,7 @@ class ProductService {
   }
 
   static Future<Product> fetchProductById({required int id}) async {
-    String url = 'https://ata-website.kampu.solutions/api/products/$id';
+    String url = 'https://atech-auto.com/api/products/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -104,7 +104,7 @@ class ProductService {
 
     List<dynamic> imagesObjects = data['images'];
     List<String> imagesUrls = imagesObjects.map((item) {
-      return 'https://ata-website.kampu.solutions/assets/images/items/thumb/${item['image']}';
+      return 'https://atech-auto.com/assets/images/items/thumb/${item['image']}';
     }).toList();
 
     String formatCreatedAt = '';
@@ -120,7 +120,7 @@ class ProductService {
       name: data['name'] ?? '',
       price: data['price']?.toString() ?? '',
       imageUrl:
-          'https://ata-website.kampu.solutions/assets/images/items/thumb/${data['image']}',
+          'https://atech-auto.com/assets/images/items/thumb/${data['image']}',
       imagesUrls: imagesUrls,
       isInstock: data['is_instock'] == 0 ? false : true,
       description: data['description'] ?? '',
@@ -156,7 +156,7 @@ class ProductService {
 
     try {
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/products'); // API URL for creating a product
+          'https://atech-auto.com/api/products'); // API URL for creating a product
       var request = http.MultipartRequest('POST', uri);
 
       // Add headers
@@ -225,7 +225,7 @@ class ProductService {
 
     try {
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/update_products/${product.id}'); // API URL for creating a product
+          'https://atech-auto.com/api/update_products/${product.id}'); // API URL for creating a product
       var request = http.MultipartRequest('POST', uri);
       print(uri);
 
@@ -289,7 +289,7 @@ class ProductService {
 
     try {
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/products/$productId/delete'); // API URL for deleting a product
+          'https://atech-auto.com/api/products/$productId/delete'); // API URL for deleting a product
       var request = http.Request('GET', uri);
 
       // Add headers

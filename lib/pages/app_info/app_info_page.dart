@@ -16,7 +16,7 @@ class AppInfoPage extends StatelessWidget {
           final route = MaterialPageRoute(
               builder: (context) => WebViewPage(
                     title: 'About Us',
-                    url: 'https://ata-website.kampu.solutions/about-us-webview',
+                    url: 'https://atech-auto.com/about-us-webview',
                   ));
           Navigator.push(context, route);
         },
@@ -30,7 +30,7 @@ class AppInfoPage extends StatelessWidget {
               builder: (context) => WebViewPage(
                     title: 'Contact Us',
                     url:
-                        'https://ata-website.kampu.solutions/contact-us-webview',
+                        'https://atech-auto.com/contact-us-webview',
                   ));
           Navigator.push(context, route);
         },
@@ -43,7 +43,7 @@ class AppInfoPage extends StatelessWidget {
           final route = MaterialPageRoute(
               builder: (context) => WebViewPage(
                     title: 'Privacy Policy',
-                    url: 'https://ata-website.kampu.solutions/privacy-webview',
+                    url: 'https://atech-auto.com/privacy-webview',
                   ));
           Navigator.push(context, route);
         },
@@ -53,7 +53,7 @@ class AppInfoPage extends StatelessWidget {
         icon: Icons.public_outlined,
         color: Colors.orange,
         onTap: () async {
-          final url = Uri.parse('https://ata-website.kampu.solutions');
+          final url = Uri.parse('https://atech-auto.com');
           if (await canLaunchUrl(url)) {
             await launchUrl(url, mode: LaunchMode.externalApplication);
           } else {

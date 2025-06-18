@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ShopService {
   static Future<List<Shop>> fetchShops({int? page}) async {
-    String url = 'https://ata-website.kampu.solutions/api/shops';
+    String url = 'https://atech-auto.com/api/shops';
 
     List<String> queryParams = [];
 
@@ -37,9 +37,9 @@ class ShopService {
           address: item['address'] ?? '',
           phone: item['phone'] ?? '',
           logoUrl:
-              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${item['logo']}',
+              'https://atech-auto.com/assets/images/shops/thumb/${item['logo']}',
           bannerUrl:
-              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${item['banner']}',
+              'https://atech-auto.com/assets/images/shops/thumb/${item['banner']}',
         );
       }).toList();
     } else {
@@ -48,7 +48,7 @@ class ShopService {
   }
 
   static Future<Shop> fetchShopById({required int id}) async {
-    String url = 'https://ata-website.kampu.solutions/api/shops/$id';
+    String url = 'https://atech-auto.com/api/shops/$id';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
 
@@ -61,9 +61,9 @@ class ShopService {
       address: data['address'] ?? '',
       phone: data['phone'] ?? '',
       logoUrl:
-          'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['logo']}',
+          'https://atech-auto.com/assets/images/shops/thumb/${data['logo']}',
       bannerUrl:
-          'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['banner']}',
+          'https://atech-auto.com/assets/images/shops/thumb/${data['banner']}',
     );
   }
 
@@ -83,7 +83,7 @@ class ShopService {
 
     try {
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/shops'); // API URL for creating a shop
+          'https://atech-auto.com/api/shops'); // API URL for creating a shop
       var request = http.MultipartRequest('POST', uri);
 
       // Add the fields
@@ -124,9 +124,9 @@ class ShopService {
           address: createdShop['address'] ?? '',
           phone: createdShop['phone'] ?? '',
           logoUrl:
-              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${createdShop['logo']}',
+              'https://atech-auto.com/assets/images/shops/thumb/${createdShop['logo']}',
           bannerUrl:
-              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${createdShop['banner']}',
+              'https://atech-auto.com/assets/images/shops/thumb/${createdShop['banner']}',
         );
         Navigator.pushReplacement(
           context,
@@ -163,7 +163,7 @@ class ShopService {
 
     try {
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/shops/${shop.id}'); // API URL for creating a shop
+          'https://atech-auto.com/api/shops/${shop.id}'); // API URL for creating a shop
       var request = http.MultipartRequest('POST', uri);
 
       // Add the fields
@@ -208,9 +208,9 @@ class ShopService {
           address: updatedShop['address'] ?? '',
           phone: updatedShop['phone'] ?? '',
           logoUrl:
-              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${updatedShop['logo']}',
+              'https://atech-auto.com/assets/images/shops/thumb/${updatedShop['logo']}',
           bannerUrl:
-              'https://ata-website.kampu.solutions/assets/images/shops/thumb/${updatedShop['banner']}',
+              'https://atech-auto.com/assets/images/shops/thumb/${updatedShop['banner']}',
         );
         Navigator.pop(context);
         Navigator.pushReplacement(

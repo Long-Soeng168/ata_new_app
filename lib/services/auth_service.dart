@@ -14,7 +14,7 @@ class AuthService {
 
   // Login function
   Future<Map<String, dynamic>> login(String email, String password) async {
-    final url = Uri.parse('https://ata-website.kampu.solutions/api/login');
+    final url = Uri.parse('https://atech-auto.com/api/login');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -44,7 +44,7 @@ class AuthService {
   Future<Map<String, dynamic>> register(
       String name, String phone, String email, String password) async {
     final url = Uri.parse(
-        'https://ata-website.kampu.solutions/api/register'); // Replace with your registration endpoint
+        'https://atech-auto.com/api/register'); // Replace with your registration endpoint
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -98,7 +98,7 @@ class AuthService {
   // Fetch user info
   Future<Map<String, dynamic>> getUserInfo() async {
     final token = await getToken();
-    final url = Uri.parse('https://ata-website.kampu.solutions/api/user');
+    final url = Uri.parse('https://atech-auto.com/api/user');
 
     final response = await http.get(
       url,
@@ -116,7 +116,7 @@ class AuthService {
       //   email: data['user']['email'] ?? '',
       //   phone: data['user']['phone'] ?? '',
       //   image:
-      //       'https://ata-website.kampu.solutions/assets/images/users/thumb/${data['user']['image']}',
+      //       'https://atech-auto.com/assets/images/users/thumb/${data['user']['image']}',
       // );
       // print(user);
 
@@ -141,7 +141,7 @@ class AuthService {
 
     try {
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/update_users/$userId');
+          'https://atech-auto.com/api/update_users/$userId');
       var request = http.MultipartRequest('POST', uri);
 
       // Headers
@@ -205,7 +205,7 @@ class AuthService {
 
     try {
       var uri = Uri.parse(
-          'https://ata-website.kampu.solutions/api/delete_users/$userId');
+          'https://atech-auto.com/api/delete_users/$userId');
 
       var request = http.MultipartRequest('POST', uri);
 
@@ -242,7 +242,7 @@ class AuthService {
   // Fetch user Shop
   Future<Map<String, dynamic>> getUserShop() async {
     final token = await getToken();
-    final url = Uri.parse('https://ata-website.kampu.solutions/api/user_shop');
+    final url = Uri.parse('https://atech-auto.com/api/user_shop');
 
     final response = await http.get(
       url,
@@ -261,9 +261,9 @@ class AuthService {
         address: data['address'] ?? '',
         phone: data['phone'] ?? '',
         logoUrl:
-            'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['logo']}',
+            'https://atech-auto.com/assets/images/shops/thumb/${data['logo']}',
         bannerUrl:
-            'https://ata-website.kampu.solutions/assets/images/shops/thumb/${data['banner']}',
+            'https://atech-auto.com/assets/images/shops/thumb/${data['banner']}',
       );
 
       return {'success': true, 'shop': shop};
@@ -275,7 +275,7 @@ class AuthService {
   Future<Map<String, dynamic>> getUserGarage() async {
     final token = await getToken();
     final url =
-        Uri.parse('https://ata-website.kampu.solutions/api/user_garage');
+        Uri.parse('https://atech-auto.com/api/user_garage');
 
     final response = await http.get(
       url,
@@ -297,9 +297,9 @@ class AuthService {
         expertName: data['expert']?['name'] ?? '',
         expertId: data['expert']?['id'] ?? -1,
         logoUrl:
-            'https://ata-website.kampu.solutions/assets/images/garages/thumb/${data['logo']}',
+            'https://atech-auto.com/assets/images/garages/thumb/${data['logo']}',
         bannerUrl:
-            'https://ata-website.kampu.solutions/assets/images/garages/thumb/${data['banner']}',
+            'https://atech-auto.com/assets/images/garages/thumb/${data['banner']}',
       );
 
       return {'success': true, 'garage': garage};
