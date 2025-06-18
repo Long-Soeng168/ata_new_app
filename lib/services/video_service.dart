@@ -51,7 +51,7 @@ class VideoService {
     return Video(
       id: data['id'],
       name: data['title'],
-      description: data['short_description'] ?? '',
+      description: data['description'] ?? '',
       viewsCount: data['views_count']?.toString() ?? '0',
       isFree: data['is_free'] == 0 ? false : true,
       imageUrl:
@@ -81,7 +81,7 @@ class VideoService {
           name: item['name'],
           imageUrl:
               'https://ata-website.kampu.solutions/assets/images/video_play_lists/thumb/${item['image']}',
-          description: item['short_description'] ?? '',
+          description: item['description'] ?? '',
           price: item['price']?.toString() ?? '',
           videosCount: item['videos_count']?.toString() ?? '',
         );

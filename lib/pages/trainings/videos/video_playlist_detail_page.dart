@@ -7,7 +7,6 @@ import 'package:ata_new_app/components/my_list_header.dart';
 import 'package:ata_new_app/components/my_success_dialog.dart';
 import 'package:ata_new_app/models/video.dart';
 import 'package:ata_new_app/models/video_playlist.dart';
-import 'package:ata_new_app/pages/trainings/videos/cart/video_cart_page.dart';
 import 'package:ata_new_app/pages/trainings/videos/video_detail_page.dart';
 import 'package:ata_new_app/providers/cart_provider.dart';
 import 'package:ata_new_app/services/video_service.dart';

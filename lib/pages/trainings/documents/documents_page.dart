@@ -29,6 +29,13 @@ class _DocumentsPageState extends State<DocumentsPage> {
     getDocuments();
   }
 
+  @override
+  void dispose() {
+    FocusScope.of(context).unfocus();
+    _searchController.dispose();
+    super.dispose();
+  }
+
   Future<void> getDocuments() async {
     try {
       final Document fetchedPublications;
@@ -77,122 +84,127 @@ class _DocumentsPageState extends State<DocumentsPage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 8,
-      child: Scaffold(
-        appBar: widget.isShowAppBar
-            ? AppBar(
-                foregroundColor: Theme.of(context).colorScheme.primary,
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                title: Text(
-                  widget.path.isNotEmpty
-                      ? widget.path.split('~').last
-                      : 'Documents',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          appBar: widget.isShowAppBar
+              ? AppBar(
+                  foregroundColor: Theme.of(context).colorScheme.primary,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  title: Text(
+                    widget.path.isNotEmpty
+                        ? widget.path.split('~').last
+                        : 'Documents',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              )
-            : null,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 4, bottom: 20),
-            child: Column(
-              children: [
-                // Search input
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
-                  child: TextFormField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      labelText: 'Search Folders or Files',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: const BorderSide(color: Colors.grey),
+                )
+              : null,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 4, bottom: 20),
+              child: Column(
+                children: [
+                  // Search input
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 18),
+                    child: TextFormField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        labelText: 'Search',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: searchQuery.isNotEmpty
+                            ? IconButton(
+                                icon: const Icon(Icons.close),
+                                onPressed: () {
+                                  _searchController.clear();
+                                  setState(() {
+                                    searchQuery = '';
+                                  });
+                                },
+                              )
+                            : null,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: const BorderSide(color: Colors.grey),
+                      onChanged: (value) {
+                        setState(() {
+                          searchQuery = value;
+                        });
+                      },
+                    ),
+                  ),
+
+                  if (isLoadingDocuments)
+                    const SizedBox(
+                      height: 200,
+                      child: Center(
+                        child: CircularProgressIndicator(),
                       ),
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: searchQuery.isNotEmpty
-                          ? IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {
-                                _searchController.clear();
-                                setState(() {
-                                  searchQuery = '';
-                                });
+                    ),
+
+                  if (!isLoadingDocuments)
+                    Visibility(
+                      visible: filteredFolders.isNotEmpty,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Column(
+                          children: filteredFolders.map((item) {
+                            return FolderCard(
+                              isFolder: true,
+                              name: item.split('/').last,
+                              onTap: () {
+                                final route = MaterialPageRoute(
+                                  builder: (context) => DocumentsPage(
+                                    path: item.replaceAll('/', '~'),
+                                  ),
+                                );
+                                Navigator.push(context, route);
                               },
-                            )
-                          : null,
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        searchQuery = value;
-                      });
-                    },
-                  ),
-                ),
-
-                if (isLoadingDocuments)
-                  const SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-
-                if (!isLoadingDocuments)
-                  Visibility(
-                    visible: filteredFolders.isNotEmpty,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Column(
-                        children: filteredFolders.map((item) {
-                          return FolderCard(
-                            isFolder: true,
-                            name: item.split('/').last,
-                            onTap: () {
-                              final route = MaterialPageRoute(
-                                builder: (context) => DocumentsPage(
-                                  path: item.replaceAll('/', '~'),
-                                ),
-                              );
-                              Navigator.push(context, route);
-                            },
-                          );
-                        }).toList(),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
-                  ),
 
-                if (!isLoadingDocuments)
-                  Visibility(
-                    visible: filteredFiles.isNotEmpty,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Column(
-                        children: filteredFiles
-                            .where((item) => item.endsWith('.pdf'))
-                            .map((item) {
-                          return FolderCard(
-                            isFolder: false,
-                            name: item.split('/').last,
-                            onTap: () {
-                              final route = MaterialPageRoute(
-                                builder: (context) => PdfViewPage(
-                                  url: '${Env.basePdfUrl}$item',
-                                ),
-                              );
-                              Navigator.push(context, route);
-                            },
-                          );
-                        }).toList(),
+                  if (!isLoadingDocuments)
+                    Visibility(
+                      visible: filteredFiles.isNotEmpty,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Column(
+                          children: filteredFiles
+                              .where((item) => item.endsWith('.pdf'))
+                              .map((item) {
+                            return FolderCard(
+                              isFolder: false,
+                              name: item.split('/').last,
+                              onTap: () {
+                                final route = MaterialPageRoute(
+                                  builder: (context) => PdfViewPage(
+                                    url: '${Env.basePdfUrl}$item',
+                                  ),
+                                );
+                                Navigator.push(context, route);
+                              },
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

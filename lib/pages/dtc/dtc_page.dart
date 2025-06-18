@@ -53,91 +53,95 @@ class _DtcPageState extends State<DtcPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        foregroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(
-          'DTC',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          title: Text(
+            'DTC',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Start Search
-            MySearch(
-              searchController: searchController,
-              onSearchSubmit: onSearchSubmit,
-              placeholder: 'Search DTC (កូដកំហូច)...',
-            ),
-            // End Search
-
-            SizedBox(height: 8),
-
-            // Start dtcDetail Grid
-            if (isLoadingDtcDetail)
-              SizedBox(
-                height: 100,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Start Search
+              MySearch(
+                searchController: searchController,
+                onSearchSubmit: onSearchSubmit,
+                placeholder: 'Search DTC (កូដកំហូច)...',
               ),
-            if (!isLoadingDtcDetail &&
-                !isLoadingDtcDetailError &&
-                dtcDetail != null)
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.only(left: 10, right: 10, top: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      dtcDetail!.dtcCode, // Use ! to access non-null value
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+              // End Search
+
+              SizedBox(height: 8),
+
+              // Start dtcDetail Grid
+              if (isLoadingDtcDetail)
+                SizedBox(
+                  height: 100,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              if (!isLoadingDtcDetail &&
+                  !isLoadingDtcDetailError &&
+                  dtcDetail != null)
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        dtcDetail!.dtcCode, // Use ! to access non-null value
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      dtcDetail!.descriptionKh,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      dtcDetail!.descriptionEn,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Visibility(
-                      visible: dtcDetail!.dtcCode.isEmpty,
-                      child: Center(
-                        child: Text('No Data for this CODE'),
+                      SizedBox(height: 4),
+                      Text(
+                        dtcDetail!.descriptionKh,
+                        style: TextStyle(fontSize: 16),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 4),
+                      Text(
+                        dtcDetail!.descriptionEn,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Visibility(
+                        visible: dtcDetail!.dtcCode.isEmpty,
+                        child: Center(
+                          child: Text('No Data for this CODE'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            if (isLoadingDtcDetailError)
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: Center(
-                  child: Text('Error Loading Resources'),
+              if (isLoadingDtcDetailError)
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: Center(
+                    child: Text('Error Loading Resources'),
+                  ),
                 ),
-              ),
 
-            // End dtcDetail Grid
+              // End dtcDetail Grid
 
-            SizedBox(height: 8),
-          ],
+              SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
