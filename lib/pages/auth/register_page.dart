@@ -107,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _nameController,
                   decoration: InputDecoration(
-                    labelText: 'Name',
+                    labelText: 'Name*',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(color: Colors.grey),
@@ -142,21 +142,21 @@ class _RegisterPageState extends State<RegisterPage> {
                     prefixIcon: const Icon(Icons.phone_outlined),
                   ),
                   keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your phone number';
-                    } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                      return 'Please enter a valid phone number';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Please enter your phone number';
+                  //   } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                  //     return 'Please enter a valid phone number';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 const SizedBox(height: 16),
                 // Email TextField with gray border
                 TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'Email*',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(color: Colors.grey),
@@ -183,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    labelText: 'Password*',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(color: Colors.grey),
