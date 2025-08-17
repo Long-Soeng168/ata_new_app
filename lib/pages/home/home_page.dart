@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
 
         foregroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
-          'ATech-Auto',
+          'A-Tech Auto',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,

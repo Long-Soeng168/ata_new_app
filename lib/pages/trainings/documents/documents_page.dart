@@ -110,39 +110,42 @@ class _DocumentsPageState extends State<DocumentsPage> {
               child: Column(
                 children: [
                   // Search input
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 18),
-                    child: TextFormField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        labelText: 'Search',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: const BorderSide(color: Colors.grey),
+                  Visibility(
+                    visible: widget.path != 'Documents',
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 18),
+                      child: TextFormField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          labelText: 'Search',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: searchQuery.isNotEmpty
+                              ? IconButton(
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () {
+                                    _searchController.clear();
+                                    setState(() {
+                                      searchQuery = '';
+                                    });
+                                  },
+                                )
+                              : null,
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        prefixIcon: const Icon(Icons.search),
-                        suffixIcon: searchQuery.isNotEmpty
-                            ? IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () {
-                                  _searchController.clear();
-                                  setState(() {
-                                    searchQuery = '';
-                                  });
-                                },
-                              )
-                            : null,
+                        onChanged: (value) {
+                          setState(() {
+                            searchQuery = value;
+                          });
+                        },
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          searchQuery = value;
-                        });
-                      },
                     ),
                   ),
 

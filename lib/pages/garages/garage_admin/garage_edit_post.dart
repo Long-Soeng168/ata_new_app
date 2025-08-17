@@ -80,7 +80,7 @@ class _GarageEditPostState extends State<GarageEditPost> {
   @override
   void initState() {
     super.initState();
-    _descriptionController.text = widget.garagePost.description;
+    _descriptionController.text = widget.garagePost.name;
     oldImageUrl = widget.garagePost.imageUrl;
   }
 

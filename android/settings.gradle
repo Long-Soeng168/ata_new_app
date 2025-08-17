@@ -20,7 +20,7 @@ pluginManagement {
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
     // UPDATE THIS LINE to 8.2.1 or higher for AGP
-    id "com.android.application" version "8.2.1" apply false
+    id "com.android.application" version "8.6.0" apply false
     // UPDATE THIS LINE to 1.8.10, 1.9.22, or 2.0.0 for Kotlin
     id "org.jetbrains.kotlin.android" version "1.9.22" apply false
 }

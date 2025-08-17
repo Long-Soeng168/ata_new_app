@@ -8,6 +8,8 @@ class Garage {
   final String description;
   final String expertName;
   final int expertId;
+  final double? latitude;   // nullable
+  final double? longitude;  // nullable
 
   Garage({
     required this.id,
@@ -19,5 +21,7 @@ class Garage {
     required this.description,
     required this.expertName,
     required this.expertId,
+    this.latitude,   // optional
+    this.longitude,  // optional
   });
 }

@@ -8,6 +8,7 @@ import 'package:ata_new_app/models/brand.dart';
 import 'package:ata_new_app/models/garage.dart';
 import 'package:ata_new_app/pages/garages/garage_detail_page.dart';
 import 'package:ata_new_app/pages/garages/garages_list_page.dart';
+import 'package:ata_new_app/pages/garages/garages_map_page.dart';
 import 'package:ata_new_app/services/brand_service.dart';
 import 'package:ata_new_app/services/garage_service.dart';
 import 'package:ata_new_app/services/slide_service.dart';
@@ -185,6 +186,24 @@ class _GaragesPageState extends State<GaragesPage> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.blueAccent, // main button color
+        foregroundColor: Colors.white,
+        onPressed: () {
+          final route =
+              MaterialPageRoute(builder: (context) => GaragesMapPage());
+          Navigator.push(context, route);
+        },
+        icon: Image.asset(
+          'lib/assets/icons/map.png', // move it out of lib/
+          width: 28,
+          height: 28,
+        ),
+        label: const Text(
+          'Garages Map',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+      ),
       body: isLoadingGarages
           ? Center(
               child: CircularProgressIndicator(),
@@ -287,7 +306,7 @@ class _GaragesPageState extends State<GaragesPage> {
                             child: Column(
                               children: const [
                                 SizedBox(
-                                  height: 16,
+                                  height: 80,
                                 ),
                               ],
                             ),
