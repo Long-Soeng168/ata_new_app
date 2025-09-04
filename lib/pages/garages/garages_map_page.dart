@@ -19,7 +19,7 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
   final Set<Marker> _markers = {};
   MapType _currentMapType = MapType.normal;
   LatLng _currentCenter = const LatLng(11.5564, 104.9282); // Default Phnom Penh
-  double _currentZoom = 14;
+  double _currentZoom = 12;
 
   bool _isLoading = true;
   List<Garage> garages = [];
@@ -33,7 +33,7 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
   Future<void> _initialize() async {
     await _requestLocationPermission();
     await _fetchGarages();
-    await _getCurrentLocation(); // optional auto-focus on user
+    // await _getCurrentLocation(); // optional auto-focus on user
     setState(() => _isLoading = false);
   }
 
@@ -90,17 +90,24 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
     if (!status.isGranted) await Permission.location.request();
   }
 
-  void _setMarkers(List<Garage> list) {
+  void _setMarkers(List<Garage> list) async {
     final newMarkers = <Marker>{};
+    final BitmapDescriptor customIcon = await BitmapDescriptor.asset(
+      const ImageConfiguration(size: Size(48, 48)),
+      'lib/assets/icons/garage-pin2.png', // your asset
+    );
+
     for (var garage in list) {
       newMarkers.add(
         Marker(
           markerId: MarkerId(garage.id.toString()),
           position: LatLng(garage.latitude ?? 0.0, garage.longitude ?? 0.0),
+          icon: customIcon,
           onTap: () => _showGarageDetailsSheet(garage),
         ),
       );
     }
+
     setState(() {
       _markers
         ..clear()
@@ -232,6 +239,27 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh Map',
+            onPressed: () async {
+              setState(() => _isLoading = true);
+              await _fetchGarages(); // refetch garages
+              setState(() => _isLoading = false);
+
+              if (_mapController != null && garages.isNotEmpty) {
+                final lat =
+                    garages.first.latitude ?? 11.5564; // fallback to Phnom Penh
+                final lng = garages.first.longitude ?? 104.9282;
+                _mapController!.animateCamera(
+                  CameraUpdate.newLatLngZoom(
+                    LatLng(lat, lng),
+                    _currentZoom,
+                  ),
+                );
+              }
+            },
+          ),
           PopupMenuButton<MapType>(
             icon: const Icon(Icons.layers),
             onSelected: _onMapTypeChanged,
@@ -244,41 +272,25 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            initialCameraPosition:
-                CameraPosition(target: _currentCenter, zoom: _currentZoom),
-            zoomControlsEnabled: true,
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-            mapType: _currentMapType,
-            markers: _markers,
-            onMapCreated: (controller) {
-              _mapController = controller;
-            },
-            onCameraMove: (position) {
-              _currentCenter = position.target;
-              _currentZoom = position.zoom;
-            },
-          ),
-          if (_isLoading)
-            Container(
-              color: Colors.black38,
-              child: const Center(child: CircularProgressIndicator()),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : GoogleMap(
+              initialCameraPosition:
+                  CameraPosition(target: _currentCenter, zoom: _currentZoom),
+              zoomControlsEnabled: true,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: false,
+              mapType: _currentMapType,
+              markers: _markers,
+              onMapCreated: (controller) {
+                _mapController = controller;
+                if (garages.isNotEmpty) _setMarkers(garages);
+              },
+              onCameraMove: (position) {
+                _currentCenter = position.target;
+                _currentZoom = position.zoom;
+              },
             ),
-          Positioned(
-            bottom: 100,
-            right: 8,
-            child: FloatingActionButton.small(
-              heroTag: 'btn-my-location',
-              onPressed: _getCurrentLocation,
-              backgroundColor: Colors.blue,
-              child: const Icon(Icons.my_location),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
