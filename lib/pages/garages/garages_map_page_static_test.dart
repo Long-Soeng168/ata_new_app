@@ -1,11 +1,9 @@
+import 'dart:math';
 import 'package:ata_new_app/models/garage.dart';
-import 'package:ata_new_app/pages/garages/garage_detail_page.dart';
-import 'package:ata_new_app/services/garage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class GaragesMapPage extends StatefulWidget {
   const GaragesMapPage({super.key});
@@ -18,11 +16,60 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
   GoogleMapController? _mapController;
   final Set<Marker> _markers = {};
   MapType _currentMapType = MapType.normal;
-  LatLng _currentCenter = const LatLng(11.5564, 104.9282); // Default Phnom Penh
+  LatLng _currentCenter = const LatLng(11.5564, 104.9282);
   double _currentZoom = 14;
 
-  bool _isLoading = true;
-  List<Garage> garages = [];
+  bool _isLoading = true; // show loading
+
+  final List<Garage> garages = List.generate(100, (index) {
+    final random = Random();
+    final cityLatitudes = [
+      11.56,
+      13.36,
+      13.10,
+      10.61,
+      10.64,
+      10.99,
+      13.36,
+      11.56
+    ];
+    final cityLongitudes = [
+      104.92,
+      103.85,
+      103.20,
+      104.18,
+      103.51,
+      104.78,
+      103.85,
+      104.92
+    ];
+    final cities = [
+      'Phnom Penh',
+      'Siem Reap',
+      'Battambang',
+      'Kampot',
+      'Sihanoukville',
+      'Takeo',
+      'Siem Reap Riverside',
+      'Wat Phnom'
+    ];
+    final cityIndex = index % cities.length;
+
+    return Garage(
+      bannerUrl:
+          'https://atech-auto.com/assets/images/shops/1746864386_Screenshot%202025-05-10%20at%203.06.22%20in%20the%20afternoon.webp',
+      description: '',
+      expertId: index,
+      expertName: '',
+      logoUrl: 'https://atech-auto.com/assets/images/shops/1746864535_ai.webp',
+      phone: '',
+      id: index + 1,
+      name: 'Garage ${index + 1}',
+      address: 'Street ${(100 + index)} ${cities[cityIndex]}',
+      latitude: cityLatitudes[cityIndex] + (random.nextDouble() - 0.5) * 0.1,
+      longitude: cityLongitudes[cityIndex] + (random.nextDouble() - 0.5) * 0.1,
+    );
+  });
 
   @override
   void initState() {
@@ -32,24 +79,9 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
 
   Future<void> _initialize() async {
     await _requestLocationPermission();
-    await _fetchGarages();
-    await _getCurrentLocation(); // optional auto-focus on user
-    setState(() => _isLoading = false);
-  }
-
-  Future<void> _fetchGarages() async {
-    try {
-      final fetchedGarages = await GarageService.fetchGarages(page: 1);
-      garages = fetchedGarages;
-      _setMarkers(garages);
-    } catch (e) {
-      debugPrint("Failed to fetch garages: $e");
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Failed to load garages")),
-        );
-      }
-    }
+    _setMarkers(garages);
+    // await _getCurrentLocation();
+    setState(() => _isLoading = false); // done loading
   }
 
   Future<void> _getCurrentLocation() async {
@@ -81,8 +113,7 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
     });
 
     _mapController?.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(target: currentLatLng, zoom: 14),
-    ));
+        CameraPosition(target: currentLatLng, zoom: 14)));
   }
 
   Future<void> _requestLocationPermission() async {
@@ -95,8 +126,9 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
     for (var garage in list) {
       newMarkers.add(
         Marker(
-          markerId: MarkerId(garage.id.toString()),
+          markerId: MarkerId(garage.name),
           position: LatLng(garage.latitude ?? 0.0, garage.longitude ?? 0.0),
+          // infoWindow: InfoWindow(title: garage.name, snippet: garage.address),
           onTap: () => _showGarageDetailsSheet(garage),
         ),
       );
@@ -115,7 +147,7 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
   void _showGarageDetailsSheet(Garage garage) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true,
+      isScrollControlled: true, // Allows the sheet to be full-height
       builder: (context) {
         return Container(
           padding: const EdgeInsets.all(16),
@@ -123,8 +155,9 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Banner Image
               ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(10),
                 child: Image.network(
                   garage.bannerUrl,
                   height: 150,
@@ -132,6 +165,7 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
                 ),
               ),
               const SizedBox(height: 16),
+              // Logo and Name
               Row(
                 children: [
                   ClipOval(
@@ -155,66 +189,27 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
                 ],
               ),
               const SizedBox(height: 16),
-              Text('Address: ${garage.address}',
-                  style: const TextStyle(fontSize: 16)),
+              // Garage Details
+              Text(
+                'Address: ${garage.address}',
+                style: const TextStyle(fontSize: 16),
+              ),
               const SizedBox(height: 8),
-              Text('Phone: ${garage.phone}',
-                  style: const TextStyle(fontSize: 16)),
+              Text(
+                'Phone: ${garage.phone}',
+                style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 8),
+              // Add more details here...
               const SizedBox(height: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () async {
-                      final url =
-                          'https://www.google.com/maps?q=${garage.latitude},${garage.longitude}';
-                      if (await canLaunchUrl(Uri.parse(url))) {
-                        await launchUrl(
-                          Uri.parse(url),
-                          mode: LaunchMode.externalApplication,
-                        );
-                      }
-                    },
-                    icon: const Icon(Icons.map, color: Colors.white),
-                    label: const Text(
-                      'Open in Google Maps',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      final route = MaterialPageRoute(
-                        builder: (context) => GarageDetailPage(garage: garage),
-                      );
-                      Navigator.push(context, route);
-                    },
-                    icon: const Icon(Icons.info_outline, color: Colors.white),
-                    label: const Text(
-                      'View Garage',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                ],
-              )
+              // Action Buttons
+              ElevatedButton.icon(
+                onPressed: () {
+                  // Handle button tap, e.g., navigate to the garage's full profile page
+                },
+                icon: const Icon(Icons.info_outline),
+                label: const Text('View Full Profile'),
+              ),
             ],
           ),
         );
@@ -265,7 +260,9 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
           if (_isLoading)
             Container(
               color: Colors.black38,
-              child: const Center(child: CircularProgressIndicator()),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
           Positioned(
             bottom: 100,

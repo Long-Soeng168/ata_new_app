@@ -44,6 +44,8 @@ class GarageService {
         return Garage(
           id: item['id'],
           name: item['name'] ?? '',
+          latitude: item['latitude'] ?? 0,
+          longitude: item['longitude'] ?? 0,
           phone: item['phone'] ?? '',
           address: item['address'] ?? '',
           description: item['description'] ?? '',
@@ -249,8 +251,7 @@ class GarageService {
     final token = await _storage.read(key: 'auth_token');
 
     try {
-      var uri =
-          Uri.parse('https://atech-auto.com/api/garages_posts');
+      var uri = Uri.parse('https://atech-auto.com/api/garages_posts');
       var request = http.MultipartRequest('POST', uri);
 
       request.headers.addAll({
@@ -309,8 +310,7 @@ class GarageService {
 
     try {
       // API endpoint for updating a post
-      var uri = Uri.parse(
-          'https://atech-auto.com/api/garages_posts/$postId');
+      var uri = Uri.parse('https://atech-auto.com/api/garages_posts/$postId');
       var request = http.MultipartRequest('POST', uri); // Change to PUT request
 
       // Add headers
@@ -373,8 +373,8 @@ class GarageService {
 
     try {
       // API endpoint for deleting a post
-      var uri = Uri.parse(
-          'https://atech-auto.com/api/garages_posts/$postId/delete');
+      var uri =
+          Uri.parse('https://atech-auto.com/api/garages_posts/$postId/delete');
       print(uri);
       var request = http.Request('get', uri); // Use DELETE request
 
