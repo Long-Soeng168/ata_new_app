@@ -19,7 +19,7 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
   final Set<Marker> _markers = {};
   MapType _currentMapType = MapType.normal;
   LatLng _currentCenter = const LatLng(11.5564, 104.9282); // Default Phnom Penh
-  double _currentZoom = 12;
+  double _currentZoom = 11;
 
   bool _isLoading = true;
   List<Garage> garages = [];
@@ -279,7 +279,7 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
                   CameraPosition(target: _currentCenter, zoom: _currentZoom),
               zoomControlsEnabled: true,
               myLocationEnabled: true,
-              myLocationButtonEnabled: false,
+              myLocationButtonEnabled: true,
               mapType: _currentMapType,
               markers: _markers,
               onMapCreated: (controller) {
