@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ata_new_app/components/buttons/my_elevated_button.dart';
 import 'package:ata_new_app/services/garage_service.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GarageEditPage extends StatefulWidget {
   const GarageEditPage({super.key, required this.garage});
   final Garage garage;
+
   @override
   _GarageEditPageState createState() => _GarageEditPageState();
 }
@@ -23,16 +25,38 @@ class _GarageEditPageState extends State<GarageEditPage> {
   bool isLoadingBrandsError = false;
   int? brandId;
 
-  // Controllers for garage fields
+  // Controllers
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _addressController = TextEditingController();
   final _phoneController = TextEditingController();
 
+  // Logo & banner
+  XFile? _logoImage;
+  XFile? _bannerImage;
+  final ImagePicker _picker = ImagePicker();
+
+  // Map location
+  LatLng? _selectedLocation;
+  GoogleMapController? _mapController;
+  final CameraPosition _initialCameraPosition =
+      const CameraPosition(target: LatLng(11.5564, 104.9282), zoom: 12);
+
+  bool _isLoading = false;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _selectedLocation = LatLng(
+          widget.garage.latitude ?? 11.5564,
+          widget.garage.longitude ?? 104.9282,
+        );
+      });
+    });
+
     getBrands();
     _nameController.text = widget.garage.name;
     _descriptionController.text = widget.garage.description;
@@ -43,32 +67,20 @@ class _GarageEditPageState extends State<GarageEditPage> {
 
   Future<void> getBrands() async {
     try {
-      // Fetch products outside of setState
       final fetchedBrands = await BrandService.fetchBrands();
-      // Update the state
       setState(() {
         brands = fetchedBrands;
         isLoadingBrands = false;
       });
     } catch (error) {
-      // Handle any errors that occur during the fetch
       setState(() {
         isLoadingBrands = false;
         isLoadingBrandsError = true;
       });
-      // You can also show an error message to the user
       print('Failed to load Brands: $error');
     }
   }
 
-  // Variables for logo and banner images
-  XFile? _logoImage;
-  XFile? _bannerImage;
-  final ImagePicker _picker = ImagePicker();
-
-  bool _isLoading = false;
-
-  // Function to pick image for logo or banner
   Future<void> _pickImage(bool isLogo) async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -82,14 +94,10 @@ class _GarageEditPageState extends State<GarageEditPage> {
     }
   }
 
-  // Function to handle garage creation
   Future<void> _updateGarage() async {
     if (_garageFormKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true; // Show loading indicator
-      });
+      setState(() => _isLoading = true);
 
-      // Call the garage creation service
       final response = await _garageService.updateGarage(
         garageId: widget.garage.id.toString(),
         context: context,
@@ -100,15 +108,15 @@ class _GarageEditPageState extends State<GarageEditPage> {
         description: _descriptionController.text,
         logoImage: _logoImage,
         bannerImage: _bannerImage,
+        latitude: _selectedLocation?.latitude,
+        longitude: _selectedLocation?.longitude,
       );
 
-      setState(() {
-        _isLoading = false; // Hide loading indicator
-      });
+      setState(() => _isLoading = false);
 
       if (response['success']) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Garage created successfully")),
+          const SnackBar(content: Text("Garage updated successfully")),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -117,7 +125,8 @@ class _GarageEditPageState extends State<GarageEditPage> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please complete all fields and upload images")),
+        const SnackBar(
+            content: Text("Please complete all fields and upload images")),
       );
     }
   }
@@ -126,7 +135,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create Garage"),
+        title: const Text("Edit Garage"),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
@@ -137,7 +146,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
             children: [
               const SizedBox(height: 20),
 
-              // Garage name input
+              // Garage name
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(
@@ -145,9 +154,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
                   border: const OutlineInputBorder(),
                   hintText: 'Enter Garage Name',
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400, // Border color when enabled
-                    ),
+                    borderSide: BorderSide(color: Colors.grey.shade400),
                   ),
                 ),
                 validator: (value) =>
@@ -155,7 +162,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
               ),
               const SizedBox(height: 12),
 
-              // Phone number input
+              // Phone
               TextFormField(
                 controller: _phoneController,
                 decoration: InputDecoration(
@@ -163,9 +170,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
                   border: const OutlineInputBorder(),
                   hintText: 'Enter Phone Number',
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400, // Border color when enabled
-                    ),
+                    borderSide: BorderSide(color: Colors.grey.shade400),
                   ),
                 ),
                 validator: (value) =>
@@ -173,6 +178,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
               ),
               const SizedBox(height: 12),
 
+              // Brand dropdown
               if (!isLoadingBrands)
                 DropdownButtonFormField<int>(
                   value: brandId,
@@ -180,10 +186,7 @@ class _GarageEditPageState extends State<GarageEditPage> {
                     labelText: "Select Brand",
                     border: const OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color:
-                            Colors.grey.shade400, // Border color when enabled
-                      ),
+                      borderSide: BorderSide(color: Colors.grey.shade400),
                     ),
                   ),
                   isExpanded: true,
@@ -194,81 +197,70 @@ class _GarageEditPageState extends State<GarageEditPage> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: 40, // Adjust the width as needed
-                              height: 40, // Adjust the height as needed
+                              width: 40,
+                              height: 40,
                               child: Image.network(
                                 brand.imageUrl,
                                 fit: BoxFit.contain,
                               ),
                             ),
-                            const SizedBox(width: 10), // Space between image and text
+                            const SizedBox(width: 10),
                             Text(brand.name),
                           ],
                         ),
                       );
                     }),
                     const DropdownMenuItem<int>(
-                      value: -1, // Unique value for "Other"
+                      value: -1,
                       child: Row(
                         children: [
-                          Icon(Icons.add), // Icon for "Other" option
+                          Icon(Icons.add),
                           SizedBox(width: 10),
                           Text("Other"),
                         ],
                       ),
                     ),
                   ],
-                  onChanged: (value) {
-                    setState(() {
-                      brandId = value;
-                    });
-                  },
+                  onChanged: (value) => setState(() => brandId = value),
                   validator: (value) => value == null ? "Select a Brand" : null,
                 ),
               const SizedBox(height: 12),
 
-              // Address input
+              // Address
               TextFormField(
                 controller: _addressController,
                 decoration: InputDecoration(
                   labelText: "Address",
                   hintText: 'Garage Address',
-                  alignLabelWithHint: true,
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400, // Border color when enabled
-                    ),
+                    borderSide: BorderSide(color: Colors.grey.shade400),
                   ),
                 ),
-                maxLines:
-                    2, // Set maxLines to allow multiple lines, adjust as needed
+                maxLines: 2,
                 validator: (value) =>
                     value!.isEmpty ? "Enter Garage Address" : null,
               ),
               const SizedBox(height: 12),
 
+              // Description
               TextFormField(
                 controller: _descriptionController,
                 decoration: InputDecoration(
                   labelText: "Description",
                   hintText: 'Garage Description',
-                  alignLabelWithHint: true,
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400, // Border color when enabled
-                    ),
+                    borderSide: BorderSide(color: Colors.grey.shade400),
                   ),
                 ),
-                maxLines:
-                    4, // Set maxLines to allow multiple lines, adjust as needed
+                maxLines: 4,
                 validator: (value) =>
                     value!.isEmpty ? "Enter Shop description" : null,
               ),
               const SizedBox(height: 12),
 
-              // Logo image picker with preview
+              // Logo
               GestureDetector(
                 onTap: () => _pickImage(true),
                 child: Column(
@@ -276,7 +268,10 @@ class _GarageEditPageState extends State<GarageEditPage> {
                     const Text("Logo Image", style: TextStyle(fontSize: 16)),
                     const SizedBox(height: 8),
                     _logoImage == null
-                        ? const Icon(Icons.image, size: 100, color: Colors.grey)
+                        ? (_logoImage == null && widget.garage.logoUrl != null
+                            ? Image.network(widget.garage.logoUrl!, height: 100)
+                            : const Icon(Icons.image,
+                                size: 100, color: Colors.grey))
                         : Image.file(File(_logoImage!.path), height: 100),
                     TextButton(
                       onPressed: () => _pickImage(true),
@@ -287,7 +282,9 @@ class _GarageEditPageState extends State<GarageEditPage> {
                 ),
               ),
 
-              // Banner image picker with preview
+              const SizedBox(height: 12),
+
+              // Banner
               GestureDetector(
                 onTap: () => _pickImage(false),
                 child: Column(
@@ -295,7 +292,11 @@ class _GarageEditPageState extends State<GarageEditPage> {
                     const Text("Banner Image", style: TextStyle(fontSize: 16)),
                     const SizedBox(height: 8),
                     _bannerImage == null
-                        ? const Icon(Icons.image, size: 100, color: Colors.grey)
+                        ? (widget.garage.bannerUrl != null
+                            ? Image.network(widget.garage.bannerUrl!,
+                                height: 100)
+                            : const Icon(Icons.image,
+                                size: 100, color: Colors.grey))
                         : Image.file(File(_bannerImage!.path), height: 100),
                     TextButton(
                       onPressed: () => _pickImage(false),
@@ -307,13 +308,61 @@ class _GarageEditPageState extends State<GarageEditPage> {
                 ),
               ),
 
+              const SizedBox(height: 12),
+
+              // Map picker
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Select Garage Location",
+                      style: TextStyle(fontSize: 16)),
+                  const SizedBox(height: 8),
+                  _selectedLocation != null
+                      ? SizedBox(
+                          height: 200,
+                          child: GoogleMap(
+                            initialCameraPosition: CameraPosition(
+                              target: _selectedLocation!,
+                              zoom: 12,
+                            ),
+                            onMapCreated: (controller) =>
+                                _mapController = controller,
+                            markers: {
+                              Marker(
+                                markerId: const MarkerId('garage_marker'),
+                                position: _selectedLocation!,
+                                draggable: true,
+                                onDragEnd: (latLng) {
+                                  setState(() => _selectedLocation = latLng);
+                                },
+                              ),
+                            },
+                            onTap: (latLng) =>
+                                setState(() => _selectedLocation = latLng),
+                            zoomControlsEnabled: true,
+                            myLocationButtonEnabled: true,
+                            myLocationEnabled: true,
+                          ),
+                        )
+                      : const SizedBox(
+                          height: 200,
+                          child: Center(child: CircularProgressIndicator()),
+                        ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Lat: ${_selectedLocation!.latitude.toStringAsFixed(5)}, '
+                    'Lng: ${_selectedLocation!.longitude.toStringAsFixed(5)}',
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ],
+              ),
+
               const SizedBox(height: 20),
 
-              // Submit button with loading indicator
               _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
-                      onPressed: _updateGarage, title: "Create Garage"),
+                      onPressed: _updateGarage, title: "Update Garage"),
             ],
           ),
         ),

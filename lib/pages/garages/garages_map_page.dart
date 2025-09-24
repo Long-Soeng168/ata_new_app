@@ -33,7 +33,7 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
   Future<void> _initialize() async {
     await _requestLocationPermission();
     await _fetchGarages();
-    // await _getCurrentLocation(); // optional auto-focus on user
+    await _getCurrentLocation(); // optional auto-focus on user
     setState(() => _isLoading = false);
   }
 

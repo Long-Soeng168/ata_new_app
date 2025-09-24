@@ -1,4 +1,5 @@
 import 'package:ata_new_app/components/error_image.dart';
+import 'package:ata_new_app/components/my_gallery_viewer.dart';
 import 'package:flutter/material.dart';
 
 class GaragePostCard extends StatelessWidget {
@@ -9,9 +10,10 @@ class GaragePostCard extends StatelessWidget {
     this.subTitle = '',
     this.price = 0,
     this.imageUrl = '',
-    this.onTap,
+    this.imageUrls,
     this.aspectRatio = 1 / 1,
     this.width = 200,
+    this.onEdit, // <-- new callback
   });
 
   final int id;
@@ -19,114 +21,120 @@ class GaragePostCard extends StatelessWidget {
   final String subTitle;
   final double price;
   final String imageUrl;
-  final void Function()? onTap;
+  final void Function()? onEdit; // overlay edit button
   final double aspectRatio;
   final double width;
+  final List<String>? imageUrls;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        color: Colors.transparent,
-        elevation: 0,
-        child: Container(
-          width: width,
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.transparent,
-            // border: Border.all(
-            //   color: Theme.of(context).colorScheme.primary,
-            //   width: 0.5,
-            // ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.shade200,
-                    ),
-                    borderRadius: BorderRadius.circular(8)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(7),
-                  child: AspectRatio(
-                    aspectRatio: aspectRatio,
-                    child: Image.network(
-                      imageUrl,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const ErrorImage(size: 50);
-                      },
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    (loadingProgress.expectedTotalBytes ?? 1)
-                                : null,
+    return Card(
+      color: Colors.transparent,
+      elevation: 0,
+      child: Container(
+        width: width,
+        padding: const EdgeInsets.all(4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                // IMAGE TAP → Gallery
+                GestureDetector(
+                  onTap: () {
+                    if (imageUrls != null && imageUrls!.isNotEmpty) {
+                      final initialIndex = imageUrls!.indexOf(imageUrl);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MyGalleryViewer(
+                            imageUrls: imageUrls!,
+                            initialIndex: initialIndex >= 0 ? initialIndex : 0,
                           ),
-                        );
-                      },
+                        ),
+                      );
+                    } else if (imageUrl.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MyGalleryViewer(
+                            imageUrls: [imageUrl],
+                            initialIndex: 0,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade200),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(7),
+                      child: AspectRatio(
+                        aspectRatio: aspectRatio,
+                        child: Image.network(
+                          imageUrl,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const ErrorImage(size: 50),
+                          loadingBuilder: (context, child, progress) {
+                            if (progress == null) return child;
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          },
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 4, right: 4),
-                // height: 45,
-                // color: Colors.amber,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
+
+                // EDIT BUTTON OVERLAY
+                if (onEdit != null)
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: GestureDetector(
+                      onTap: onEdit,
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.black54,
+                          shape: BoxShape.circle,
                         ),
-                        Text(
-                          subTitle,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.grey.shade600),
-                        ),
-                      ],
+                        child: const Icon(Icons.edit,
+                            color: Colors.white, size: 20),
+                      ),
                     ),
-                    // Row(
-                    //   children: [
-                    //     Expanded(
-                    //       child: Text(
-                    //         '${price.toString()} \$',
-                    //         maxLines: 1,
-                    //         overflow: TextOverflow.ellipsis,
-                    //         style: const TextStyle(
-                    //             fontSize: 16, color: Colors.redAccent),
-                    //       ),
-                    //     ),
-                    //     Icon(
-                    //       Icons.favorite_outline,
-                    //       size: 24,
-                    //       color: Colors.grey.shade500,
-                    //     ),
-                    //   ],
-                    // ),
-                  ],
-                ),
+                  ),
+              ],
+            ),
+
+            const SizedBox(height: 8),
+
+            // TITLE/SUBTITLE
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    subTitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

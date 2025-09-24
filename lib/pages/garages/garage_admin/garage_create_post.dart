@@ -16,58 +16,75 @@ class GarageCreatePost extends StatefulWidget {
 }
 
 class _GarageCreatePostState extends State<GarageCreatePost> {
-  final _productService = GarageService();
-  final _productFormKey = GlobalKey<FormState>();
+  final _garageService = GarageService();
+  final _garagePostFormKey = GlobalKey<FormState>();
 
-  // Controllers for product fields
+  // Controllers
   final _descriptionController = TextEditingController();
 
-  // Variable for product image
-  XFile? _productImage;
+  // For multiple images
+  List<XFile> _postImages = [];
   final ImagePicker _picker = ImagePicker();
 
   bool _isLoading = false;
 
-  // Function to pick image for the product
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _productImage = pickedFile;
-      });
+  // Pick multiple images
+  // Pick multiple new images (each must be under 2 MB)
+  Future<void> _pickImages() async {
+    final pickedFiles = await _picker.pickMultiImage();
+    if (pickedFiles.isEmpty) return;
+
+    final List<XFile> validImages = [];
+    for (var file in pickedFiles) {
+      final fileSize = await file.length(); // in bytes
+      if (fileSize <= 2 * 1024 * 1024) {
+        validImages.add(file);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  "${file.name} is too large. Maximum allowed size is 2 MB.")),
+        );
+      }
+    }
+
+    if (validImages.isNotEmpty) {
+      setState(() => _postImages = validImages);
     }
   }
 
-  // Function to handle product creation
-  Future<void> _createProduct() async {
-    if (_productFormKey.currentState!.validate() && _productImage != null) {
+  // Create post
+  Future<void> _createPost() async {
+    if (_garagePostFormKey.currentState!.validate() && _postImages.isNotEmpty) {
       setState(() {
-        _isLoading = true; // Show loading indicator
+        _isLoading = true;
       });
 
-      // Call the product creation service
-      final response = await _productService.createPost(
+      final response = await _garageService.createPost(
         context: context,
         garage: widget.garage,
-        description: _descriptionController.text, // Pass description
-        image: _productImage!,
+        description: _descriptionController.text,
+        images: _postImages, // pass list instead of single
       );
 
       setState(() {
-        _isLoading = false; // Hide loading indicator
+        _isLoading = false;
       });
 
       if (response['success']) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Product created successfully")));
+          SnackBar(content: Text("Post created successfully")),
+        );
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(response['message'])));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(response['message'])),
+        );
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:
-              Text("Please complete the description and upload an image")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text("Please complete description and upload images")),
+      );
     }
   }
 
@@ -81,46 +98,51 @@ class _GarageCreatePostState extends State<GarageCreatePost> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Form(
-          key: _productFormKey,
+          key: _garagePostFormKey,
           child: ListView(
             children: [
-              // Description input
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               GestureDetector(
-                onTap: _pickImage,
-                child: Container(
-                  width: double.infinity,
-                  color: _productImage == null
-                      ? Colors.grey.shade200
-                      : Colors.transparent,
-                  child: _productImage == null
-                      ? AspectRatio(
+                onTap: _pickImages,
+                child: _postImages.isEmpty
+                    ? Container(
+                        width: double.infinity,
+                        color: Colors.grey.shade200,
+                        child: AspectRatio(
                           aspectRatio: 16 / 9,
                           child: Center(
-                              child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.image,
-                                color: Colors.grey.shade400,
-                                size: 50,
-                              ),
-                              Text('Tap to pick an image'),
-                            ],
-                          )))
-                      : AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: Image.file(
-                            File(_productImage!.path),
-                            fit: BoxFit
-                                .cover, // You can change BoxFit based on your preference
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image,
+                                  color: Colors.grey.shade400,
+                                  size: 50,
+                                ),
+                                Text('Tap to pick images'),
+                              ],
+                            ),
                           ),
                         ),
-                ),
+                      )
+                    : SizedBox(
+                        height: 120,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _postImages.length,
+                          separatorBuilder: (_, __) => SizedBox(width: 8),
+                          itemBuilder: (context, index) {
+                            return AspectRatio(
+                              aspectRatio: 1,
+                              child: Image.file(
+                                File(_postImages[index].path),
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
               ),
-
               SizedBox(height: 12),
               TextFormField(
                 controller: _descriptionController,
@@ -131,27 +153,21 @@ class _GarageCreatePostState extends State<GarageCreatePost> {
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.grey.shade400, // Border color when enabled
+                      color: Colors.grey.shade400,
                     ),
                   ),
                 ),
-                maxLines:
-                    4, // Set maxLines to allow multiple lines, adjust as needed
+                maxLines: 4,
                 validator: (value) =>
-                    value!.isEmpty ? "Enter Shop description" : null,
+                    value!.isEmpty ? "Enter shop description" : null,
               ),
-              SizedBox(
-                height: 12,
-              ),
-              // Loading indicator
+              SizedBox(height: 12),
               _isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
+                  ? Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
-                      onPressed: _createProduct,
+                      onPressed: _createPost,
                       title: 'Create Post',
-                    ), 
+                    ),
             ],
           ),
         ),

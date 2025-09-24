@@ -74,44 +74,49 @@ class GarageService {
     required String phone,
     required XFile logoImage,
     required XFile bannerImage,
+    double? latitude,
+    double? longitude, // new parameters
   }) async {
     final token = await _storage.read(key: 'auth_token');
 
     try {
-      var uri = Uri.parse(
-          'https://atech-auto.com/api/garages'); // API URL for creating a garage
+      var uri = Uri.parse('https://atech-auto.com/api/garages');
       var request = http.MultipartRequest('POST', uri);
 
-      // Add the fields
+      // Add headers
       request.headers.addAll({
         'Content-Type': 'multipart/form-data',
         'Authorization': 'Bearer $token',
       });
+
+      // Add text fields
       request.fields['name'] = name;
       request.fields['description'] = description;
       request.fields['address'] = address;
       request.fields['phone'] = phone;
       request.fields['brand_id'] = brandId.toString();
 
-      // Add the logo image
+      // Add latitude & longitude if available
+      if (latitude != null) request.fields['latitude'] = latitude.toString();
+      if (longitude != null) request.fields['longitude'] = longitude.toString();
+
+      // Add images
       request.files.add(await http.MultipartFile.fromPath(
         'logo',
         logoImage.path,
         contentType: MediaType('image', 'jpeg'),
       ));
-
-      // Add the banner image
       request.files.add(await http.MultipartFile.fromPath(
         'banner',
         bannerImage.path,
         contentType: MediaType('image', 'jpeg'),
       ));
 
-      // Send the request
+      // Send request
       var response = await request.send();
 
+      final responseData = await response.stream.bytesToString();
       if (response.statusCode == 200) {
-        final responseData = await response.stream.bytesToString();
         final data = jsonDecode(responseData);
         final createdGarage = data['garage'];
         final newGarage = Garage(
@@ -126,21 +131,26 @@ class GarageService {
               'https://atech-auto.com/assets/images/garages/thumb/${createdGarage['logo']}',
           bannerUrl:
               'https://atech-auto.com/assets/images/garages/thumb/${createdGarage['banner']}',
+          latitude: createdGarage['latitude'] != null
+              ? double.tryParse(createdGarage['latitude'].toString())
+              : null,
+          longitude: createdGarage['longitude'] != null
+              ? double.tryParse(createdGarage['longitude'].toString())
+              : null,
         );
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => AdminGarageDetailPage(
-              garage: newGarage,
-            ),
+            builder: (context) => AdminGarageDetailPage(garage: newGarage),
           ),
         );
+
         return {'success': true, 'message': responseData};
       } else {
-        final responseData = await response.stream.bytesToString();
         return {
           'success': false,
-          'message': 'Failed to create garage: $responseData'
+          'message': 'Failed to create garage: $responseData',
         };
       }
     } catch (e) {
@@ -157,16 +167,16 @@ class GarageService {
     required String address,
     required String phone,
     required int brandId,
+    double? latitude, // new
+    double? longitude, // new
     XFile? logoImage, // Optional
     XFile? bannerImage, // Optional
   }) async {
     final token = await _storage.read(key: 'auth_token'); // Retrieve auth token
 
     try {
-      var uri = Uri.parse(
-          'https://atech-auto.com/api/garages/$garageId'); // API URL for updating a garage
-      var request = http.MultipartRequest(
-          'POST', uri); // Change to PUT request for updating
+      var uri = Uri.parse('https://atech-auto.com/api/garages/$garageId');
+      var request = http.MultipartRequest('POST', uri); // Or 'PUT'
 
       // Add headers
       request.headers.addAll({
@@ -180,6 +190,10 @@ class GarageService {
       request.fields['address'] = address;
       request.fields['phone'] = phone;
       request.fields['brand_id'] = brandId.toString();
+
+      // Add latitude & longitude if provided
+      if (latitude != null) request.fields['latitude'] = latitude.toString();
+      if (longitude != null) request.fields['longitude'] = longitude.toString();
 
       // Add logo image if provided
       if (logoImage != null) {
@@ -202,9 +216,10 @@ class GarageService {
       // Send the request
       var response = await request.send();
 
+      final responseData = await response.stream.bytesToString();
+      final data = jsonDecode(responseData);
+
       if (response.statusCode == 200) {
-        final responseData = await response.stream.bytesToString();
-        final data = jsonDecode(responseData);
         final updatedGarage = data['garage'];
         final newGarage = Garage(
           id: updatedGarage['id'],
@@ -218,19 +233,24 @@ class GarageService {
               'https://atech-auto.com/assets/images/garages/thumb/${updatedGarage['logo']}',
           bannerUrl:
               'https://atech-auto.com/assets/images/garages/thumb/${updatedGarage['banner']}',
+          latitude: updatedGarage['latitude'] != null
+              ? double.tryParse(updatedGarage['latitude'].toString())
+              : null,
+          longitude: updatedGarage['longitude'] != null
+              ? double.tryParse(updatedGarage['longitude'].toString())
+              : null,
         );
+
         Navigator.pop(context);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => AdminGarageDetailPage(
-              garage: newGarage,
-            ),
+            builder: (context) => AdminGarageDetailPage(garage: newGarage),
           ),
         );
+
         return {'success': true, 'message': responseData};
       } else {
-        final responseData = await response.stream.bytesToString();
         return {
           'success': false,
           'message': 'Failed to update garage: $responseData'
@@ -245,8 +265,8 @@ class GarageService {
   Future<Map<String, dynamic>> createPost({
     required BuildContext context,
     garage,
-    required String description, // Only description is required
-    required XFile image, // Image input from the UI
+    required String description,
+    required List<XFile> images,
   }) async {
     final token = await _storage.read(key: 'auth_token');
 
@@ -255,57 +275,71 @@ class GarageService {
       var request = http.MultipartRequest('POST', uri);
 
       request.headers.addAll({
-        'Content-Type': 'multipart/form-data',
         'Authorization': 'Bearer $token',
       });
 
       request.fields['description'] = description;
 
-      request.files.add(await http.MultipartFile.fromPath(
-        'image',
-        image.path,
-        contentType: MediaType('image', 'jpeg'),
-      ));
+      // Main image
+      if (images.isNotEmpty) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'image',
+          images.first.path,
+          contentType: MediaType('image', 'jpeg'),
+        ));
+      }
 
-      // Send the request
+      // Extra images
+      if (images.length > 1) {
+        for (int i = 1; i < images.length; i++) {
+          request.files.add(await http.MultipartFile.fromPath(
+            'images[]',
+            images[i].path,
+            contentType: MediaType('image', 'jpeg'),
+          ));
+        }
+      }
+
       var response = await request.send();
+      final responseData = await response.stream.bytesToString();
+
+      dynamic parsed;
+      try {
+        parsed = jsonDecode(responseData);
+      } catch (_) {
+        parsed = responseData; // fallback to raw HTML/text
+      }
 
       if (response.statusCode == 200) {
-        final responseData = await response.stream.bytesToString();
-        Navigator.pop(
-            context); // Pop the current screen (e.g., loading or form screen)
+        Navigator.pop(context);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => AdminGarageDetailPage(
-              garage: garage, // Pass any required parameters to the next page
-            ),
+            builder: (context) => AdminGarageDetailPage(garage: garage),
           ),
         );
 
-        // Return success response with the message from the API
-        return {'success': true, 'message': jsonDecode(responseData)};
+        return {'success': true, 'message': parsed};
       } else {
-        final responseData = await response.stream.bytesToString();
-        // Return failure response with the error message from the API
         return {
           'success': false,
-          'message': 'Failed to create Post: ${jsonDecode(responseData)}'
+          'message': 'Failed to create Post',
+          'error': parsed, // 👈 you’ll see raw HTML here if it’s not JSON
         };
       }
     } catch (e) {
-      print(e);
+      print("Exception: $e");
       return {'success': false, 'message': 'Failed to create Post'};
     }
   }
 
-  Future<Map<String, dynamic>> editPost({
-    context,
-    required String postId, // ID of the post to be updated
-    required Garage garage, // Garage object
-    required String description, // Only description is required
-    XFile? image, // Image input from the UI (optional)
-  }) async {
+  Future<Map<String, dynamic>> editPost(
+      {context,
+      required String postId, // ID of the post to be updated
+      required Garage garage, // Garage object
+      required String description, // Only description is required
+      List<XFile>? images // Image input from the UI (optional)
+      }) async {
     final token = await _storage.read(key: 'auth_token'); // Retrieve auth token
 
     try {
@@ -322,13 +356,25 @@ class GarageService {
       // Add fields
       request.fields['description'] = description;
 
-      // Add image if provided
-      if (image != null) {
+      // Add images if provided
+      if (images != null && images.isNotEmpty) {
+        // Attach first image as "image" (main image)
         request.files.add(await http.MultipartFile.fromPath(
           'image',
-          image.path,
+          images.first.path,
           contentType: MediaType('image', 'jpeg'),
         ));
+
+        // Attach the rest as "images[]" (additional images)
+        if (images.length > 1) {
+          for (int i = 1; i < images.length; i++) {
+            request.files.add(await http.MultipartFile.fromPath(
+              'images[]',
+              images[i].path,
+              contentType: MediaType('image', 'jpeg'),
+            ));
+          }
+        }
       }
 
       // Send the request
@@ -429,17 +475,61 @@ class GarageService {
     if (response.statusCode == 200) {
       Map<String, dynamic> result = jsonDecode(response.body);
       List<dynamic> data = result['data'];
+
       return data.map((item) {
+        // Get all image URLs
+        List<String> imageUrls = [];
+        if (item['images'] != null && item['images'].isNotEmpty) {
+          imageUrls = (item['images'] as List<dynamic>)
+              .map<String>((img) =>
+                  'https://atech-auto.com/assets/images/garage_posts/${img['image']}')
+              .toList();
+        }
+
         return GaragePost(
           id: item['id'],
           name: item['short_description'] ?? '',
-          imageUrl:
-              'https://atech-auto.com/assets/images/garage_posts/thumb/${item['images'][0]['image']}',
           description: item['long_description'] ?? '',
+          imageUrl: imageUrls.isNotEmpty ? imageUrls[0] : '', // first image
+          images: imageUrls, // all images
         );
       }).toList();
     } else {
       throw Exception('Failed to load Garages Posts');
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteImage(String imageName) async {
+    final token = await _storage.read(key: 'auth_token');
+    final encodedName = Uri.encodeComponent(imageName);
+    final url = Uri.parse(
+        'https://atech-auto.com/api/garages_posts/$encodedName/delete_image');
+
+    try {
+      final request = http.Request('GET', url); // API expects GET
+      request.headers.addAll({
+        'Authorization': 'Bearer $token',
+      });
+
+      final response = await request.send();
+      final responseData = await response.stream.bytesToString();
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(responseData);
+        return {
+          'success': data['success'] ?? false,
+          'message': data['message'] ?? 'Deleted successfully',
+        };
+      } else {
+        final data = jsonDecode(responseData);
+        return {
+          'success': false,
+          'message': data['message'] ?? 'Failed to delete image',
+        };
+      }
+    } catch (e) {
+      print("Delete Image Error: $e");
+      return {'success': false, 'message': 'Failed to delete image'};
     }
   }
 }

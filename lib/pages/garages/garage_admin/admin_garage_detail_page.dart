@@ -264,9 +264,15 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                                   final garagePost = garagesPosts[index];
                                   return Padding(
                                     padding: const EdgeInsets.only(
-                                        bottom: 0), // Spacing between cards
-                                    child: GestureDetector(
-                                      onTap: () {
+                                        bottom: 8), // spacing between cards
+                                    child: GaragePostCard(
+                                      aspectRatio: 16 / 9,
+                                      id: garagePost.id,
+                                      title: garagePost.name,
+                                      imageUrl: garagePost.imageUrl,
+                                      imageUrls: garagePost
+                                          .images, // optional list of images
+                                      onEdit: () {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -278,12 +284,6 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                                           ),
                                         );
                                       },
-                                      child: GaragePostCard(
-                                        aspectRatio: 16 / 9,
-                                        id: garagePost.id,
-                                        title: garagePost.name,
-                                        imageUrl: garagePost.imageUrl,
-                                      ),
                                     ),
                                   );
                                 },

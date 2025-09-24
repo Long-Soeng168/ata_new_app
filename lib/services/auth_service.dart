@@ -140,8 +140,7 @@ class AuthService {
     final token = await getToken();
 
     try {
-      var uri = Uri.parse(
-          'https://atech-auto.com/api/update_users/$userId');
+      var uri = Uri.parse('https://atech-auto.com/api/update_users/$userId');
       var request = http.MultipartRequest('POST', uri);
 
       // Headers
@@ -204,8 +203,7 @@ class AuthService {
     final token = await getToken();
 
     try {
-      var uri = Uri.parse(
-          'https://atech-auto.com/api/delete_users/$userId');
+      var uri = Uri.parse('https://atech-auto.com/api/delete_users/$userId');
 
       var request = http.MultipartRequest('POST', uri);
 
@@ -274,8 +272,7 @@ class AuthService {
 
   Future<Map<String, dynamic>> getUserGarage() async {
     final token = await getToken();
-    final url =
-        Uri.parse('https://atech-auto.com/api/user_garage');
+    final url = Uri.parse('https://atech-auto.com/api/user_garage');
 
     final response = await http.get(
       url,
@@ -292,6 +289,8 @@ class AuthService {
         id: data['id'],
         name: data['name'] ?? '',
         address: data['address'] ?? '',
+        latitude: data['latitude'] ?? 0,
+        longitude: data['longitude'] ?? 0,
         description: data['short_description'] ?? '',
         phone: data['phone'] ?? '',
         expertName: data['expert']?['name'] ?? '',
