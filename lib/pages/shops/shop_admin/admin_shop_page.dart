@@ -7,6 +7,8 @@ import 'package:ata_new_app/components/my_slide_show.dart';
 import 'package:ata_new_app/components/my_tab_button.dart';
 import 'package:ata_new_app/models/product.dart';
 import 'package:ata_new_app/models/shop.dart';
+import 'package:ata_new_app/pages/app_info/web_view_page.dart';
+import 'package:ata_new_app/pages/main_page.dart';
 import 'package:ata_new_app/pages/shops/shop_admin/admin_product_detail_page.dart';
 import 'package:ata_new_app/pages/shops/shop_admin/product_create_page.dart';
 import 'package:ata_new_app/pages/shops/shop_admin/shop_edit_page.dart';
@@ -33,6 +35,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
   void initState() {
     super.initState();
     getProducts();
+
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
               _scrollController.position.maxScrollExtent - 200 &&
@@ -40,7 +43,129 @@ class _AdminShopPageState extends State<AdminShopPage> {
         loadMoreProducts();
       }
     });
-    print(widget.shop.id);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkShopStatus();
+    });
+  }
+
+  void _checkShopStatus() {
+    final status = widget.shop.status.toLowerCase();
+
+    if (status == 'pending' || status == 'suspended' || status == 'rejected') {
+      IconData icon;
+      Color iconColor;
+      String message;
+
+      switch (status) {
+        case 'pending':
+          icon = Icons.hourglass_bottom;
+          iconColor = Colors.amber;
+          message =
+              "Your shop is pending approval. Please wait for verification.";
+          break;
+        case 'suspended':
+          icon = Icons.pause_circle_filled;
+          iconColor = Colors.orange;
+          message =
+              "Your shop has been suspended. Contact support for details.";
+          break;
+        case 'rejected':
+          icon = Icons.block;
+          iconColor = Colors.red;
+          message = "Your shop has been rejected. Contact us for further info.";
+          break;
+        default:
+          icon = Icons.info;
+          iconColor = Colors.blueGrey;
+          message = "Status: $status";
+      }
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            title: Row(
+              children: [
+                Icon(icon, color: iconColor, size: 28),
+                SizedBox(width: 8),
+                Text(
+                  "Shop Status",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(message, style: TextStyle(fontSize: 16, height: 1.4)),
+                SizedBox(height: 12),
+                Text(
+                  "Current Status: ${status[0].toUpperCase()}${status.substring(1)}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: iconColor,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+            actionsPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            actions: [
+              TextButton.icon(
+                style: TextButton.styleFrom(foregroundColor: Colors.grey[700]),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ShopEditPage(shop: widget.shop)),
+                  );
+                },
+                icon: Icon(Icons.edit, size: 18),
+                label: Text("Edit Shop"),
+              ),
+              TextButton.icon(
+                style: TextButton.styleFrom(foregroundColor: Colors.grey[700]),
+                onPressed: () {
+                  final route = MaterialPageRoute(
+                    builder: (context) => WebViewPage(
+                      title: 'Contact Us',
+                      url: 'https://atech-auto.com/contact-us-webview',
+                    ),
+                  );
+                  Navigator.push(context, route);
+                },
+                icon: Icon(Icons.support_agent, size: 18),
+                label: Text("Contact Us"),
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage()),
+                  );
+                },
+                icon: const Icon(Icons.home, color: Colors.white, size: 18),
+                label: const Text(
+                  "Back to Home",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   List<Product> products = [];
@@ -147,29 +272,31 @@ class _AdminShopPageState extends State<AdminShopPage> {
           ),
         ],
       ),
-      floatingActionButton: SizedBox(
-        height: 70.0, // Custom height
-        width: 70.0, // Custom width
-        child: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ProductCreatePage(
+      floatingActionButton: widget.shop.status == 'approved'
+          ? SizedBox(
+              height: 70.0, // Custom height
+              width: 70.0, // Custom width
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductCreatePage(
                         shop: widget.shop,
-                      )),
-            );
-          },
-          shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(100), // Large radius for full rounding
-          ),
-          child: Icon(
-            Icons.add,
-            size: 35,
-          ),
-        ),
-      ),
+                      ),
+                    ),
+                  );
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100), // Fully rounded
+                ),
+                child: const Icon(
+                  Icons.add,
+                  size: 35,
+                ),
+              ),
+            )
+          : null,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -144,24 +144,42 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
   final _productDescriptionController = TextEditingController();
 
   // Variable for product image
-  XFile? _productImage;
+  List<XFile> _productImages = [];
   final ImagePicker _picker = ImagePicker();
 
   bool _isLoading = false;
 
   // Function to pick image for the product
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
+  Future<void> _pickImages() async {
+    final pickedFiles = await _picker.pickMultiImage();
+    if (pickedFiles.isEmpty) return;
+
+    final List<XFile> validImages = [];
+    for (var file in pickedFiles) {
+      final fileSize = await file.length(); // in bytes
+      if (fileSize <= 2 * 1024 * 1024) {
+        validImages.add(file);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "${file.name} is too large. Max 2 MB.",
+            ),
+          ),
+        );
+      }
+    }
+
+    if (validImages.isNotEmpty) {
       setState(() {
-        _productImage = pickedFile;
+        _productImages.addAll(validImages); // append to existing images
       });
     }
   }
 
   // Function to handle product creation
   Future<void> _createProduct() async {
-    if (_productFormKey.currentState!.validate() && _productImage != null) {
+    if (_productFormKey.currentState!.validate() && _productImages != null) {
       setState(() {
         _isLoading = true; // Show loading indicator
       });
@@ -176,8 +194,8 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
         brandId: brandId ?? -1,
         brandModelId: brandModelId ?? -1,
         bodyTypeId: bodyTypeId ?? -1,
-        description: _productDescriptionController.text, // Pass description
-        image: _productImage!,
+        description: _productDescriptionController.text,
+        images: _productImages, // <- pass list now
       );
 
       setState(() {
@@ -195,6 +213,38 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Please complete all fields and upload an image")));
     }
+  }
+
+  Widget _buildImageCard(
+      {required Widget child,
+      VoidCallback? onDelete,
+      bool isDeleting = false}) {
+    return Stack(
+      children: [
+        AspectRatio(aspectRatio: 1, child: child),
+        if (isDeleting)
+          Positioned.fill(
+            child: Container(
+              color: Colors.black45,
+              child: const Center(
+                  child: CircularProgressIndicator(color: Colors.white)),
+            ),
+          )
+        else if (onDelete != null)
+          Positioned(
+            top: 4,
+            right: 4,
+            child: GestureDetector(
+              onTap: onDelete,
+              child: CircleAvatar(
+                radius: 12,
+                backgroundColor: Colors.black54,
+                child: Icon(Icons.close, size: 14, color: Colors.white),
+              ),
+            ),
+          ),
+      ],
+    );
   }
 
   @override
@@ -517,27 +567,58 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
 
               // Product image picker with preview
               Center(
-                child: GestureDetector(
-                  onTap: _pickImage,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("Product Image",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 8),
-                      _productImage == null
-                          ? Icon(Icons.image,
-                              size: 100, color: Colors.grey.shade400)
-                          : Image.file(File(_productImage!.path), height: 100),
-                      TextButton(
-                        onPressed: _pickImage,
-                        child: Text(_productImage == null
-                            ? "Upload Image"
-                            : "Change Image"),
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Product Images",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 8),
+                    GestureDetector(
+                      onTap: _pickImages,
+                      child: _productImages.isEmpty
+                          ? Container(
+                              width: double.infinity,
+                              color: Colors.grey.shade200,
+                              child: AspectRatio(
+                                aspectRatio: 16 / 9,
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.image,
+                                          color: Colors.grey.shade400,
+                                          size: 50),
+                                      Text('Tap to pick images'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              height: 120,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: _productImages.length,
+                                separatorBuilder: (_, __) =>
+                                    const SizedBox(width: 8),
+                                itemBuilder: (_, index) => _buildImageCard(
+                                  child: Image.file(
+                                      File(_productImages[index].path),
+                                      fit: BoxFit.cover),
+                                  onDelete: () => setState(
+                                      () => _productImages.removeAt(index)),
+                                ),
+                              ),
+                            ),
+                    ),
+                    TextButton(
+                      onPressed: _pickImages,
+                      child: Text(_productImages.isEmpty
+                          ? "Upload Images"
+                          : "Add More"),
+                    ),
+                  ],
                 ),
               ),
 

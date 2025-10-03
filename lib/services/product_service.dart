@@ -150,13 +150,12 @@ class ProductService {
     required int brandId,
     required int brandModelId,
     required int bodyTypeId,
-    required XFile image,
+    required List<XFile> images, // <- changed from single XFile
   }) async {
     final token = await _storage.read(key: 'auth_token');
 
     try {
-      var uri = Uri.parse(
-          'https://atech-auto.com/api/products'); // API URL for creating a product
+      var uri = Uri.parse('https://atech-auto.com/api/products');
       var request = http.MultipartRequest('POST', uri);
 
       // Add headers
@@ -174,29 +173,30 @@ class ProductService {
       request.fields['brandId'] = brandId.toString();
       request.fields['brandModelId'] = brandModelId.toString();
 
-      // Add the product image
-      request.files.add(await http.MultipartFile.fromPath(
-        'image', // Ensure this key matches your API's expected field name for the product image
-        image.path,
-        contentType: MediaType('image', 'jpeg'),
-      ));
+      // Add all images
+      for (var i = 0; i < images.length; i++) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'images[]', // <- your API must support array field like this
+          images[i].path,
+          contentType: MediaType('image', 'jpeg'),
+        ));
+      }
 
       // Send the request
       var response = await request.send();
 
+      final responseData = await response.stream.bytesToString();
+
       if (response.statusCode == 200) {
-        final responseData = await response.stream.bytesToString();
         Navigator.pop(context);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => AdminShopPage(
-                    shop: shop,
-                  )),
+            builder: (context) => AdminShopPage(shop: shop),
+          ),
         );
         return {'success': true, 'message': jsonDecode(responseData)};
       } else {
-        final responseData = await response.stream.bytesToString();
         return {
           'success': false,
           'message': 'Failed to create product: ${jsonDecode(responseData)}'
@@ -219,7 +219,7 @@ class ProductService {
     required int brandId,
     required int brandModelId,
     required int bodyTypeId,
-    required XFile? image,
+    List<XFile>? images,
   }) async {
     final token = await _storage.read(key: 'auth_token');
 
@@ -245,12 +245,24 @@ class ProductService {
       request.fields['brandModelId'] = brandModelId.toString();
 
       // Add the product image
-      if (image != null) {
+      if (images != null && images.isNotEmpty) {
+        // Attach first image as "image" (main image)
         request.files.add(await http.MultipartFile.fromPath(
-          'image', // Ensure this key matches your API's expected field name for the product image
-          image.path,
+          'image',
+          images.first.path,
           contentType: MediaType('image', 'jpeg'),
         ));
+
+        // Attach the rest as "images[]" (additional images)
+        if (images.length > 1) {
+          for (int i = 1; i < images.length; i++) {
+            request.files.add(await http.MultipartFile.fromPath(
+              'images[]',
+              images[i].path,
+              contentType: MediaType('image', 'jpeg'),
+            ));
+          }
+        }
       }
 
       // Send the request
@@ -314,6 +326,40 @@ class ProductService {
     } catch (e) {
       print(e);
       return {'success': false, 'message': 'Failed to delete product'};
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteImage(String imageName) async {
+    final token = await _storage.read(key: 'auth_token');
+    final encodedName = Uri.encodeComponent(imageName);
+    final url = Uri.parse(
+        'https://atech-auto.com/api/products/$encodedName/delete_image');
+
+    try {
+      final request = http.Request('GET', url); // API expects GET
+      request.headers.addAll({
+        'Authorization': 'Bearer $token',
+      });
+
+      final response = await request.send();
+      final responseData = await response.stream.bytesToString();
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(responseData);
+        return {
+          'success': data['success'] ?? false,
+          'message': data['message'] ?? 'Deleted successfully',
+        };
+      } else {
+        final data = jsonDecode(responseData);
+        return {
+          'success': false,
+          'message': data['message'] ?? 'Failed to delete image',
+        };
+      }
+    } catch (e) {
+      print("Delete Image Error: $e");
+      return {'success': false, 'message': 'Failed to delete image'};
     }
   }
 }

@@ -255,6 +255,7 @@ class AuthService {
       final shop = Shop(
         id: data['id'],
         name: data['name'] ?? '',
+        status: data['status'] ?? '',
         description: data['short_description'] ?? '',
         address: data['address'] ?? '',
         phone: data['phone'] ?? '',
@@ -292,6 +293,7 @@ class AuthService {
         latitude: data['latitude'] ?? 0,
         longitude: data['longitude'] ?? 0,
         description: data['short_description'] ?? '',
+        status: data['status'] ?? '',
         phone: data['phone'] ?? '',
         expertName: data['expert']?['name'] ?? '',
         expertId: data['expert']?['id'] ?? -1,
@@ -300,6 +302,8 @@ class AuthService {
         bannerUrl:
             'https://atech-auto.com/assets/images/garages/thumb/${data['banner']}',
       );
+
+      print(garage.status);
 
       return {'success': true, 'garage': garage};
     } else {

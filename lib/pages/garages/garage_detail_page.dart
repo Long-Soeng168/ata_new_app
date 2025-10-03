@@ -226,6 +226,7 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                                       id: garagePost.id,
                                       title: garagePost.name,
                                       imageUrl: garagePost.imageUrl,
+                                      imageUrls: garagePost.images,
                                     ),
                                   );
                                 },

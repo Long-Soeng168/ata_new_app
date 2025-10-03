@@ -24,7 +24,6 @@ class MyDrawer extends StatelessWidget {
     try {
       final userInfo = await _authService.getUserInfo();
       final userShop = await _authService.getUserShop();
-      print(userShop);
       final userGarage = await _authService.getUserGarage();
       return {
         'userInfo': userInfo,

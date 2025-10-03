@@ -3,6 +3,7 @@ import 'package:ata_new_app/components/my_success_dialog.dart';
 import 'package:ata_new_app/config/env.dart';
 import 'package:ata_new_app/pages/accounts/account_page.dart';
 import 'package:ata_new_app/pages/auth/register_page.dart';
+import 'package:ata_new_app/pages/main_page.dart';
 import 'package:ata_new_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -41,11 +42,16 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (BuildContext context) {
             return SuccessDialog(
-                message: 'Login Successfully!',
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                });
+              message: 'Login Successfully!',
+              onPressed: () {
+                // Contact support page
+                Navigator.pop(context);
+                final route = MaterialPageRoute(
+                  builder: (context) => MainPage(),
+                );
+                Navigator.push(context, route);
+              },
+            );
           },
         );
       } else {
@@ -186,12 +192,13 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const RegisterPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterPage()),
                       );
                     },
                     style: TextButton.styleFrom(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 20),
                       backgroundColor: Theme.of(context)
                           .primaryColor
                           .withOpacity(0.1), // Subtle background

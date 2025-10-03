@@ -6,6 +6,7 @@ class Shop {
   final String bannerUrl;
   final String address;
   final String phone; 
+  final String status; 
   final int ownerId;
 
   Shop({
@@ -16,6 +17,7 @@ class Shop {
     required this.bannerUrl,
     required this.address,
     required this.phone, 
+    required this.status, 
     this.ownerId = 0,
   });
 }

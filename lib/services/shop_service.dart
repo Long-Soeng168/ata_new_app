@@ -33,6 +33,7 @@ class ShopService {
         return Shop(
           id: item['id'],
           name: item['name'] ?? '',
+          status: item['status'] ?? '',
           description: item['short_description'] ?? '',
           address: item['address'] ?? '',
           phone: item['phone'] ?? '',
@@ -57,6 +58,7 @@ class ShopService {
     return Shop(
       id: data['id'],
       name: data['name'] ?? '',
+      status: data['status'] ?? '',
       description: data['short_description'] ?? '',
       address: data['address'] ?? '',
       phone: data['phone'] ?? '',
@@ -120,6 +122,7 @@ class ShopService {
         final newShop = Shop(
           id: createdShop['id'],
           name: createdShop['name'] ?? '',
+          status: createdShop['status'] ?? '',
           description: createdShop['short_description'] ?? '',
           address: createdShop['address'] ?? '',
           phone: createdShop['phone'] ?? '',
@@ -204,6 +207,7 @@ class ShopService {
         final newShop = Shop(
           id: updatedShop['id'],
           name: updatedShop['name'] ?? '',
+          status: updatedShop['status'] ?? '',
           description: updatedShop['short_description'] ?? '',
           address: updatedShop['address'] ?? '',
           phone: updatedShop['phone'] ?? '',

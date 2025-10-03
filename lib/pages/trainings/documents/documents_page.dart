@@ -1,6 +1,9 @@
 import 'package:ata_new_app/components/cards/folder_card.dart';
 import 'package:ata_new_app/config/env.dart';
 import 'package:ata_new_app/models/document.dart';
+import 'package:ata_new_app/pages/app_info/web_view_page.dart';
+import 'package:ata_new_app/pages/auth/login_page.dart';
+import 'package:ata_new_app/pages/main_page.dart';
 import 'package:ata_new_app/pages/pdf_view_page.dart';
 import 'package:ata_new_app/services/document_service.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +19,8 @@ class DocumentsPage extends StatefulWidget {
 }
 
 class _DocumentsPageState extends State<DocumentsPage> {
-  late Document documentObjects = Document(folders: [], files: []);
+  late Document documentObjects =
+      Document(folders: [], files: [], status: 'unknown');
   bool isLoadingDocuments = true;
   bool isLoadingDocumentsError = false;
 
@@ -49,6 +53,14 @@ class _DocumentsPageState extends State<DocumentsPage> {
         documentObjects = fetchedPublications;
         isLoadingDocuments = false;
       });
+      // after loading, check status
+
+      if (widget.path.isNotEmpty && widget.path != 'Documents') {
+        // print(widget.path);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _checkDocumentStatus();
+        });
+      }
     } catch (error) {
       setState(() {
         isLoadingDocuments = false;
@@ -78,6 +90,125 @@ class _DocumentsPageState extends State<DocumentsPage> {
             .toLowerCase()
             .contains(searchQuery.toLowerCase()))
         .toList();
+  }
+
+  void _checkDocumentStatus() {
+    final status = (documentObjects.status ?? '').toLowerCase();
+    if (status.isEmpty) return;
+    // print(status);
+
+    IconData icon;
+    Color iconColor;
+    String message;
+
+    switch (status) {
+      case 'need_login':
+        icon = Icons.lock;
+        iconColor = Colors.orange;
+        message = "You need to log in to access these documents.";
+        break;
+      case 'need_purchase':
+        icon = Icons.shopping_cart;
+        iconColor = Colors.red;
+        message = "You need to purchase access before reading these documents.";
+        break;
+      case 'can_read':
+        return; // no popup, user can access directly
+      default:
+        return; // unknown status, skip
+    }
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Row(
+            children: [
+              Icon(icon, color: iconColor, size: 28),
+              const SizedBox(width: 8),
+              const Text(
+                "Document Access",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(message, style: const TextStyle(fontSize: 16, height: 1.4)),
+            ],
+          ),
+          actionsPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          actions: [
+            TextButton.icon(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.grey[700],
+              ),
+              onPressed: () {
+                // TODO: replace with real contact navigation
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   SnackBar(content: Text("Redirecting to Contact Us...")),
+                // );
+                final route = MaterialPageRoute(
+                    builder: (context) => WebViewPage(
+                          title: 'Contact Us',
+                          url: 'https://atech-auto.com/contact-us-webview',
+                        ));
+                Navigator.push(context, route);
+              },
+              icon: Icon(Icons.support_agent, size: 18),
+              label: Text("Contact Us"),
+            ),
+            if (status == 'need_login')
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).primaryColor, // always fixed color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+                icon: const Icon(Icons.login, color: Colors.white, size: 18),
+                label: const Text(
+                  "Login",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    Theme.of(context).primaryColor, // always fixed color
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainPage()),
+                );
+              },
+              icon: const Icon(Icons.home, color: Colors.white, size: 18),
+              label: const Text(
+                "Back to Home",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

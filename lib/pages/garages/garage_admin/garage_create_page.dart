@@ -73,15 +73,27 @@ class _GarageCreatePageState extends State<GarageCreatePage> {
 
   Future<void> _pickImage(bool isLogo) async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        if (isLogo) {
-          _logoImage = pickedFile;
-        } else {
-          _bannerImage = pickedFile;
-        }
-      });
+    if (pickedFile == null) return;
+
+    final fileSize = await pickedFile.length(); // in bytes
+    if (fileSize > 2 * 1024 * 1024) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "${pickedFile.name} is too large. Maximum allowed size is 2 MB.",
+          ),
+        ),
+      );
+      return;
     }
+
+    setState(() {
+      if (isLogo) {
+        _logoImage = pickedFile;
+      } else {
+        _bannerImage = pickedFile;
+      }
+    });
   }
 
   Future<void> _createGarage() async {
@@ -259,8 +271,9 @@ class _GarageCreatePageState extends State<GarageCreatePage> {
                         : Image.file(File(_logoImage!.path), height: 100),
                     TextButton(
                         onPressed: () => _pickImage(true),
-                        child: Text(
-                            _logoImage == null ? "Upload Logo" : "Change Logo")),
+                        child: Text(_logoImage == null
+                            ? "Upload Logo"
+                            : "Change Logo")),
                   ],
                 ),
               ),
@@ -275,8 +288,9 @@ class _GarageCreatePageState extends State<GarageCreatePage> {
                         : Image.file(File(_bannerImage!.path), height: 100),
                     TextButton(
                         onPressed: () => _pickImage(false),
-                        child: Text(
-                            _bannerImage == null ? "Upload Banner" : "Change Banner")),
+                        child: Text(_bannerImage == null
+                            ? "Upload Banner"
+                            : "Change Banner")),
                   ],
                 ),
               ),

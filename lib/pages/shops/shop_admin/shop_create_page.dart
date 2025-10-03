@@ -31,15 +31,27 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
   // Function to pick image for logo or banner
   Future<void> _pickImage(bool isLogo) async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        if (isLogo) {
-          _logoImage = pickedFile;
-        } else {
-          _bannerImage = pickedFile;
-        }
-      });
+    if (pickedFile == null) return;
+
+    final fileSize = await pickedFile.length(); // in bytes
+    if (fileSize > 2 * 1024 * 1024) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "${pickedFile.name} is too large. Maximum allowed size is 2 MB.",
+          ),
+        ),
+      );
+      return;
     }
+
+    setState(() {
+      if (isLogo) {
+        _logoImage = pickedFile;
+      } else {
+        _bannerImage = pickedFile;
+      }
+    });
   }
 
   // Function to handle shop creation
@@ -67,8 +79,8 @@ class _ShopCreatePageState extends State<ShopCreatePage> {
       });
 
       if (response['success']) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Shop created successfully")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Shop created successfully")));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response['message'])));

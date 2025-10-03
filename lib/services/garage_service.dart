@@ -31,7 +31,7 @@ class GarageService {
       url += '?${queryParams.join('&')}';
     }
 
-    print(url);
+    // print(url);
 
     final uri = Uri.parse(url);
     final response = await http.get(uri);
@@ -48,6 +48,7 @@ class GarageService {
           longitude: item['longitude'] ?? 0,
           phone: item['phone'] ?? '',
           address: item['address'] ?? '',
+          status: item['status'] ?? '',
           description: item['description'] ?? '',
           expertName: item['expert']?['name'] ?? '',
           expertId: item['expert']?['id'] ?? -1,
@@ -122,6 +123,7 @@ class GarageService {
         final newGarage = Garage(
           id: createdGarage['id'],
           name: createdGarage['name'] ?? '',
+          status: createdGarage['status'] ?? '',
           description: createdGarage['short_description'] ?? '',
           address: createdGarage['address'] ?? '',
           phone: createdGarage['phone'] ?? '',
@@ -224,6 +226,7 @@ class GarageService {
         final newGarage = Garage(
           id: updatedGarage['id'],
           name: updatedGarage['name'] ?? '',
+          status: updatedGarage['status'] ?? '',
           description: updatedGarage['short_description'] ?? '',
           address: updatedGarage['address'] ?? '',
           phone: updatedGarage['phone'] ?? '',

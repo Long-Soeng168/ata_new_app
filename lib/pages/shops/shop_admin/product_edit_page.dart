@@ -47,6 +47,11 @@ class _ProductEditPageState extends State<ProductEditPage> {
   bool isLoadingBrandModelsError = false;
   int? brandModelId;
 
+  List<String> _oldImages = [];
+  List<XFile> _newImages = [];
+  int? _deletingImageIndex; // track deleting image
+  bool _isLoading = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -64,6 +69,10 @@ class _ProductEditPageState extends State<ProductEditPage> {
       _productNameController.text = widget.product.name;
       _productPriceController.text = widget.product.price;
       _productDescriptionController.text = widget.product.description;
+
+      if (widget.product.imagesUrls.isNotEmpty) {
+        _oldImages = widget.product.imagesUrls;
+      }
     });
   }
 
@@ -166,20 +175,32 @@ class _ProductEditPageState extends State<ProductEditPage> {
   XFile? _productImage;
   final ImagePicker _picker = ImagePicker();
 
-  bool _isLoading = false;
-
   // Function to pick image for the product
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _productImage = pickedFile;
-      });
+  Future<void> _pickImages() async {
+    final pickedFiles = await _picker.pickMultiImage();
+    if (pickedFiles.isEmpty) return;
+
+    final List<XFile> validImages = [];
+    for (var file in pickedFiles) {
+      final fileSize = await file.length(); // in bytes
+      if (fileSize <= 2 * 1024 * 1024) {
+        validImages.add(file);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  "${file.name} is too large. Maximum allowed size is 2 MB.")),
+        );
+      }
+    }
+
+    if (validImages.isNotEmpty) {
+      setState(() => _newImages = validImages);
     }
   }
 
   // Function to handle product creation
-  Future<void> _createProduct() async {
+  Future<void> _updateProduct() async {
     if (_productFormKey.currentState!.validate()) {
       setState(() {
         _isLoading = true; // Show loading indicator
@@ -197,7 +218,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
         brandModelId: brandModelId ?? -1,
         bodyTypeId: bodyTypeId ?? -1,
         description: _productDescriptionController.text, // Pass description
-        image: _productImage,
+        images: _newImages,
       );
 
       setState(() {
@@ -215,6 +236,73 @@ class _ProductEditPageState extends State<ProductEditPage> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Please complete all fields")));
     }
+  }
+
+  // Delete single old image
+  void _confirmDeleteOldImage(int index) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Delete Image'),
+        content: Text('Are you sure you want to delete this image?'),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: Text('Delete')),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
+
+    setState(() => _deletingImageIndex = index);
+
+    final imageName = _oldImages[index].split('/').last;
+    final result = await ProductService().deleteImage(imageName);
+
+    setState(() => _deletingImageIndex = null);
+
+    if (result['success']) {
+      setState(() => _oldImages.removeAt(index));
+    }
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(result['message'])));
+  }
+
+  Widget _buildImageCard(
+      {required Widget child,
+      VoidCallback? onDelete,
+      bool isDeleting = false}) {
+    return Stack(
+      children: [
+        AspectRatio(aspectRatio: 1, child: child),
+        if (isDeleting)
+          Positioned.fill(
+            child: Container(
+              color: Colors.black45,
+              child: const Center(
+                  child: CircularProgressIndicator(color: Colors.white)),
+            ),
+          )
+        else if (onDelete != null)
+          Positioned(
+            top: 4,
+            right: 4,
+            child: GestureDetector(
+              onTap: onDelete,
+              child: CircleAvatar(
+                radius: 12,
+                backgroundColor: Colors.black54,
+                child: Icon(Icons.close, size: 14, color: Colors.white),
+              ),
+            ),
+          ),
+      ],
+    );
   }
 
   @override
@@ -536,29 +624,62 @@ class _ProductEditPageState extends State<ProductEditPage> {
               SizedBox(height: 12),
 
               // Product image picker with preview
-              Center(
-                child: GestureDetector(
-                  onTap: _pickImage,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("Product Image",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 8),
-                      _productImage == null
-                          ? Icon(Icons.image,
-                              size: 100, color: Colors.grey.shade400)
-                          : Image.file(File(_productImage!.path), height: 100),
-                      TextButton(
-                        onPressed: _pickImage,
-                        child: Text(_productImage == null
-                            ? "Upload Image"
-                            : "Change Image"),
-                      ),
-                    ],
+              // Old Images
+              if (_oldImages.isNotEmpty) ...[
+                Text("Existing Images"),
+                const SizedBox(height: 8),
+                SizedBox(
+                  height: 120,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _oldImages.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 8),
+                    itemBuilder: (_, index) => _buildImageCard(
+                      child:
+                          Image.network(_oldImages[index], fit: BoxFit.cover),
+                      onDelete: () => _confirmDeleteOldImage(index),
+                      isDeleting: _deletingImageIndex == index,
+                    ),
                   ),
                 ),
+                const SizedBox(height: 12),
+              ],
+
+              // New Images
+              GestureDetector(
+                onTap: _pickImages,
+                child: _newImages.isEmpty
+                    ? Container(
+                        width: double.infinity,
+                        color: Colors.grey.shade200,
+                        child: AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.image,
+                                    color: Colors.grey.shade400, size: 50),
+                                Text('Tap to pick images'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        height: 120,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _newImages.length,
+                          separatorBuilder: (_, __) => const SizedBox(width: 8),
+                          itemBuilder: (_, index) => _buildImageCard(
+                            child: Image.file(File(_newImages[index].path),
+                                fit: BoxFit.cover),
+                            onDelete: () =>
+                                setState(() => _newImages.removeAt(index)),
+                          ),
+                        ),
+                      ),
               ),
 
               SizedBox(height: 20),
@@ -567,7 +688,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
               _isLoading
                   ? Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
-                      onPressed: _createProduct, title: 'Update Product')
+                      onPressed: _updateProduct, title: 'Update Product')
             ],
           ),
         ),

@@ -83,15 +83,27 @@ class _GarageEditPageState extends State<GarageEditPage> {
 
   Future<void> _pickImage(bool isLogo) async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        if (isLogo) {
-          _logoImage = pickedFile;
-        } else {
-          _bannerImage = pickedFile;
-        }
-      });
+    if (pickedFile == null) return;
+
+    final fileSize = await pickedFile.length(); // in bytes
+    if (fileSize > 2 * 1024 * 1024) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "${pickedFile.name} is too large. Maximum allowed size is 2 MB.",
+          ),
+        ),
+      );
+      return;
     }
+
+    setState(() {
+      if (isLogo) {
+        _logoImage = pickedFile;
+      } else {
+        _bannerImage = pickedFile;
+      }
+    });
   }
 
   Future<void> _updateGarage() async {

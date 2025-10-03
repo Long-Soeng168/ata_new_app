@@ -5,6 +5,7 @@ class Video {
   final String imageUrl;
   final String videoUrl;
   final String description;
+  final String status;
   final bool isFree;
 
   Video({
@@ -14,6 +15,7 @@ class Video {
       this.videoUrl = '',
       this.viewsCount = '',
       this.description = '',
+      required this.status,
       this.isFree = false,
   });
 }

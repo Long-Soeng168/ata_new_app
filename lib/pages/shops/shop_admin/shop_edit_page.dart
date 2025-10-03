@@ -43,15 +43,27 @@ class _ShopEditPageState extends State<ShopEditPage> {
   // Function to pick image for logo or banner
   Future<void> _pickImage(bool isLogo) async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        if (isLogo) {
-          _logoImage = pickedFile;
-        } else {
-          _bannerImage = pickedFile;
-        }
-      });
+    if (pickedFile == null) return;
+
+    final fileSize = await pickedFile.length(); // in bytes
+    if (fileSize > 2 * 1024 * 1024) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "${pickedFile.name} is too large. Maximum allowed size is 2 MB.",
+          ),
+        ),
+      );
+      return;
     }
+
+    setState(() {
+      if (isLogo) {
+        _logoImage = pickedFile;
+      } else {
+        _bannerImage = pickedFile;
+      }
+    });
   }
 
   // Function to handle shop creation
@@ -79,15 +91,15 @@ class _ShopEditPageState extends State<ShopEditPage> {
       });
 
       if (response['success']) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Shop Update successfully")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Shop Update successfully")));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response['message'])));
       }
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Please complete all fields")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please complete all fields")));
     }
   }
 
@@ -196,9 +208,12 @@ class _ShopEditPageState extends State<ShopEditPage> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
-                    _logoImage == null
-                        ? Icon(Icons.image, size: 100, color: Colors.grey.shade400)
-                        : Image.file(File(_logoImage!.path), height: 100),
+                    _logoImage != null
+                        ? Image.file(File(_logoImage!.path), height: 100)
+                        : (widget.shop.logoUrl.isNotEmpty
+                            ? Image.network(widget.shop.logoUrl, height: 100)
+                            : Icon(Icons.image,
+                                size: 100, color: Colors.grey.shade400)),
                     TextButton(
                       onPressed: () => _pickImage(true),
                       child: Text(
@@ -218,9 +233,12 @@ class _ShopEditPageState extends State<ShopEditPage> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
-                    _bannerImage == null
-                        ? Icon(Icons.image, size: 100, color: Colors.grey.shade400)
-                        : Image.file(File(_bannerImage!.path), height: 100),
+                    _bannerImage != null
+                        ? Image.file(File(_bannerImage!.path), height: 100)
+                        : (widget.shop.bannerUrl.isNotEmpty
+                            ? Image.network(widget.shop.bannerUrl, height: 100)
+                            : Icon(Icons.image,
+                                size: 100, color: Colors.grey.shade400)),
                     TextButton(
                       onPressed: () => _pickImage(false),
                       child: Text(_bannerImage == null

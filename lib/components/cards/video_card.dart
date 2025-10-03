@@ -112,7 +112,7 @@ class VideoCard extends StatelessWidget {
                             ),
                             isFree
                                 ? Text(
-                                    'Free',
+                                    '',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(

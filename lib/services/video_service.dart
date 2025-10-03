@@ -13,13 +13,21 @@ import 'package:provider/provider.dart';
 
 class VideoService {
   static Future<List<Video>> fetchVideos({int? playlistId}) async {
+    final FlutterSecureStorage _storage = const FlutterSecureStorage();
+    final token = await _storage.read(key: 'auth_token');
+
     String url = 'https://atech-auto.com/api/videos';
     if (playlistId != null) {
       url += '?playlistId=$playlistId';
     }
 
     final uri = Uri.parse(url);
-    final response = await http.get(uri);
+    final response = await http.get(
+      uri,
+      headers: {
+        'Authorization': 'Bearer $token', // add token
+      },
+    );
 
     if (response.statusCode == 200) {
       Map<String, dynamic> result = jsonDecode(response.body);
@@ -28,6 +36,7 @@ class VideoService {
         return Video(
           id: item['id'],
           name: item['title'],
+          status: item['status'],
           viewsCount: item['views_count']?.toString() ?? '0',
           isFree: item['is_free'] == 0 ? false : true,
           imageUrl:
@@ -51,6 +60,7 @@ class VideoService {
     return Video(
       id: data['id'],
       name: data['title'],
+      status: data['status'],
       description: data['description'] ?? '',
       viewsCount: data['views_count']?.toString() ?? '0',
       isFree: data['is_free'] == 0 ? false : true,

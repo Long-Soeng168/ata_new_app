@@ -100,6 +100,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     try {
       final fetchedShopDetail =
           await ShopService.fetchShopById(id: widget.product.shopId);
+      print(fetchedShopDetail);
       setState(() {
         shopDetail = fetchedShopDetail;
         isLoadingShopDetail = false;
