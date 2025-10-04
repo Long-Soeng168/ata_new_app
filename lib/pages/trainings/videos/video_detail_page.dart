@@ -5,6 +5,8 @@ import 'package:ata_new_app/components/my_success_dialog.dart';
 import 'package:ata_new_app/components/my_video_player.dart';
 import 'package:ata_new_app/models/video.dart';
 import 'package:ata_new_app/models/video_playlist.dart';
+import 'package:ata_new_app/pages/app_info/web_view_page.dart';
+import 'package:ata_new_app/pages/auth/login_page.dart';
 import 'package:ata_new_app/pages/trainings/videos/cart/video_cart_page.dart';
 import 'package:ata_new_app/providers/cart_provider.dart';
 import 'package:ata_new_app/services/video_service.dart';
@@ -104,75 +106,147 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
   }
 
   void _showPurchaseDialog(Video video) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Buy to Watch'),
-          content: Text(
-              'You need to buy this course on our website to watch it.'),
-          // actions: [
-          //   Row(
-          //     mainAxisAlignment: MainAxisAlignment.end,
-          //     children: [
-          //       OutlinedButton(
-          //         style: OutlinedButton.styleFrom(
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(12),
-          //           ),
-          //           side: BorderSide(
-          //               color: Theme.of(context)
-          //                   .colorScheme
-          //                   .primary), // Set border color here
-          //         ),
-          //         onPressed: () {
-          //           Navigator.of(context).pop();
-          //           _addToCart(); // Call your add to cart method
-          //         },
-          //         child: Row(
-          //           children: [
-          //             Text(
-          //               'Add',
-          //               style: TextStyle(
-          //                   color: Theme.of(context)
-          //                       .colorScheme
-          //                       .primary), // Text color
-          //             ),
-          //             SizedBox(width: 4),
-          //             Icon(
-          //               Icons.add_shopping_cart_rounded,
-          //               color: Theme.of(context).colorScheme.primary,
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //       SizedBox(width: 12),
-          //       ElevatedButton(
-          //         style: ElevatedButton.styleFrom(
-          //           backgroundColor: Theme.of(context).colorScheme.primary,
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(12),
-          //           ),
-          //         ),
-          //         onPressed: () {
-          //           Navigator.pop(context);
-          //           _addToCart(isShowDialog: false);
-          //           final route = MaterialPageRoute(
-          //             builder: (context) => VideoCartPage(),
-          //           );
-          //           Navigator.push(context, route);
-          //         },
-          //         child: Text(
-          //           'Buy Now',
-          //           style: TextStyle(color: Colors.white),
-          //         ),
-          //       ),
-          //     ],
-          //   )
-          // ],
-        );
-      },
-    );
+    final status = video.status.toLowerCase();
+
+    if (status == 'need_purchase') {
+      // Locked video → show dialog to encourage purchase
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            title: Row(
+              children: const [
+                Icon(Icons.lock, color: Colors.redAccent, size: 28),
+                SizedBox(width: 8),
+                Text(
+                  "Purchase Required",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "This video requires purchase before you can watch it.",
+                  style: TextStyle(fontSize: 16, height: 1.4),
+                ),
+              ],
+            ),
+            actionsPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            actions: [
+              TextButton.icon(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.grey[700],
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.cancel_outlined, size: 18),
+                label: const Text("Close"),
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () {
+                  // Contact support page
+                  Navigator.pop(context);
+                  final route = MaterialPageRoute(
+                    builder: (context) => WebViewPage(
+                      title: 'Contact Us',
+                      url: 'https://atech-auto.com/contact-us-webview',
+                    ),
+                  );
+                  Navigator.push(context, route);
+                },
+                icon: const Icon(Icons.support_agent,
+                    color: Colors.white, size: 18),
+                label: const Text(
+                  "Contact Us",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } else if (status == 'need_login') {
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            title: Row(
+              children: const [
+                Icon(Icons.lock, color: Colors.redAccent, size: 28),
+                SizedBox(width: 8),
+                Text(
+                  "Login Required",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "You need to log in and purchase this video.",
+                  style: TextStyle(fontSize: 16, height: 1.4),
+                ),
+              ],
+            ),
+            actionsPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            actions: [
+              TextButton.icon(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.grey[700],
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.cancel_outlined, size: 18),
+                label: const Text("Close"),
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () {
+                  // Contact support page
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  final route = MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  );
+                  Navigator.push(context, route);
+                },
+                icon: const Icon(Icons.login, color: Colors.white, size: 18),
+                label: const Text(
+                  "Login",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -359,13 +433,17 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                                       aspectRatio: 16 / 9,
                                       id: video.id,
                                       title: video.name,
-                                      isFree: video.isFree,
                                       viewsCount: video.viewsCount,
                                       imageUrl: video.imageUrl,
-                                      ownPlaylist: widget.ownPlaylist,
+                                      isFree: video.status == 'can_watch'
+                                          ? true
+                                          : false,
+                                      ownPlaylist: video.status == 'can_watch'
+                                          ? true
+                                          : false,
                                       onTap: () {
                                         if (!video.isFree &&
-                                            widget.ownPlaylist == false) {
+                                            video.status != 'can_watch') {
                                           _showPurchaseDialog(video);
                                         } else {
                                           changeVideoPlay(index);
