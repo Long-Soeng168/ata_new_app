@@ -12,6 +12,7 @@ import 'package:ata_new_app/pages/garages/garages_map_page.dart';
 import 'package:ata_new_app/services/brand_service.dart';
 import 'package:ata_new_app/services/garage_service.dart';
 import 'package:ata_new_app/services/slide_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class GaragesPage extends StatefulWidget {
@@ -166,7 +167,7 @@ class _GaragesPageState extends State<GaragesPage> {
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
-          'Garages',
+          'Garages'.tr(),
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -199,8 +200,8 @@ class _GaragesPageState extends State<GaragesPage> {
           width: 28,
           height: 28,
         ),
-        label: const Text(
-          'Garages Map',
+        label: Text(
+          'Garages Map'.tr(),
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ),
@@ -228,7 +229,7 @@ class _GaragesPageState extends State<GaragesPage> {
                                   height: 12,
                                 ),
                                 MyListHeader(
-                                  title: 'Expert',
+                                  title: 'Experts'.tr(),
                                   isShowSeeMore: false,
                                 ),
                                 SizedBox(
@@ -259,12 +260,12 @@ class _GaragesPageState extends State<GaragesPage> {
                           ),
                           SliverToBoxAdapter(
                             child: Column(
-                              children: const [
+                              children: [
                                 SizedBox(
                                   height: 12,
                                 ),
                                 MyListHeader(
-                                  title: 'Garages',
+                                  title: 'Garages'.tr(),
                                   isShowSeeMore: false,
                                 ),
                               ],
@@ -333,7 +334,7 @@ class _GaragesPageState extends State<GaragesPage> {
                   ),
                 )
               : Center(
-                  child: Text('No Data'),
+                  child: Text('No Data'.tr()),
                 ),
     );
   }

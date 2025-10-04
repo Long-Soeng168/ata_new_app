@@ -4,6 +4,7 @@ import 'package:ata_new_app/pages/garages/garages_page.dart';
 import 'package:ata_new_app/pages/home/home_page.dart';
 import 'package:ata_new_app/pages/shops/shops_page.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -37,9 +38,14 @@ class _MainPageState extends State<MainPage> {
         children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedLabelStyle: const TextStyle(
+          fontSize: 14,
+          height: 1.8, // line height
+          fontWeight: FontWeight.w500,
+        ),
         items: [
           BottomNavigationBarItem(
-            label: "Home",
+            label: "Home".tr(),
             icon: _selectedIndex == 0
                 ? Image.asset(
                     'lib/assets/icons/home.png',
@@ -56,7 +62,7 @@ class _MainPageState extends State<MainPage> {
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-            label: "Shop",
+            label: "Shop".tr(),
             icon: _selectedIndex == 1
                 ? Image.asset(
                     'lib/assets/icons/shop.png',
@@ -73,7 +79,7 @@ class _MainPageState extends State<MainPage> {
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-            label: "Garage",
+            label: "Garage".tr(),
             icon: _selectedIndex == 2
                 ? Image.asset(
                     'lib/assets/icons/garage.png',
@@ -90,7 +96,7 @@ class _MainPageState extends State<MainPage> {
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-            label: "DTC",
+            label: "DTC".tr(),
             icon: _selectedIndex == 3
                 ? Image.asset(
                     'lib/assets/icons/dtc.png',
@@ -107,7 +113,7 @@ class _MainPageState extends State<MainPage> {
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-            label: "Trainings",
+            label: "Trainings".tr(),
             icon: _selectedIndex == 4
                 ? Image.asset(
                     'lib/assets/icons/training.png',

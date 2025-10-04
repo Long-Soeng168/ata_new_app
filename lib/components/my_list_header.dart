@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MyListHeader extends StatelessWidget {
@@ -33,7 +34,7 @@ class MyListHeader extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'See More',
+                    'See More'.tr(),
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),

@@ -4,6 +4,7 @@ import 'package:ata_new_app/components/cards/detail_list_card.dart';
 import 'package:ata_new_app/components/my_gallery.dart';
 import 'package:ata_new_app/models/course.dart';
 import 'package:ata_new_app/services/course_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CourseDetailPage extends StatefulWidget {
@@ -61,7 +62,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
         foregroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Course',
+          'Course'.tr(),
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -137,7 +138,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                               ListTile(
                                 contentPadding: EdgeInsets.all(2),
                                 title: Text(
-                                  'Description',
+                                  'Description'.tr(),
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 subtitle: Text(courseDetail.description),

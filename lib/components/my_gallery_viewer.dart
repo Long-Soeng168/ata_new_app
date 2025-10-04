@@ -1,4 +1,5 @@
 import 'package:ata_new_app/components/error_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -50,7 +51,7 @@ class _MyGalleryViewerState extends State<MyGalleryViewer> {
           : AppBar(
               foregroundColor: Theme.of(context).colorScheme.primary,
               title: Text(
-                'Image ${currentIndex + 1} of ${widget.imageUrls.length}',
+                '${"Image".tr()} ${currentIndex + 1} / ${widget.imageUrls.length}',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,

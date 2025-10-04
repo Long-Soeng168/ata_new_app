@@ -4,6 +4,7 @@ import 'package:ata_new_app/components/cards/course_card.dart';
 import 'package:ata_new_app/models/course.dart';
 import 'package:ata_new_app/pages/trainings/courses/course_detail_page.dart';
 import 'package:ata_new_app/services/course_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CoursesPage extends StatefulWidget {
@@ -109,7 +110,7 @@ class _CoursesPageState extends State<CoursesPage> {
         foregroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(
-          'Courses',
+          'Courses'.tr(),
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -184,7 +185,7 @@ class _CoursesPageState extends State<CoursesPage> {
                   ),
                 )
               : Center(
-                  child: Text('No Data'),
+                  child: Text('No Data'.tr()),
                 ),
     );
   }

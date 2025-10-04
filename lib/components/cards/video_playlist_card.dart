@@ -1,4 +1,5 @@
 import 'package:ata_new_app/components/error_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class VideoPlayListCard extends StatelessWidget {
@@ -162,7 +163,7 @@ class VideoPlayListCard extends StatelessWidget {
 
                         Text(
                           // '$price \$',
-                          'See More ',
+                          'See More'.tr() + ' ',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

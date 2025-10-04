@@ -14,6 +14,7 @@ import 'package:ata_new_app/services/brand_model_service.dart';
 import 'package:ata_new_app/services/brand_service.dart';
 import 'package:ata_new_app/services/category_service.dart';
 import 'package:ata_new_app/services/product_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:ata_new_app/components/cards/product_card.dart';
 
@@ -245,7 +246,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
             // Search bar
             Expanded(
               child: MySearch(
-                placeholder: 'Search...',
+                placeholder: 'Search...'.tr(),
                 searchController: _searchController,
                 onSearchSubmit: () {
                   setState(() {
@@ -362,7 +363,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                             ),
                           SliverToBoxAdapter(
                             child: Center(
-                              child: Text('No Data...'),
+                              child: Text('No Data...'.tr()),
                             ),
                           ),
                         ],
@@ -375,7 +376,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
 
   MyFilterOption brandModelsFilterOption() {
     return MyFilterOption(
-      title: 'Models',
+      title: 'Models'.tr(),
       showImage: false,
       selectedItem: selectedBrandModelId,
       options: brandModels.map((item) {
@@ -412,12 +413,14 @@ class _ProductsListPageState extends State<ProductsListPage> {
               children: [
                 // Example filter options
                 MyFilterOption(
-                  title: 'Categories',
+                  title: 'Categories'.tr(),
                   selectedItem: selectedCategoryId,
                   options: categories.map((item) {
                     return {
                       'id': item.id,
-                      'title': item.name,
+                      'title': context.locale.languageCode == 'km'
+                          ? item.nameKh
+                          : item.name,
                       'image': item.imageUrl,
                     };
                   }).toList(), // Don't forget to convert it to a List if necessary
@@ -431,7 +434,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                 ),
                 SizedBox(height: 16),
                 MyFilterOption(
-                  title: 'Brands',
+                  title: 'Brands'.tr(),
                   selectedItem: selectedBrandId,
                   options: brands.map((item) {
                     return {
@@ -451,7 +454,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                 ),
                 SizedBox(height: 16),
                 MyFilterOption(
-                  title: 'Body Types',
+                  title: 'Body Types'.tr(),
                   selectedItem: selectedBodyTypeId,
                   options: bodyTypes.map((item) {
                     return {
@@ -482,12 +485,12 @@ class _ProductsListPageState extends State<ProductsListPage> {
                       if (selectedBrandId != null) {
                         getBrandModels();
                       }
-                      if(selectedBrandModelId == null) {
+                      if (selectedBrandModelId == null) {
                         brandModels = [];
                       }
                       Navigator.pop(context); // Close the bottom sheet
                     },
-                    title: 'Filter',
+                    title: 'Filter'.tr(),
                   ),
                 ),
               ],

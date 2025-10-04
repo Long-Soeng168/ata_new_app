@@ -3,6 +3,7 @@
 import 'package:ata_new_app/components/cards/asset_icon_card.dart';
 import 'package:ata_new_app/components/cards/product_card.dart';
 import 'package:ata_new_app/components/cards/video_playlist_card.dart';
+import 'package:ata_new_app/components/language_dropdown.dart';
 import 'package:ata_new_app/components/my_drawer.dart';
 import 'package:ata_new_app/components/my_list_header.dart';
 import 'package:ata_new_app/components/my_slide_show.dart';
@@ -21,6 +22,7 @@ import 'package:ata_new_app/pages/trainings/videos/video_playlist_page.dart';
 import 'package:ata_new_app/services/product_service.dart';
 import 'package:ata_new_app/services/slide_service.dart';
 import 'package:ata_new_app/services/video_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -124,6 +126,7 @@ class _HomePageState extends State<HomePage> {
       drawer: MyDrawer(),
       appBar: AppBar(
         actions: [
+          LanguageDropdown(),
           GestureDetector(
             onTap: () {
               final route =
@@ -209,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   AssetIconCard(
                     icon: 'lib/assets/icons/shop.png',
-                    title: 'Shops',
+                    title: 'Shops'.tr(),
                     onTap: () {
                       final route =
                           MaterialPageRoute(builder: (context) => ShopsPage());
@@ -218,7 +221,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   AssetIconCard(
                     icon: 'lib/assets/icons/garage.png',
-                    title: 'Garages',
+                    title: 'Garages'.tr(),
                     onTap: () {
                       final route = MaterialPageRoute(
                           builder: (context) => GaragesPage());
@@ -227,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   AssetIconCard(
                     icon: 'lib/assets/icons/document.png',
-                    title: 'Documents',
+                    title: 'Documents'.tr(),
                     onTap: () {
                       final route = MaterialPageRoute(
                           builder: (context) => DocumentsPage());
@@ -236,7 +239,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   AssetIconCard(
                     icon: 'lib/assets/icons/video.png',
-                    title: 'Videos',
+                    title: 'Videos'.tr(),
                     onTap: () {
                       final route = MaterialPageRoute(
                           builder: (context) => VideoPlayListPage());
@@ -245,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   AssetIconCard(
                     icon: 'lib/assets/icons/dtc.png',
-                    title: 'DTC',
+                    title: 'DTC'.tr(),
                     onTap: () {
                       final route =
                           MaterialPageRoute(builder: (context) => DtcPage());
@@ -254,7 +257,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   AssetIconCard(
                     icon: 'lib/assets/icons/course.png',
-                    title: 'Courses',
+                    title: 'Courses'.tr(),
                     onTap: () {
                       final route = MaterialPageRoute(
                           builder: (context) => CoursesPage());
@@ -280,7 +283,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         MyListHeader(
-                          title: 'New Products',
+                          title: 'New Arrivals'.tr(),
                           onTap: () {
                             final route = MaterialPageRoute(
                                 builder: (context) => ProductsListPage());
@@ -321,7 +324,7 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 height: 50,
                 child: Center(
-                  child: Text('Error Loading Resources'),
+                  child: Text('Error Loading Resources'.tr()),
                 ),
               ),
             ),
@@ -360,7 +363,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         SizedBox(height: 20),
                         MyListHeader(
-                            title: 'Videos Trainings',
+                            title: 'Videos Trainings'.tr(),
                             onTap: () {
                               final route = MaterialPageRoute(
                                   builder: (context) => VideoPlayListPage());
@@ -403,7 +406,7 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 height: 50,
                 child: Center(
-                  child: Text('Error Loading Resources'),
+                  child: Text('Error Loading Resources'.tr()),
                 ),
               ),
             ),

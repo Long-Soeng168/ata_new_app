@@ -12,6 +12,7 @@ import 'package:ata_new_app/pages/shops/products_list_page.dart';
 import 'package:ata_new_app/pages/shops/shop_detail_page.dart';
 import 'package:ata_new_app/services/product_service.dart';
 import 'package:ata_new_app/services/shop_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -121,7 +122,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         foregroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Product',
+          'Product'.tr(),
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -192,7 +193,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     visible:
                                         productDetail.categoryName.isNotEmpty,
                                     child: DetailListCard(
-                                      keyword: 'Category',
+                                      keyword: 'Category'.tr(),
                                       value: productDetail.categoryName,
                                     ),
                                   ),
@@ -200,21 +201,21 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     visible:
                                         productDetail.bodyTypeName.isNotEmpty,
                                     child: DetailListCard(
-                                      keyword: 'Body Type',
+                                      keyword: 'Body Type'.tr(),
                                       value: productDetail.bodyTypeName,
                                     ),
                                   ),
                                   Visibility(
                                     visible: productDetail.brandName.isNotEmpty,
                                     child: DetailListCard(
-                                      keyword: 'Brand',
+                                      keyword: 'Brand'.tr(),
                                       value: productDetail.brandName,
                                     ),
                                   ),
                                   Visibility(
                                     visible: productDetail.createdAt.isNotEmpty,
                                     child: DetailListCard(
-                                      keyword: 'Post Date',
+                                      keyword: 'Post Date'.tr(),
                                       value: productDetail.createdAt,
                                     ),
                                   ),
@@ -224,7 +225,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     child: ListTile(
                                       contentPadding: EdgeInsets.all(2),
                                       title: Text(
-                                        'Description',
+                                        'Description'.tr(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -259,7 +260,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   Column(
                     children: [
                       MyListHeader(
-                        title: 'Related Products',
+                        title: 'Related Products'.tr(),
                         onTap: () {
                           final route = MaterialPageRoute(
                               builder: (context) => ProductsListPage());
@@ -305,7 +306,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: MyElevatedButton(
-                  title: 'Call',
+                  title: 'Call'.tr(),
                   onPressed: () => showContactModal(context),
                   // onPressed: () async {
                   //   final Uri phoneUri = Uri(
@@ -337,13 +338,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Contact',
+                'Contact'.tr(),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
               ContactButton(
                   phoneNumber: shopDetail.phone,
-                  label: 'Number : ${shopDetail.phone}'),
+                  label: "Number".tr() + ' : ${shopDetail.phone}'),
               // ContactButton(phoneNumber: '063561156', label: 'Metfone : 063561156'),
               // ContactButton(phoneNumber: '062561155', label: 'Smart : 062561155'),
               SizedBox(height: 40),

@@ -9,6 +9,7 @@ import 'package:ata_new_app/models/garage.dart';
 import 'package:ata_new_app/pages/garages/garage_detail_page.dart';
 import 'package:ata_new_app/services/brand_service.dart';
 import 'package:ata_new_app/services/garage_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class GaragesListPage extends StatefulWidget {
@@ -156,7 +157,7 @@ class _GaragesListPageState extends State<GaragesListPage> {
             // Search bar
             Expanded(
               child: MySearch(
-                placeholder: 'Search...',
+                placeholder: 'Search...'.tr(),
                 searchController: _searchController,
                 onSearchSubmit: () {
                   setState(() {
@@ -253,7 +254,7 @@ class _GaragesListPageState extends State<GaragesListPage> {
                   ),
                 )
               : Center(
-                  child: Text('No Data'),
+                  child: Text('No Data'.tr()),
                 ),
     );
   }
@@ -274,7 +275,7 @@ class _GaragesListPageState extends State<GaragesListPage> {
               children: [
                 // Example filter options
                 MyFilterOption(
-                  title: 'Experts',
+                  title: 'Experts'.tr(),
                   selectedItem: selectedBrandId,
                   options: brands.map((item) {
                     return {
@@ -305,7 +306,7 @@ class _GaragesListPageState extends State<GaragesListPage> {
                       getGarages();
                       Navigator.pop(context); // Close the bottom sheet
                     },
-                    title: 'Filter',
+                    title: 'Filter'.tr(),
                   ),
                 ),
               ],

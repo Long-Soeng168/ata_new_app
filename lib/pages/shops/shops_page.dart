@@ -12,6 +12,7 @@ import 'package:ata_new_app/services/product_service.dart';
 import 'package:ata_new_app/services/slide_service.dart';
 import 'package:flutter/material.dart';
 import 'package:ata_new_app/components/cards/product_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ShopsPage extends StatefulWidget {
   const ShopsPage({super.key});
@@ -165,7 +166,7 @@ class _ShopsPageState extends State<ShopsPage> {
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
-          'Shops',
+          'Shops'.tr(),
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -210,7 +211,7 @@ class _ShopsPageState extends State<ShopsPage> {
                                   height: 12,
                                 ),
                                 MyListHeader(
-                                  title: 'Categories',
+                                  title: 'Categories'.tr(),
                                   isShowSeeMore: false,
                                 ),
                                 SizedBox(
@@ -223,11 +224,16 @@ class _ShopsPageState extends State<ShopsPage> {
                                       final category = categories[index];
                                       return DatabaseCard(
                                         image: category.imageUrl,
-                                        title: category.name,
+                                        title: context.locale.languageCode ==
+                                                'km'
+                                            ? category.nameKh
+                                            : category.name,
                                         onTap: () {
                                           final route = MaterialPageRoute(
                                               builder: (context) =>
-                                                  ProductsListPage(categoryId: category.id,));
+                                                  ProductsListPage(
+                                                    categoryId: category.id,
+                                                  ));
                                           Navigator.push(context, route);
                                         },
                                       );
@@ -239,12 +245,12 @@ class _ShopsPageState extends State<ShopsPage> {
                           ),
                           SliverToBoxAdapter(
                             child: Column(
-                              children: const [
+                              children: [
                                 SizedBox(
                                   height: 12,
                                 ),
                                 MyListHeader(
-                                  title: 'New Products',
+                                  title: 'New Arrivals'.tr(),
                                   isShowSeeMore: false,
                                 ),
                               ],
@@ -303,7 +309,7 @@ class _ShopsPageState extends State<ShopsPage> {
                   ),
                 )
               : Center(
-                  child: Text('No Data'),
+                  child: Text('No Data'.tr()),
                 ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:ata_new_app/components/cards/tab_card.dart';
 import 'package:ata_new_app/pages/trainings/courses/courses_page.dart';
 import 'package:ata_new_app/pages/trainings/documents/documents_page.dart';
 import 'package:ata_new_app/pages/trainings/videos/video_playlist_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class TrainingPage extends StatelessWidget {
@@ -15,8 +16,8 @@ class TrainingPage extends StatelessWidget {
         appBar: AppBar(
           foregroundColor: Theme.of(context).colorScheme.primary,
           backgroundColor: Theme.of(context).colorScheme.surface,
-          title: const Text(
-            'Trainings',
+          title: Text(
+            'Trainings'.tr(),
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -29,17 +30,17 @@ class TrainingPage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: TabCard(
                       image: 'lib/assets/icons/document.png',
-                      title: 'Documents',
+                      title: 'Documents'.tr(),
                       isSelected: true,
                     ),
                   ),
                   Expanded(
                     child: TabCard(
                       image: 'lib/assets/icons/video_outline.png',
-                      title: 'Videos',
+                      title: 'Videos'.tr(),
                       onTap: () {
                         final route = MaterialPageRoute(
                             builder: (context) => const VideoPlayListPage());
@@ -50,7 +51,7 @@ class TrainingPage extends StatelessWidget {
                   Expanded(
                     child: TabCard(
                       image: 'lib/assets/icons/course_outline.png',
-                      title: 'Courses',
+                      title: 'Courses'.tr(),
                       onTap: () {
                         final route = MaterialPageRoute(
                             builder: (context) => const CoursesPage());

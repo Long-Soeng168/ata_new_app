@@ -8,6 +8,7 @@ import 'package:ata_new_app/components/my_tab_button.dart';
 import 'package:ata_new_app/models/garage.dart';
 import 'package:ata_new_app/models/garage_post.dart';
 import 'package:ata_new_app/services/garage_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class GarageDetailPage extends StatefulWidget {
@@ -171,7 +172,7 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
             Row(
               children: [
                 MyTabButton(
-                  title: 'Posts',
+                  title: 'Posts'.tr(),
                   isSelected: _selectedTabIndex == 0,
                   onTap: () {
                     setState(() {
@@ -180,7 +181,7 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                   },
                 ),
                 MyTabButton(
-                  title: 'About Garage',
+                  title: 'About Garage'.tr(),
                   isSelected: _selectedTabIndex == 1,
                   onTap: () {
                     setState(() {
@@ -259,15 +260,15 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                     Column(children: [
                       // Start Detail
                       DetailListCard(
-                        keyword: 'Expert',
+                        keyword: 'Expert'.tr(),
                         value: widget.garage.expertName,
                       ),
                       DetailListCard(
-                        keyword: 'Contact',
+                        keyword: 'Contact'.tr(),
                         value: widget.garage.phone,
                       ),
                       DetailListCard(
-                        keyword: 'Address',
+                        keyword: 'Address'.tr(),
                         value: widget.garage.address,
                       ),
                       // End Detail
@@ -275,7 +276,7 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                       ListTile(
                         contentPadding: EdgeInsets.all(2),
                         title: Text(
-                          'Description',
+                          'Description'.tr(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(widget.garage.description),

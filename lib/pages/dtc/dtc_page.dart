@@ -3,6 +3,7 @@
 import 'package:ata_new_app/components/my_search.dart';
 import 'package:ata_new_app/models/dtc.dart';
 import 'package:ata_new_app/services/dtc_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DtcPage extends StatefulWidget {
@@ -62,7 +63,7 @@ class _DtcPageState extends State<DtcPage> {
           backgroundColor: Colors.transparent,
           foregroundColor: Theme.of(context).colorScheme.primary,
           title: Text(
-            'DTC',
+            'DTC'.tr(),
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -76,7 +77,7 @@ class _DtcPageState extends State<DtcPage> {
               MySearch(
                 searchController: searchController,
                 onSearchSubmit: onSearchSubmit,
-                placeholder: 'Search DTC (កូដកំហូច)...',
+                placeholder: "Search DTC".tr() + ' (កូដកំហូច)...',
               ),
               // End Search
 
@@ -120,7 +121,7 @@ class _DtcPageState extends State<DtcPage> {
                       Visibility(
                         visible: dtcDetail!.dtcCode.isEmpty,
                         child: Center(
-                          child: Text('No Data for this CODE'),
+                          child: Text('No Data for this CODE'.tr()),
                         ),
                       ),
                     ],
@@ -131,7 +132,7 @@ class _DtcPageState extends State<DtcPage> {
                   width: double.infinity,
                   height: 50,
                   child: Center(
-                    child: Text('Error Loading Resources'),
+                    child: Text('Error Loading Resources'.tr()),
                   ),
                 ),
 

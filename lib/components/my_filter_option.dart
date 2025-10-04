@@ -1,4 +1,5 @@
 import 'package:ata_new_app/components/error_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MyFilterOption extends StatefulWidget {
@@ -54,7 +55,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
                   height: widget.showImage ?? true ? 50 : 22,
                   child: Center(
                     child: Text(
-                      'All',
+                      'All'.tr(),
                       style: TextStyle(
                         color: selectedOption == null
                             ? Colors.white
@@ -126,6 +127,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
                             },
                           ),
                         ),
+
                         Text(
                           option['title'].toString(),
                           style: TextStyle(
@@ -133,6 +135,7 @@ class _MyFilterOptionState extends State<MyFilterOption> {
                                 ? Colors.white
                                 : Colors.black,
                             fontWeight: FontWeight.bold,
+                            height: 1.8
                           ),
                         ),
                       ],

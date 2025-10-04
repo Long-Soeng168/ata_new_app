@@ -9,6 +9,7 @@ import 'package:ata_new_app/models/product.dart';
 import 'package:ata_new_app/models/shop.dart';
 import 'package:ata_new_app/pages/shops/product_detail_page.dart';
 import 'package:ata_new_app/services/product_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ShopDetailPage extends StatefulWidget {
@@ -233,7 +234,7 @@ class _ShopDetailPageState extends State<ShopDetailPage> {
             Row(
               children: [
                 MyTabButton(
-                  title: 'Products',
+                  title: 'Products'.tr(),
                   isSelected: _selectedTabIndex == 0,
                   onTap: () {
                     setState(() {
@@ -242,7 +243,7 @@ class _ShopDetailPageState extends State<ShopDetailPage> {
                   },
                 ),
                 MyTabButton(
-                  title: 'About Shop',
+                  title: 'About Shop'.tr(),
                   isSelected: _selectedTabIndex == 1,
                   onTap: () {
                     setState(() {
@@ -311,7 +312,7 @@ class _ShopDetailPageState extends State<ShopDetailPage> {
                       width: double.infinity,
                       height: 50,
                       child: Center(
-                        child: Text('Error Loading Resources'),
+                        child: Text('Error Loading Resources'.tr()),
                       ),
                     ),
                   ),
@@ -330,11 +331,11 @@ class _ShopDetailPageState extends State<ShopDetailPage> {
                     Column(children: [
                       // Start Detail
                       DetailListCard(
-                        keyword: 'Contact',
+                        keyword: 'Contact'.tr(),
                         value: widget.shop.phone,
                       ),
                       DetailListCard(
-                        keyword: 'Address',
+                        keyword: 'Address'.tr(),
                         value: widget.shop.address,
                       ),
                       // End Detail
@@ -342,7 +343,7 @@ class _ShopDetailPageState extends State<ShopDetailPage> {
                       ListTile(
                         contentPadding: EdgeInsets.all(2),
                         title: Text(
-                          'Description',
+                          'Description'.tr(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(widget.shop.description),
