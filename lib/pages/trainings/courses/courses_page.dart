@@ -144,7 +144,7 @@ class _CoursesPageState extends State<CoursesPage> {
                                 (context, index) {
                                   final course = courses[index];
                                   return CourseCard(
-                                    aspectRatio: 16 / 9,
+                                    aspectRatio: 17 / 9,
                                     width: double.infinity,
                                     id: course.id,
                                     title: course.name,

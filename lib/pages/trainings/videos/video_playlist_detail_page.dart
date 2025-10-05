@@ -542,12 +542,12 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Icon(Icons.play_circle_outline_outlined,
                                   color: Colors.white),
                               SizedBox(width: 8),
                               Text(
-                                'Play Video',
+                                'Play Video'.tr(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

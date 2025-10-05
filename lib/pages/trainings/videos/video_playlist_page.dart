@@ -167,12 +167,22 @@ class _VideoPlayListPageState extends State<VideoPlayListPage> {
                       ),
                     ),
               Visibility(
+                visible: videoPlaylists.isEmpty,
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: Center(
+                    child: Text('No Data'.tr()),
+                  ),
+                ),
+              ),
+              Visibility(
                 visible: isLoadingVideoPlaylistsError,
                 child: SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: Center(
-                    child: Text('Error Loading Resources'),
+                    child: Text('Error Loading Resources'.tr()),
                   ),
                 ),
               ),
