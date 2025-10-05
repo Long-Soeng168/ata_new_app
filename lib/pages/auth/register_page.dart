@@ -2,6 +2,7 @@ import 'package:ata_new_app/components/buttons/my_elevated_button.dart';
 import 'package:ata_new_app/components/my_success_dialog.dart';
 import 'package:ata_new_app/pages/accounts/account_page.dart';
 import 'package:ata_new_app/services/auth_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 
@@ -45,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
           context: context,
           builder: (BuildContext context) {
             return SuccessDialog(
-                message: 'Register Successfully!',
+                message: 'Register Successfully!'.tr(),
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pop(context);
@@ -66,9 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+         SnackBar(
           content: Text(
-            'An error occurred. Please try again.',
+            'An error occurred. Please try again.'.tr(),
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.red,
@@ -81,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: Text('Register'.tr()),
         backgroundColor: Colors.transparent,
       ),
       body: Center(
@@ -107,7 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _nameController,
                   decoration: InputDecoration(
-                    labelText: 'Name*',
+                    labelText: 'Name'.tr(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(color: Colors.grey),
@@ -120,7 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
+                      return 'Please enter your name'.tr();
                     }
                     return null;
                   },
@@ -130,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _phoneController,
                   decoration: InputDecoration(
-                    labelText: 'Phone',
+                    labelText: 'Phone'.tr(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(color: Colors.grey),
@@ -156,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
-                    labelText: 'Email*',
+                    labelText: 'Email'.tr(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(color: Colors.grey),
@@ -170,10 +171,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return 'Please enter your email'.tr();
                     } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
                         .hasMatch(value)) {
-                      return 'Please enter a valid email';
+                      return 'Please enter a valid email'.tr();
                     }
                     return null;
                   },
@@ -183,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    labelText: 'Password*',
+                    labelText: 'Password'.tr(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(color: Colors.grey),
@@ -197,9 +198,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return 'Please enter your password'.tr();
                     } else if (value.length < 6) {
-                      return 'Password must be at least 6 characters long';
+                      return 'Password must be at least 6 characters long'.tr();
                     }
                     return null;
                   },
@@ -210,7 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ? const Center(child: CircularProgressIndicator())
                     : MyElevatedButton(
                         onPressed: _register,
-                        title: 'Register',
+                        title: 'Register'.tr(),
                       ),
                 const SizedBox(height: 16),
                 // Link to login page
@@ -241,7 +242,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Already have an account? Log in here',
+                          'Already have an account? Login here'.tr(),
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,

@@ -167,7 +167,7 @@ class _VideoPlayListPageState extends State<VideoPlayListPage> {
                       ),
                     ),
               Visibility(
-                visible: videoPlaylists.isEmpty,
+                visible: videoPlaylists.isEmpty && !isLoadingVideoPlaylists,
                 child: SizedBox(
                   width: double.infinity,
                   height: 50,

@@ -1,4 +1,5 @@
 import 'package:ata_new_app/pages/app_info/web_view_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -9,26 +10,26 @@ class AppInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<_SectionItem> sections = [
       _SectionItem(
-        title: 'About Us',
+        title: 'About Us'.tr(),
         icon: Icons.info_outline,
         color: Colors.blue,
         onTap: () {
           final route = MaterialPageRoute(
               builder: (context) => WebViewPage(
-                    title: 'About Us',
+                    title: 'About Us'.tr(),
                     url: 'https://atech-auto.com/about-us-webview',
                   ));
           Navigator.push(context, route);
         },
       ),
       _SectionItem(
-        title: 'Contact Us',
+        title: 'Contact Us'.tr(),
         icon: Icons.phone_outlined,
         color: Colors.green,
         onTap: () {
           final route = MaterialPageRoute(
               builder: (context) => WebViewPage(
-                    title: 'Contact Us',
+                    title: 'Contact Us'.tr(),
                     url:
                         'https://atech-auto.com/contact-us-webview',
                   ));
@@ -36,20 +37,20 @@ class AppInfoPage extends StatelessWidget {
         },
       ),
       _SectionItem(
-        title: 'Privacy Policy',
+        title: 'Privacy Policy'.tr(),
         icon: Icons.privacy_tip_outlined,
         color: Colors.deepPurple,
         onTap: () {
           final route = MaterialPageRoute(
               builder: (context) => WebViewPage(
-                    title: 'Privacy Policy',
+                    title: 'Privacy Policy'.tr(),
                     url: 'https://atech-auto.com/privacy-webview',
                   ));
           Navigator.push(context, route);
         },
       ),
       _SectionItem(
-        title: 'Our Website',
+        title: 'Our Website'.tr(),
         icon: Icons.public_outlined,
         color: Colors.orange,
         onTap: () async {
@@ -68,7 +69,7 @@ class AppInfoPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('App Info'),
+        title: Text('App Info'.tr()),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),

@@ -115,7 +115,7 @@ class _ShopsPageState extends State<ShopsPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to load Data'),
+          content: Text('Failed to load Data'.tr()),
         ),
       );
     }
@@ -144,7 +144,7 @@ class _ShopsPageState extends State<ShopsPage> {
         hasMoreProducts = false;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('No more Data!'),
+            content: Text('No more Data!'.tr()),
           ),
         );
       }
@@ -154,7 +154,7 @@ class _ShopsPageState extends State<ShopsPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to load Data'),
+          content: Text('Failed to load Data'.tr()),
         ),
       );
     }

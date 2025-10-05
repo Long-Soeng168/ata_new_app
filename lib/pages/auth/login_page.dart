@@ -5,6 +5,7 @@ import 'package:ata_new_app/pages/accounts/account_page.dart';
 import 'package:ata_new_app/pages/auth/register_page.dart';
 import 'package:ata_new_app/pages/main_page.dart';
 import 'package:ata_new_app/services/auth_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (BuildContext context) {
             return SuccessDialog(
-              message: 'Login Successfully!',
+              message: 'Login Successfully!'.tr(),
               onPressed: () {
                 // Contact support page
                 Navigator.pop(context);
@@ -67,9 +68,9 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'An error occurred. Please try again.',
+            'An error occurred. Please try again.'.tr(),
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.red,
@@ -85,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
     if (url != null) {
       launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
-      print('Could not launch the URL.');
+      print('Could not launch the URL.'.tr());
     }
   }
 
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: Text('Login'.tr()),
         backgroundColor: Colors.transparent,
       ),
       body: Center(
@@ -117,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'Email'.tr(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(color: Colors.grey),
@@ -131,10 +132,10 @@ class _LoginPageState extends State<LoginPage> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return 'Please enter your email'.tr();
                     } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
                         .hasMatch(value)) {
-                      return 'Please enter a valid email';
+                      return 'Please enter a valid email'.tr();
                     }
                     return null;
                   },
@@ -143,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextFormField(
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    labelText: 'Password'.tr(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: const BorderSide(color: Colors.grey),
@@ -157,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return 'Please enter your password'.tr();
                     }
                     return null;
                   },
@@ -169,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                     GestureDetector(
                       onTap: _openForgotPasswordUrl,
                       child: Text(
-                        'Forgot Password?',
+                        'Forgot Password?'.tr(),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -184,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                     ? const Center(child: CircularProgressIndicator())
                     : MyElevatedButton(
                         onPressed: _login,
-                        title: 'Login',
+                        title: 'Login'.tr(),
                       ),
                 const SizedBox(height: 16),
                 Center(
@@ -215,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Don\'t have an account? Register here',
+                          'Don\'t have an account? Register here'.tr(),
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,

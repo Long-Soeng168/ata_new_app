@@ -116,7 +116,7 @@ class _GaragesPageState extends State<GaragesPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to load Data'),
+          content: Text('Failed to load Data'.tr()),
         ),
       );
     }
@@ -145,7 +145,7 @@ class _GaragesPageState extends State<GaragesPage> {
         hasMoreGarages = false;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('No more Data!'),
+            content: Text('No more Data!'.tr()),
           ),
         );
       }
@@ -155,7 +155,7 @@ class _GaragesPageState extends State<GaragesPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to load Data'),
+          content: Text('Failed to load Data'.tr()),
         ),
       );
     }

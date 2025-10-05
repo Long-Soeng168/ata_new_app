@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,9 +31,9 @@ class Menu extends StatelessWidget {
         }
       },
       itemBuilder: (context) => [
-        const PopupMenuItem<_MenuOptions>(
+        PopupMenuItem<_MenuOptions>(
           value: _MenuOptions.openWebsite,
-          child: Text('Open Our Website'),
+          child: Text('Open Our Website'.tr()),
         ),
       ],
     );

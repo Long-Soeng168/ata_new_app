@@ -6,6 +6,7 @@ import 'package:ata_new_app/pages/auth/login_page.dart';
 import 'package:ata_new_app/pages/main_page.dart';
 import 'package:ata_new_app/pages/pdf_view_page.dart';
 import 'package:ata_new_app/services/document_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DocumentsPage extends StatefulWidget {
@@ -105,12 +106,12 @@ class _DocumentsPageState extends State<DocumentsPage> {
       case 'need_login':
         icon = Icons.lock;
         iconColor = Colors.orange;
-        message = "You need to log in to access these documents.";
+        message = "You need to log in to access these documents.".tr();
         break;
       case 'need_purchase':
         icon = Icons.shopping_cart;
         iconColor = Colors.red;
-        message = "You need to purchase access before reading these documents.";
+        message = "You need to purchase access before reading these documents.".tr();
         break;
       case 'can_read':
         return; // no popup, user can access directly
@@ -130,8 +131,8 @@ class _DocumentsPageState extends State<DocumentsPage> {
             children: [
               Icon(icon, color: iconColor, size: 28),
               const SizedBox(width: 8),
-              const Text(
-                "Document Access",
+              Text(
+                "Document Access".tr(),
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
@@ -156,13 +157,13 @@ class _DocumentsPageState extends State<DocumentsPage> {
                 // );
                 final route = MaterialPageRoute(
                     builder: (context) => WebViewPage(
-                          title: 'Contact Us',
+                          title: 'Contact Us'.tr(),
                           url: 'https://atech-auto.com/contact-us-webview',
                         ));
                 Navigator.push(context, route);
               },
               icon: Icon(Icons.support_agent, size: 18),
-              label: Text("Contact Us"),
+              label: Text("Contact Us".tr()),
             ),
             if (status == 'need_login')
               ElevatedButton.icon(
@@ -180,8 +181,8 @@ class _DocumentsPageState extends State<DocumentsPage> {
                   );
                 },
                 icon: const Icon(Icons.login, color: Colors.white, size: 18),
-                label: const Text(
-                  "Login",
+                label: Text(
+                  "Login".tr(),
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -200,8 +201,8 @@ class _DocumentsPageState extends State<DocumentsPage> {
                 );
               },
               icon: const Icon(Icons.home, color: Colors.white, size: 18),
-              label: const Text(
-                "Back to Home",
+              label: Text(
+                "Back to Home".tr(),
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -227,7 +228,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
                   title: Text(
                     widget.path.isNotEmpty
                         ? widget.path.split('~').last
-                        : 'Documents',
+                        : 'Documents'.tr(),
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -249,7 +250,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
                       child: TextFormField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          labelText: 'Search',
+                          labelText: 'Search...'.tr(),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: const BorderSide(color: Colors.grey),

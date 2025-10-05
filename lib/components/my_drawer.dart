@@ -5,6 +5,7 @@ import 'package:ata_new_app/pages/garages/garage_admin/garage_create_page.dart';
 import 'package:ata_new_app/pages/shops/shop_admin/admin_shop_page.dart';
 import 'package:ata_new_app/pages/shops/shop_admin/shop_create_page.dart';
 import 'package:ata_new_app/services/auth_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -81,7 +82,7 @@ class MyDrawer extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Login',
+                        'Login'.tr(),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -152,7 +153,7 @@ class MyDrawer extends StatelessWidget {
   ) {
     return [
       ListTile(
-        title: Text('Account Settings'),
+        title: Text('Account Settings'.tr()),
         leading: Icon(
           Icons.account_circle_outlined,
           size: 28,
@@ -171,8 +172,8 @@ class MyDrawer extends StatelessWidget {
       ),
       ListTile(
         title: Text(userShop == null || !(userShop['success'] ?? false)
-            ? 'Create Shop'
-            : 'View Shop'),
+            ? 'Create Shop'.tr()
+            : 'View Shop'.tr()),
         leading: Image.asset(
           'lib/assets/icons/shop_outline.png',
           width: 24,
@@ -205,8 +206,8 @@ class MyDrawer extends StatelessWidget {
       ),
       ListTile(
         title: Text(userGarage == null || !(userGarage['success'] ?? false)
-            ? 'Create Garage'
-            : 'View Garage'),
+            ? 'Create Garage'.tr()
+            : 'View Garage'.tr()),
         leading: Image.asset(
           'lib/assets/icons/garage_outline.png',
           width: 24,
@@ -263,12 +264,12 @@ class MyDrawer extends StatelessWidget {
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () => _logout(context),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.logout_outlined, color: Colors.white),
               SizedBox(width: 8.0),
-              Text('Logout', style: TextStyle(color: Colors.white)),
+              Text('Logout'.tr(), style: TextStyle(color: Colors.white)),
             ],
           ),
         ),
