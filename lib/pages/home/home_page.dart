@@ -363,7 +363,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         SizedBox(height: 20),
                         MyListHeader(
-                            title: 'Videos Trainings'.tr(),
+                            title: 'Video Trainings'.tr(),
                             onTap: () {
                               final route = MaterialPageRoute(
                                   builder: (context) => VideoPlayListPage());

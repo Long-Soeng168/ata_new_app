@@ -1,4 +1,5 @@
 import 'package:ata_new_app/components/error_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class VideoCard extends StatelessWidget {
@@ -102,7 +103,7 @@ class VideoCard extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  '$viewsCount Views',
+                                  '$viewsCount ' + 'Views'.tr(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
@@ -122,8 +123,12 @@ class VideoCard extends StatelessWidget {
                                     ),
                                   )
                                 : Icon(
-                                    ownPlaylist ? Icons.play_arrow_outlined : Icons.lock_outline,
-                                    color: ownPlaylist ? Theme.of(context).colorScheme.primary : Colors.redAccent,
+                                    ownPlaylist
+                                        ? Icons.play_arrow_outlined
+                                        : Icons.lock_outline,
+                                    color: ownPlaylist
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Colors.redAccent,
                                   )
                           ],
                         ),

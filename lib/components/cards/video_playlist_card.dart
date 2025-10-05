@@ -105,7 +105,7 @@ class VideoPlayListCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '$videosCount Videos',
+                            '$videosCount ' + 'Videos'.tr(),
                             style: const TextStyle(color: Colors.white),
                           ),
                         ],

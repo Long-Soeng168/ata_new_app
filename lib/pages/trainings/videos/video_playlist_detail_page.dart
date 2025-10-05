@@ -13,6 +13,7 @@ import 'package:ata_new_app/pages/main_page.dart';
 import 'package:ata_new_app/pages/trainings/videos/video_detail_page.dart';
 import 'package:ata_new_app/providers/cart_provider.dart';
 import 'package:ata_new_app/services/video_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -150,11 +151,11 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
               borderRadius: BorderRadius.circular(16),
             ),
             title: Row(
-              children: const [
+              children: [
                 Icon(Icons.lock, color: Colors.redAccent, size: 28),
                 SizedBox(width: 8),
                 Text(
-                  "Purchase Required",
+                  "Purchase Required".tr(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -162,8 +163,8 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  "This video requires purchase before you can watch it.",
+                Text(
+                  "This video requires purchase before you can watch it.".tr(),
                   style: TextStyle(fontSize: 16, height: 1.4),
                 ),
               ],
@@ -179,7 +180,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.cancel_outlined, size: 18),
-                label: const Text("Close"),
+                label: Text("Close".tr()),
               ),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
@@ -193,7 +194,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                   Navigator.pop(context);
                   final route = MaterialPageRoute(
                     builder: (context) => WebViewPage(
-                      title: 'Contact Us',
+                      title: 'Contact Us'.tr(),
                       url: 'https://atech-auto.com/contact-us-webview',
                     ),
                   );
@@ -201,8 +202,8 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                 },
                 icon: const Icon(Icons.support_agent,
                     color: Colors.white, size: 18),
-                label: const Text(
-                  "Contact Us",
+                label: Text(
+                  "Contact Us".tr(),
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -220,11 +221,11 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
               borderRadius: BorderRadius.circular(16),
             ),
             title: Row(
-              children: const [
+              children: [
                 Icon(Icons.lock, color: Colors.redAccent, size: 28),
                 SizedBox(width: 8),
                 Text(
-                  "Login Required",
+                  "Login Required".tr(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -232,8 +233,8 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  "You need to log in and purchase this video.",
+                Text(
+                  "You need to log in and purchase this video.".tr(),
                   style: TextStyle(fontSize: 16, height: 1.4),
                 ),
               ],
@@ -249,7 +250,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.cancel_outlined, size: 18),
-                label: const Text("Close"),
+                label: Text("Close".tr()),
               ),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
@@ -267,8 +268,8 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                   Navigator.push(context, route);
                 },
                 icon: const Icon(Icons.login, color: Colors.white, size: 18),
-                label: const Text(
-                  "Login",
+                label: Text(
+                  "Login".tr(),
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -287,7 +288,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
         foregroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Videos Training',
+          'Video Training'.tr(),
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -368,7 +369,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                         //   value: videoPlaylist.categoryName,
                         // ),
                         DetailListCard(
-                          keyword: 'Videos',
+                          keyword: 'Videos'.tr(),
                           value: videoPlaylist.videosCount.toString(),
                         ),
                         // End Detail
@@ -376,7 +377,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                         ListTile(
                           contentPadding: EdgeInsets.all(2),
                           title: Text(
-                            'Description',
+                            'Description'.tr(),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(videoPlaylist.description),
@@ -390,7 +391,7 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                 // Start  Related Items
                 SizedBox(height: 24),
                 MyListHeader(
-                  title: 'Videos',
+                  title: 'Videos'.tr(),
                   isShowSeeMore: false,
                 ),
 
@@ -435,7 +436,8 @@ class _VideoPlayListDetailPageState extends State<VideoPlayListDetailPage> {
                                       ? true
                                       : false,
                                   onTap: () {
-                                    if (!video.isFree && video.status != 'can_watch') {
+                                    if (!video.isFree &&
+                                        video.status != 'can_watch') {
                                       _showPurchaseDialog(video);
                                     } else {
                                       final route = MaterialPageRoute(

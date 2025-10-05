@@ -6,6 +6,7 @@ import 'package:ata_new_app/models/video_playlist.dart';
 import 'package:ata_new_app/pages/trainings/videos/video_playlist_detail_page.dart';
 import 'package:ata_new_app/providers/cart_provider.dart';
 import 'package:ata_new_app/services/video_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +61,7 @@ class _VideoPlayListPageState extends State<VideoPlayListPage> {
           backgroundColor: Colors.transparent,
           foregroundColor: Theme.of(context).colorScheme.primary,
           title: Text(
-            'Videos Trainings',
+            'Video Trainings'.tr(),
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -103,7 +104,7 @@ class _VideoPlayListPageState extends State<VideoPlayListPage> {
             children: [
               // Start Search
               MySearch(
-                placeholder: 'Search...',
+                placeholder: 'Search...'.tr(),
                 searchController: _searchController,
                 onSearchSubmit: () {
                   setState(() {

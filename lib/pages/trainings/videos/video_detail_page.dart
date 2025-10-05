@@ -10,6 +10,7 @@ import 'package:ata_new_app/pages/auth/login_page.dart';
 import 'package:ata_new_app/pages/trainings/videos/cart/video_cart_page.dart';
 import 'package:ata_new_app/providers/cart_provider.dart';
 import 'package:ata_new_app/services/video_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -119,11 +120,11 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
               borderRadius: BorderRadius.circular(16),
             ),
             title: Row(
-              children: const [
+              children: [
                 Icon(Icons.lock, color: Colors.redAccent, size: 28),
                 SizedBox(width: 8),
                 Text(
-                  "Purchase Required",
+                  "Purchase Required".tr(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -131,8 +132,8 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  "This video requires purchase before you can watch it.",
+                Text(
+                  "This video requires purchase before you can watch it.".tr(),
                   style: TextStyle(fontSize: 16, height: 1.4),
                 ),
               ],
@@ -148,7 +149,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.cancel_outlined, size: 18),
-                label: const Text("Close"),
+                label: Text("Close".tr()),
               ),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
@@ -162,7 +163,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                   Navigator.pop(context);
                   final route = MaterialPageRoute(
                     builder: (context) => WebViewPage(
-                      title: 'Contact Us',
+                      title: 'Contact Us'.tr(),
                       url: 'https://atech-auto.com/contact-us-webview',
                     ),
                   );
@@ -170,8 +171,8 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                 },
                 icon: const Icon(Icons.support_agent,
                     color: Colors.white, size: 18),
-                label: const Text(
-                  "Contact Us",
+                label: Text(
+                  "Contact Us".tr(),
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -189,11 +190,11 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
               borderRadius: BorderRadius.circular(16),
             ),
             title: Row(
-              children: const [
+              children: [
                 Icon(Icons.lock, color: Colors.redAccent, size: 28),
                 SizedBox(width: 8),
                 Text(
-                  "Login Required",
+                  "Login Required".tr(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -201,8 +202,8 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  "You need to log in and purchase this video.",
+                Text(
+                  "You need to log in and purchase this video.".tr(),
                   style: TextStyle(fontSize: 16, height: 1.4),
                 ),
               ],
@@ -218,7 +219,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.cancel_outlined, size: 18),
-                label: const Text("Close"),
+                label: Text("Close".tr()),
               ),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
@@ -237,8 +238,8 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                   Navigator.push(context, route);
                 },
                 icon: const Icon(Icons.login, color: Colors.white, size: 18),
-                label: const Text(
-                  "Login",
+                label: Text(
+                  "Login".tr(),
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -257,7 +258,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
         foregroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Videos',
+          'Videos'.tr(),
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -354,7 +355,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                           ),
                           SizedBox(width: 4),
                           Text(
-                            '${videoPlay.viewsCount} Views',
+                            '${videoPlay.viewsCount} ' + "Views".tr(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 12, color: Colors.grey),
@@ -388,17 +389,17 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                       width: 2,
                       color: Theme.of(context).colorScheme.primary,
                     ))),
-                    tabs: const [
+                    tabs: [
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("VIDEOS"),
+                          child: Text("VIDEOS".tr()),
                         ),
                       ),
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("DESCRIPTION"),
+                          child: Text("DESCRIPTION".tr()),
                         ),
                       ),
                     ],
@@ -481,7 +482,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                                           : ListTile(
                                               contentPadding: EdgeInsets.all(2),
                                               title: Text(
-                                                'Description',
+                                                'Description'.tr(),
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold),

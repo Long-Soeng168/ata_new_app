@@ -32,7 +32,8 @@
   "Products": "ផលិតផល",
   "New Arrivals": "ទំនិញចូលថ្មី",
   "See More": "មើលបន្ថែម",
-  "Videos Trainings": "វីដេអូបណ្ដុះបណ្ដាល",
+  "Video Trainings": "វគ្គសិក្សាជាវីដេអូ",
+  "Video Training": "វគ្គសិក្សាជាវីដេអូ",
   "Filter": "តម្រង",
   "Filters": "តម្រង",
   "Model": "ម៉ូដែល",
@@ -79,6 +80,11 @@
   "No Data...": "មិនមានទិន្នន័យ...",
   "All": "ទាំងអស់",
   "No Data for this CODE": "មិនមានទិន្នន័យសម្រាប់កូដនេះ",
+  "Purchase Required": "",
+  "This video requires purchase before you can watch it.": "",
+  "Close": "",
+  "Login Required": "",
+  "You need to log in and purchase this video.": "",
   "": "",
 
   "A-Tech Auto": "A-Tech Auto"
