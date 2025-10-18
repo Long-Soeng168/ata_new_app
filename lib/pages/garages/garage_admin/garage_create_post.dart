@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:ata_new_app/components/buttons/my_elevated_button.dart';
 import 'package:ata_new_app/models/garage.dart';
 import 'package:ata_new_app/services/garage_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -73,7 +74,7 @@ class _GarageCreatePostState extends State<GarageCreatePost> {
 
       if (response['success']) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Post created successfully")),
+          SnackBar(content: Text("Post created successfully".tr())),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -83,7 +84,7 @@ class _GarageCreatePostState extends State<GarageCreatePost> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text("Please complete description and upload images")),
+            content: Text("Please complete description and upload images".tr())),
       );
     }
   }
@@ -92,7 +93,7 @@ class _GarageCreatePostState extends State<GarageCreatePost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Post"),
+        title: Text("Create Post".tr()),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
@@ -119,7 +120,7 @@ class _GarageCreatePostState extends State<GarageCreatePost> {
                                   color: Colors.grey.shade400,
                                   size: 50,
                                 ),
-                                Text('Tap to pick images'),
+                                Text('Tap to pick images'.tr()),
                               ],
                             ),
                           ),
@@ -147,8 +148,8 @@ class _GarageCreatePostState extends State<GarageCreatePost> {
               TextFormField(
                 controller: _descriptionController,
                 decoration: InputDecoration(
-                  labelText: "Description",
-                  hintText: 'Post Description',
+                  labelText: "Description".tr(),
+                  hintText: 'Post Description'.tr(),
                   alignLabelWithHint: true,
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -159,14 +160,14 @@ class _GarageCreatePostState extends State<GarageCreatePost> {
                 ),
                 maxLines: 4,
                 validator: (value) =>
-                    value!.isEmpty ? "Enter shop description" : null,
+                    value!.isEmpty ? "Enter post description".tr() : null,
               ),
               SizedBox(height: 12),
               _isLoading
                   ? Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
                       onPressed: _createPost,
-                      title: 'Create Post',
+                      title: 'Create Post'.tr(),
                     ),
             ],
           ),

@@ -241,7 +241,7 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                       width: double.infinity,
                       height: 50,
                       child: Center(
-                        child: Text('Error Loading Resources'),
+                        child: Text('Error Loading Resources'.tr()),
                       ),
                     ),
                   ),

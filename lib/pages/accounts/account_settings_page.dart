@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:ata_new_app/services/auth_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -129,22 +130,23 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
             }
 
             return AlertDialog(
-              title: const Text(
-                "Delete Account",
+              title: Text(
+                "Delete Account".tr(),
                 style: TextStyle(color: Colors.red),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    "Are you sure you want to delete your account? Please enter your password to confirm. All your data will be permanently removed from our database.",
+                  Text(
+                    "Are you sure you want to delete your account? Please enter your password to confirm. All your data will be permanently removed from our database."
+                        .tr(),
                   ),
                   const SizedBox(height: 12),
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      labelText: "Password",
+                      labelText: "Password".tr(),
                       border: const OutlineInputBorder(),
                       errorText: errorText,
                     ),
@@ -165,7 +167,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 TextButton(
                   onPressed:
                       isDeleting ? null : () => Navigator.of(context).pop(),
-                  child: const Text("Cancel"),
+                  child: Text("Cancel".tr()),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
@@ -174,7 +176,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                       : () {
                           if (_passwordController.text.isEmpty) {
                             setState(() {
-                              errorText = "Please enter your password.";
+                              errorText = "Please enter your password.".tr();
                             });
                           } else {
                             setState(() {
@@ -192,8 +194,8 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             color: Colors.white,
                           ),
                         )
-                      : const Text(
-                          "Delete",
+                      : Text(
+                          "Delete".tr(),
                           style: TextStyle(color: Colors.white),
                         ),
                 ),
@@ -211,7 +213,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Account Settings"),
+        title: Text("Account Settings".tr()),
         actions: [
           IconButton(
             icon: const Icon(
@@ -249,35 +251,36 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
               // Name
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: "Name"),
+                decoration: InputDecoration(labelText: "Name".tr()),
                 validator: (value) =>
-                    value!.isEmpty ? "Please enter your name" : null,
+                    value!.isEmpty ? "Please enter your name".tr() : null,
               ),
               const SizedBox(height: 12),
 
               // Email
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(labelText: "Email"),
+                decoration: InputDecoration(labelText: "Email".tr()),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) =>
-                    value!.isEmpty ? "Please enter your email" : null,
+                    value!.isEmpty ? "Please enter your email".tr() : null,
               ),
               const SizedBox(height: 12),
 
               // Phone
               TextFormField(
                 controller: _phoneController,
-                decoration: const InputDecoration(labelText: "Phone"),
+                decoration: InputDecoration(labelText: "Phone".tr()),
                 keyboardType: TextInputType.phone,
-                validator: (value) =>
-                    value!.isEmpty ? "Please enter your phone number" : null,
+                validator: (value) => value!.isEmpty
+                    ? "Please enter your phone number".tr()
+                    : null,
               ),
               const SizedBox(height: 20),
 
               // Change Password Section Title
-              const Text(
-                "Change Password",
+              Text(
+                "Change Password".tr(),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
@@ -285,8 +288,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
               // Current Password
               TextFormField(
                 controller: _currentPasswordController,
-                decoration:
-                    const InputDecoration(labelText: "Current Password"),
+                decoration: InputDecoration(labelText: "Current Password".tr()),
                 obscureText: true,
               ),
               const SizedBox(height: 12),
@@ -294,7 +296,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
               // New Password
               TextFormField(
                 controller: _newPasswordController,
-                decoration: const InputDecoration(labelText: "New Password"),
+                decoration: InputDecoration(labelText: "New Password".tr()),
                 obscureText: true,
               ),
               const SizedBox(height: 12),
@@ -303,12 +305,12 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
               TextFormField(
                 controller: _confirmPasswordController,
                 decoration:
-                    const InputDecoration(labelText: "Confirm New Password"),
+                    InputDecoration(labelText: "Confirm New Password".tr()),
                 obscureText: true,
                 validator: (value) {
                   if (_newPasswordController.text.isNotEmpty &&
                       value != _newPasswordController.text) {
-                    return "Passwords do not match";
+                    return "Passwords do not match".tr();
                   }
                   return null;
                 },
@@ -319,7 +321,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                   ? const Center(child: CircularProgressIndicator())
                   : ElevatedButton(
                       onPressed: _saveAccountSettings,
-                      child: const Text("Save Changes"),
+                      child: Text("Save Changes".tr()),
                     ),
             ],
           ),

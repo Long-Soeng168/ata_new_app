@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:ata_new_app/components/buttons/my_elevated_button.dart';
 import 'package:ata_new_app/models/shop.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ata_new_app/services/shop_service.dart';
@@ -92,14 +93,14 @@ class _ShopEditPageState extends State<ShopEditPage> {
 
       if (response['success']) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Shop Update successfully")));
+            SnackBar(content: Text("Shop Update successfully".tr())));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response['message'])));
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Please complete all fields")));
+          SnackBar(content: Text("Please complete all fields".tr())));
     }
   }
 
@@ -107,7 +108,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit Shop"),
+        title: Text("Edit Shop".tr()),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
@@ -123,16 +124,17 @@ class _ShopEditPageState extends State<ShopEditPage> {
               TextFormField(
                 controller: _shopNameController,
                 decoration: InputDecoration(
-                  labelText: "Name",
+                  labelText: "Name".tr(),
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
                     ),
                   ),
-                  hintText: 'Shop Name',
+                  hintText: 'Shop Name'.tr(),
                 ),
-                validator: (value) => value!.isEmpty ? "Enter Shop name" : null,
+                validator: (value) =>
+                    value!.isEmpty ? "Enter Shop name".tr() : null,
               ),
               const SizedBox(height: 12),
 
@@ -140,17 +142,17 @@ class _ShopEditPageState extends State<ShopEditPage> {
               TextFormField(
                 controller: _phoneController,
                 decoration: InputDecoration(
-                  labelText: "Phone",
+                  labelText: "Phone".tr(),
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
                     ),
                   ),
-                  hintText: 'Shop Phone',
+                  hintText: 'Shop Phone'.tr(),
                 ),
                 validator: (value) =>
-                    value!.isEmpty ? "Enter Shop Phone" : null,
+                    value!.isEmpty ? "Enter Shop Phone".tr() : null,
               ),
               const SizedBox(height: 12),
 
@@ -158,8 +160,8 @@ class _ShopEditPageState extends State<ShopEditPage> {
               TextFormField(
                 controller: _addressController,
                 decoration: InputDecoration(
-                  labelText: "Address",
-                  hintText: 'Shop Address',
+                  labelText: "Address".tr(),
+                  hintText: 'Shop Address'.tr(),
                   alignLabelWithHint: true,
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -171,7 +173,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 maxLines:
                     4, // Set maxLines to allow multiple lines, adjust as needed
                 validator: (value) =>
-                    value!.isEmpty ? "Enter Shop Address" : null,
+                    value!.isEmpty ? "Enter Shop Address".tr() : null,
               ),
               const SizedBox(height: 12),
 
@@ -179,8 +181,8 @@ class _ShopEditPageState extends State<ShopEditPage> {
               TextFormField(
                 controller: _shopDescriptionController,
                 decoration: InputDecoration(
-                  labelText: "Description",
-                  hintText: 'Shop Description',
+                  labelText: "Description".tr(),
+                  hintText: 'Shop Description'.tr(),
                   alignLabelWithHint: true,
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -192,7 +194,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 maxLines:
                     4, // Set maxLines to allow multiple lines, adjust as needed
                 validator: (value) =>
-                    value!.isEmpty ? "Enter Shop description" : null,
+                    value!.isEmpty ? "Enter Shop description".tr() : null,
               ),
               const SizedBox(height: 12),
 
@@ -204,7 +206,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text("Logo Image",
+                    Text("Logo Image".tr(),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
@@ -216,8 +218,9 @@ class _ShopEditPageState extends State<ShopEditPage> {
                                 size: 100, color: Colors.grey.shade400)),
                     TextButton(
                       onPressed: () => _pickImage(true),
-                      child: Text(
-                          _logoImage == null ? "Upload Logo" : "Change Logo"),
+                      child: Text(_logoImage == null
+                          ? "Upload Logo".tr()
+                          : "Change Logo".tr()),
                     ),
                   ],
                 ),
@@ -229,7 +232,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text("Banner Image",
+                    Text("Banner Image".tr(),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
@@ -242,8 +245,8 @@ class _ShopEditPageState extends State<ShopEditPage> {
                     TextButton(
                       onPressed: () => _pickImage(false),
                       child: Text(_bannerImage == null
-                          ? "Upload Banner"
-                          : "Change Banner"),
+                          ? "Upload Banner".tr()
+                          : "Change Banner".tr()),
                     ),
                   ],
                 ),
@@ -255,7 +258,7 @@ class _ShopEditPageState extends State<ShopEditPage> {
               _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
-                      onPressed: _updateShop, title: "Update Shop"),
+                      onPressed: _updateShop, title: "Update Shop".tr()),
             ],
           ),
         ),

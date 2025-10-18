@@ -344,7 +344,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               SizedBox(height: 10),
               ContactButton(
                   phoneNumber: shopDetail.phone,
-                  label: "Number".tr() + ' : ${shopDetail.phone}'),
+                  label: '${shopDetail.phone}'),
               // ContactButton(phoneNumber: '063561156', label: 'Metfone : 063561156'),
               // ContactButton(phoneNumber: '062561155', label: 'Smart : 062561155'),
               SizedBox(height: 40),
@@ -372,7 +372,7 @@ class ContactButton extends StatelessWidget {
           await launchUrl(phoneUri);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Could not make a call')),
+            SnackBar(content: Text('Could not make a call'.tr())),
           );
         }
       },

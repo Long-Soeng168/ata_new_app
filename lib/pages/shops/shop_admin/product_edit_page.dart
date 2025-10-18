@@ -12,6 +12,7 @@ import 'package:ata_new_app/services/body_type_service.dart';
 import 'package:ata_new_app/services/brand_model_service.dart';
 import 'package:ata_new_app/services/brand_service.dart';
 import 'package:ata_new_app/services/category_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ata_new_app/services/product_service.dart';
@@ -227,14 +228,14 @@ class _ProductEditPageState extends State<ProductEditPage> {
 
       if (response['success']) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Product Updated successfully")));
+            SnackBar(content: Text("Product Updated successfully".tr())));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response['message'])));
       }
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Please complete all fields")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Please complete all fields".tr())));
     }
   }
 
@@ -243,15 +244,15 @@ class _ProductEditPageState extends State<ProductEditPage> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Image'),
+        title: Text('Delete Image'.tr()),
         content: Text('Are you sure you want to delete this image?'),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: Text('Cancel')),
+              child: Text('Cancel'.tr())),
           TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: Text('Delete')),
+              child: Text('Delete'.tr())),
         ],
       ),
     );
@@ -309,7 +310,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Product"),
+        title: Text("Edit Product".tr()),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
@@ -325,17 +326,17 @@ class _ProductEditPageState extends State<ProductEditPage> {
               TextFormField(
                 controller: _productNameController,
                 decoration: InputDecoration(
-                  labelText: "Name",
+                  labelText: "Name".tr(),
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
                     ),
                   ),
-                  hintText: 'Product Name',
+                  hintText: 'Product Name'.tr(),
                 ),
                 validator: (value) =>
-                    value!.isEmpty ? "Enter product name" : null,
+                    value!.isEmpty ? "Enter product name".tr() : null,
               ),
               SizedBox(
                 height: 12,
@@ -345,18 +346,18 @@ class _ProductEditPageState extends State<ProductEditPage> {
               TextFormField(
                 controller: _productPriceController,
                 decoration: InputDecoration(
-                  labelText: "Price \$",
+                  labelText: "Price \$".tr(),
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
                     ),
                   ),
-                  hintText: 'Example : 25\$',
+                  hintText: "Price \$".tr(),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) =>
-                    value!.isEmpty ? "Enter product price" : null,
+                    value!.isEmpty ? "Enter product price".tr() : null,
               ),
 
               SizedBox(
@@ -378,7 +379,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                 DropdownButtonFormField<int>(
                   value: categoryId,
                   decoration: InputDecoration(
-                    labelText: "Select Category",
+                    labelText: "Select Category".tr(),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -411,10 +412,10 @@ class _ProductEditPageState extends State<ProductEditPage> {
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
-                          Text("Other"),
+                          Text("Other".tr()),
                         ],
                       ),
                     ),
@@ -425,7 +426,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                     });
                   },
                   validator: (value) =>
-                      value == null ? "Select a Category" : null,
+                      value == null ? "Select Category".tr() : null,
                 ),
               SizedBox(height: 12),
 
@@ -433,7 +434,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                 DropdownButtonFormField<int>(
                   value: bodyTypeId,
                   decoration: InputDecoration(
-                    labelText: "Select Body-Type",
+                    labelText: "Select Body-Type".tr(),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -466,10 +467,10 @@ class _ProductEditPageState extends State<ProductEditPage> {
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
-                          Text("Other"),
+                          Text("Other".tr()),
                         ],
                       ),
                     ),
@@ -481,7 +482,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                   },
                   validator: (value) {
                     if (value == null) {
-                      return "Select a Body-Type"; // Include validation for "Other"
+                      return "Select Body-Type".tr(); // Include validation for "Other"
                     }
                     return null;
                   },
@@ -493,7 +494,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                 DropdownButtonFormField<int>(
                   value: brandId,
                   decoration: InputDecoration(
-                    labelText: "Select Brand",
+                    labelText: "Select Brand".tr(),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -526,10 +527,10 @@ class _ProductEditPageState extends State<ProductEditPage> {
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
-                          Text("Other"),
+                          Text("Other".tr()),
                         ],
                       ),
                     ),
@@ -544,7 +545,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                           .toList();
                     });
                   },
-                  validator: (value) => value == null ? "Select a Brand" : null,
+                  validator: (value) => value == null ? "Select Brand".tr() : null,
                 ),
               SizedBox(height: 12),
 
@@ -552,7 +553,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                 DropdownButtonFormField<int>(
                   value: brandModelId,
                   decoration: InputDecoration(
-                    labelText: "Select Model",
+                    labelText: "Select Model".tr(),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -585,10 +586,10 @@ class _ProductEditPageState extends State<ProductEditPage> {
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
-                          Text("Other"),
+                          Text("Other".tr()),
                         ],
                       ),
                     ),
@@ -598,15 +599,15 @@ class _ProductEditPageState extends State<ProductEditPage> {
                       brandModelId = value;
                     });
                   },
-                  validator: (value) => value == null ? "Select a Model" : null,
+                  validator: (value) => value == null ? "Select Model".tr() : null,
                 ),
               SizedBox(height: 12),
 
               TextFormField(
                 controller: _productDescriptionController,
                 decoration: InputDecoration(
-                  labelText: "Description",
-                  hintText: 'Product Description',
+                  labelText: "Description".tr(),
+                  hintText: 'Product Description'.tr(),
                   alignLabelWithHint: true,
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -618,7 +619,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                 maxLines:
                     4, // Set maxLines to allow multiple lines, adjust as needed
                 validator: (value) =>
-                    value!.isEmpty ? "Enter product description" : null,
+                    value!.isEmpty ? "Enter product description".tr() : null,
               ),
 
               SizedBox(height: 12),
@@ -626,7 +627,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
               // Product image picker with preview
               // Old Images
               if (_oldImages.isNotEmpty) ...[
-                Text("Existing Images"),
+                Text("Existing Images".tr()),
                 const SizedBox(height: 8),
                 SizedBox(
                   height: 120,
@@ -660,7 +661,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                               children: [
                                 Icon(Icons.image,
                                     color: Colors.grey.shade400, size: 50),
-                                Text('Tap to pick images'),
+                                Text('Tap to pick images'.tr()),
                               ],
                             ),
                           ),
@@ -688,7 +689,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
               _isLoading
                   ? Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
-                      onPressed: _updateProduct, title: 'Update Product')
+                      onPressed: _updateProduct, title: 'Update Product'.tr())
             ],
           ),
         ),

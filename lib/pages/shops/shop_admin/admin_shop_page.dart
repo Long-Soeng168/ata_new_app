@@ -13,6 +13,7 @@ import 'package:ata_new_app/pages/shops/shop_admin/admin_product_detail_page.dar
 import 'package:ata_new_app/pages/shops/shop_admin/product_create_page.dart';
 import 'package:ata_new_app/pages/shops/shop_admin/shop_edit_page.dart';
 import 'package:ata_new_app/services/product_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AdminShopPage extends StatefulWidget {
@@ -62,18 +63,18 @@ class _AdminShopPageState extends State<AdminShopPage> {
           icon = Icons.hourglass_bottom;
           iconColor = Colors.amber;
           message =
-              "Your shop is pending approval. Please wait for verification.";
+              "Your shop is pending approval. Please wait for verification.".tr();
           break;
         case 'suspended':
           icon = Icons.pause_circle_filled;
           iconColor = Colors.orange;
           message =
-              "Your shop has been suspended. Contact support for details.";
+              "Your shop has been suspended. Contact support for details.".tr();
           break;
         case 'rejected':
           icon = Icons.block;
           iconColor = Colors.red;
-          message = "Your shop has been rejected. Contact us for further info.";
+          message = "Your shop has been rejected. Contact us for further info.".tr();
           break;
         default:
           icon = Icons.info;
@@ -94,7 +95,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
                 Icon(icon, color: iconColor, size: 28),
                 SizedBox(width: 8),
                 Text(
-                  "Shop Status",
+                  "Shop Status".tr(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -105,7 +106,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
                 Text(message, style: TextStyle(fontSize: 16, height: 1.4)),
                 SizedBox(height: 12),
                 Text(
-                  "Current Status: ${status[0].toUpperCase()}${status.substring(1)}",
+                  "${'Current Status'.tr()}: ${status[0].toUpperCase()}${status.substring(1)}",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: iconColor,
@@ -126,21 +127,21 @@ class _AdminShopPageState extends State<AdminShopPage> {
                   );
                 },
                 icon: Icon(Icons.edit, size: 18),
-                label: Text("Edit Shop"),
+                label: Text("Edit Shop".tr()),
               ),
               TextButton.icon(
                 style: TextButton.styleFrom(foregroundColor: Colors.grey[700]),
                 onPressed: () {
                   final route = MaterialPageRoute(
                     builder: (context) => WebViewPage(
-                      title: 'Contact Us',
+                      title: 'Contact Us'.tr(),
                       url: 'https://atech-auto.com/contact-us-webview',
                     ),
                   );
                   Navigator.push(context, route);
                 },
                 icon: Icon(Icons.support_agent, size: 18),
-                label: Text("Contact Us"),
+                label: Text("Contact Us".tr()),
               ),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
@@ -156,8 +157,8 @@ class _AdminShopPageState extends State<AdminShopPage> {
                   );
                 },
                 icon: const Icon(Icons.home, color: Colors.white, size: 18),
-                label: const Text(
-                  "Back to Home",
+                label: Text(
+                  "Back to Home".tr(),
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -193,7 +194,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to load Data'),
+          content: Text('Failed to load Data'.tr()),
         ),
       );
     }
@@ -222,7 +223,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
         hasMoreProducts = false;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('No more Data!'),
+            content: Text('No more Data!'.tr()),
           ),
         );
       }
@@ -232,7 +233,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to load Data'),
+          content: Text('Failed to load Data'.tr()),
         ),
       );
     }
@@ -382,7 +383,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
             Row(
               children: [
                 MyTabButton(
-                  title: 'Products',
+                  title: 'Products'.tr(),
                   isSelected: _selectedTabIndex == 0,
                   onTap: () {
                     setState(() {
@@ -391,7 +392,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
                   },
                 ),
                 MyTabButton(
-                  title: 'About Shop',
+                  title: 'About Shop'.tr(),
                   isSelected: _selectedTabIndex == 1,
                   onTap: () {
                     setState(() {
@@ -461,7 +462,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
                       width: double.infinity,
                       height: 50,
                       child: Center(
-                        child: Text('Error Loading Resources'),
+                        child: Text('Error Loading Resources'.tr()),
                       ),
                     ),
                   ),
@@ -480,11 +481,11 @@ class _AdminShopPageState extends State<AdminShopPage> {
                     Column(children: [
                       // Start Detail
                       DetailListCard(
-                        keyword: 'Contact',
+                        keyword: 'Contact'.tr(),
                         value: widget.shop.phone,
                       ),
                       DetailListCard(
-                        keyword: 'Address',
+                        keyword: 'Address'.tr(),
                         value: widget.shop.address,
                       ),
                       // End Detail
@@ -492,7 +493,7 @@ class _AdminShopPageState extends State<AdminShopPage> {
                       ListTile(
                         contentPadding: EdgeInsets.all(2),
                         title: Text(
-                          'Description',
+                          'Description'.tr(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(widget.shop.description),

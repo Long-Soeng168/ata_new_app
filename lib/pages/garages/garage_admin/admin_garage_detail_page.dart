@@ -14,6 +14,7 @@ import 'package:ata_new_app/pages/garages/garage_admin/garage_edit_post.dart';
 import 'package:ata_new_app/pages/home/home_page.dart';
 import 'package:ata_new_app/pages/main_page.dart';
 import 'package:ata_new_app/services/garage_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AdminGarageDetailPage extends StatefulWidget {
@@ -58,19 +59,19 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
           icon = Icons.hourglass_bottom;
           iconColor = Colors.amber;
           message =
-              "Your garage is pending approval. Please wait for verification.";
+              "Your garage is pending approval. Please wait for verification.".tr();
           break;
         case 'suspended':
           icon = Icons.pause_circle_filled;
           iconColor = Colors.orange;
           message =
-              "Your garage has been suspended. Contact support for details.";
+              "Your garage has been suspended. Contact support for details.".tr();
           break;
         case 'rejected':
           icon = Icons.block;
           iconColor = Colors.red;
           message =
-              "Your garage has been rejected. Contact us for further info.";
+              "Your garage has been rejected. Contact us for further info.".tr();
           break;
         default:
           icon = Icons.info;
@@ -91,7 +92,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                 Icon(icon, color: iconColor, size: 28),
                 SizedBox(width: 8),
                 Text(
-                  "Garage Status",
+                  "Garage Status".tr(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -105,7 +106,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  "Current Status: ${status[0].toUpperCase()}${status.substring(1)}",
+                  "${'Current Status'.tr()}: ${status[0].toUpperCase()}${status.substring(1)}",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: iconColor,
@@ -131,7 +132,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                   );
                 },
                 icon: Icon(Icons.edit, size: 18),
-                label: Text("Edit Garage"),
+                label: Text("Edit Garage".tr()),
               ),
               TextButton.icon(
                 style: TextButton.styleFrom(
@@ -144,13 +145,13 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                   // );
                   final route = MaterialPageRoute(
                       builder: (context) => WebViewPage(
-                            title: 'Contact Us',
+                            title: 'Contact Us'.tr(),
                             url: 'https://atech-auto.com/contact-us-webview',
                           ));
                   Navigator.push(context, route);
                 },
                 icon: Icon(Icons.support_agent, size: 18),
-                label: Text("Contact Us"),
+                label: Text("Contact Us".tr()),
               ),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
@@ -167,8 +168,8 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                   );
                 },
                 icon: const Icon(Icons.home, color: Colors.white, size: 18),
-                label: const Text(
-                  "Back to Home",
+                label: Text(
+                  "Back to Home".tr(),
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -221,7 +222,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
         foregroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: Colors.transparent,
         title: Text(
-          widget.garage.status,
+          widget.garage.name,
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -358,7 +359,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
             Row(
               children: [
                 MyTabButton(
-                  title: 'Posts',
+                  title: 'Posts'.tr(),
                   isSelected: _selectedTabIndex == 0,
                   onTap: () {
                     setState(() {
@@ -367,7 +368,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                   },
                 ),
                 MyTabButton(
-                  title: 'About Garage',
+                  title: 'About Garage'.tr(),
                   isSelected: _selectedTabIndex == 1,
                   onTap: () {
                     setState(() {
@@ -440,7 +441,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                       width: double.infinity,
                       height: 50,
                       child: Center(
-                        child: Text('Error Loading Resources'),
+                        child: Text('Error Loading Resources'.tr()),
                       ),
                     ),
                   ),
@@ -459,15 +460,15 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                     Column(children: [
                       // Start Detail
                       DetailListCard(
-                        keyword: 'Expert',
+                        keyword: 'Expert'.tr(),
                         value: widget.garage.expertName,
                       ),
                       DetailListCard(
-                        keyword: 'Contact',
+                        keyword: 'Contact'.tr(),
                         value: widget.garage.phone,
                       ),
                       DetailListCard(
-                        keyword: 'Address',
+                        keyword: 'Address'.tr(),
                         value: widget.garage.address,
                       ),
                       // End Detail
@@ -475,7 +476,7 @@ class _AdminGarageDetailPageState extends State<AdminGarageDetailPage> {
                       ListTile(
                         contentPadding: EdgeInsets.all(2),
                         title: Text(
-                          'Description',
+                          'Description'.tr(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(widget.garage.description),

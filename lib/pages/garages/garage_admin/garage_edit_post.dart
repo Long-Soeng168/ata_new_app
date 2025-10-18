@@ -6,6 +6,7 @@ import 'package:ata_new_app/models/garage.dart';
 import 'package:ata_new_app/models/garage_post.dart';
 import 'package:ata_new_app/pages/garages/garage_admin/admin_garage_detail_page.dart';
 import 'package:ata_new_app/services/garage_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -79,7 +80,7 @@ class _GarageEditPostState extends State<GarageEditPost> {
   Future<void> _updatePost() async {
     if (!_postFormKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Please complete the description")));
+          SnackBar(content: Text("Please complete the description".tr())));
       return;
     }
 
@@ -98,7 +99,7 @@ class _GarageEditPostState extends State<GarageEditPost> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(response['success']
-            ? "Post updated successfully"
+            ? "Post updated successfully".tr()
             : response['message']),
       ),
     );
@@ -109,15 +110,15 @@ class _GarageEditPostState extends State<GarageEditPost> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Confirm Delete'),
+        title: Text('Confirm Delete'.tr()),
         content: Text('Are you sure you want to delete this post?'),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: Text('Cancel')),
+              child: Text('Cancel'.tr())),
           TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: Text('Delete')),
+              child: Text('Delete'.tr())),
         ],
       ),
     );
@@ -138,7 +139,7 @@ class _GarageEditPostState extends State<GarageEditPost> {
             builder: (context) => AdminGarageDetailPage(garage: widget.garage)),
       );
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Post deleted successfully')));
+          .showSnackBar(SnackBar(content: Text('Post deleted successfully'.tr())));
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(result['message'])));
@@ -150,15 +151,15 @@ class _GarageEditPostState extends State<GarageEditPost> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Image'),
-        content: Text('Are you sure you want to delete this image?'),
+        title: Text('Delete Image'.tr()),
+        content: Text('Are you sure you want to delete this image?'.tr()),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: Text('Cancel')),
+              child: Text('Cancel'.tr())),
           TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: Text('Delete')),
+              child: Text('Delete'.tr())),
         ],
       ),
     );
@@ -216,7 +217,7 @@ class _GarageEditPostState extends State<GarageEditPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Post"),
+        title: Text("Edit Post".tr()),
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
@@ -235,7 +236,7 @@ class _GarageEditPostState extends State<GarageEditPost> {
 
               // Old Images
               if (_oldImages.isNotEmpty) ...[
-                Text("Existing Images"),
+                Text("Existing Images".tr()),
                 const SizedBox(height: 8),
                 SizedBox(
                   height: 120,
@@ -269,7 +270,7 @@ class _GarageEditPostState extends State<GarageEditPost> {
                               children: [
                                 Icon(Icons.image,
                                     color: Colors.grey.shade400, size: 50),
-                                Text('Tap to pick images'),
+                                Text('Tap to pick images'.tr()),
                               ],
                             ),
                           ),
@@ -297,10 +298,10 @@ class _GarageEditPostState extends State<GarageEditPost> {
                 controller: _descriptionController,
                 maxLines: 4,
                 validator: (value) =>
-                    value!.isEmpty ? "Enter post description" : null,
+                    value!.isEmpty ? "Enter post description".tr() : null,
                 decoration: InputDecoration(
-                  labelText: "Description",
-                  hintText: 'Post Description',
+                  labelText: "Description".tr(),
+                  hintText: 'Post Description'.tr(),
                   alignLabelWithHint: true,
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -313,7 +314,7 @@ class _GarageEditPostState extends State<GarageEditPost> {
               _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
-                      onPressed: _updatePost, title: 'Update Post'),
+                      onPressed: _updatePost, title: 'Update Post'.tr()),
             ],
           ),
         ),

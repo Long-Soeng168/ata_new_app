@@ -8,6 +8,7 @@ import 'package:ata_new_app/pages/shops/shop_admin/admin_shop_page.dart';
 import 'package:ata_new_app/pages/shops/shop_admin/product_edit_page.dart';
 import 'package:ata_new_app/services/product_service.dart';
 import 'package:ata_new_app/services/shop_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,7 +25,8 @@ class AdminProductDetailPage extends StatefulWidget {
 class _AdminProductDetailPageState extends State<AdminProductDetailPage> {
   late List<String> imageUrls = [];
 
-  late Product productDetail;
+  late Product? productDetail;
+
   bool isLoadingProductDetail = true;
   bool isLoadingProductDetailError = false;
 
@@ -79,10 +81,10 @@ class _AdminProductDetailPageState extends State<AdminProductDetailPage> {
       // Update the state
       setState(() {
         productDetail = fetchedProductDetail;
-        imageUrls.addAll(fetchedProductDetail.imagesUrls);
+        imageUrls.addAll(fetchedProductDetail!.imagesUrls);
         isLoadingProductDetail = false;
       });
-      // print(fetchedProductDetail.imagesUrls[0]);
+      // print(fetchedProductDetail!.imagesUrls[0]);
     } catch (error) {
       // Handle any errors that occur during the fetch
       setState(() {
@@ -116,16 +118,16 @@ class _AdminProductDetailPageState extends State<AdminProductDetailPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Confirm Delete'),
-          content: Text('Are you sure you want to delete this product?'),
+          title: Text('Confirm Delete'.tr()),
+          content: Text('Are you sure you want to delete this product?'.tr()),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false), // Cancel
-              child: Text('Cancel'),
+              child: Text('Cancel'.tr()),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true), // Confirm
-              child: Text('Delete'),
+              child: Text('Delete'.tr()),
             ),
           ],
         );
@@ -151,7 +153,7 @@ class _AdminProductDetailPageState extends State<AdminProductDetailPage> {
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Product deleted successfully')),
+        SnackBar(content: Text('Product deleted successfully'.tr())),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -167,7 +169,7 @@ class _AdminProductDetailPageState extends State<AdminProductDetailPage> {
         foregroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Product',
+          'Product'.tr(),
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -186,11 +188,12 @@ class _AdminProductDetailPageState extends State<AdminProductDetailPage> {
           ),
           IconButton(
             onPressed: () {
+              if (productDetail == null) return;
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => ProductEditPage(
-                          product: productDetail,
+                          product: productDetail!,
                           shop: widget.shop,
                         )),
               );
@@ -235,19 +238,19 @@ class _AdminProductDetailPageState extends State<AdminProductDetailPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                   Text(
-                                    '${productDetail.price} \$',
+                                    '${productDetail!.price} \$',
                                     style: TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.redAccent),
                                   ),
                                   // Text(
-                                  //   productDetail.isInstock
+                                  //   productDetail!.isInstock
                                   //       ? 'Instock'
                                   //       : 'Not-Instock',
                                   //   style: TextStyle(
                                   //     fontSize: 16,
-                                  //     color: productDetail.isInstock
+                                  //     color: productDetail!.isInstock
                                   //         ? Colors.green
                                   //         : Colors.yellow.shade700,
                                   //   ),
@@ -255,43 +258,43 @@ class _AdminProductDetailPageState extends State<AdminProductDetailPage> {
                                   const SizedBox(height: 8.0),
                                   Visibility(
                                     visible:
-                                        productDetail.categoryName.isNotEmpty,
+                                        productDetail!.categoryName.isNotEmpty,
                                     child: DetailListCard(
-                                      keyword: 'Category',
-                                      value: productDetail.categoryName,
+                                      keyword: 'Category'.tr(),
+                                      value: productDetail!.categoryName,
                                     ),
                                   ),
                                   Visibility(
                                     visible:
-                                        productDetail.bodyTypeName.isNotEmpty,
+                                        productDetail!.bodyTypeName.isNotEmpty,
                                     child: DetailListCard(
-                                      keyword: 'Body Type',
-                                      value: productDetail.bodyTypeName,
+                                      keyword: 'Body Type'.tr(),
+                                      value: productDetail!.bodyTypeName,
                                     ),
                                   ),
                                   Visibility(
-                                    visible: productDetail.brandName.isNotEmpty,
+                                    visible: productDetail!.brandName.isNotEmpty,
                                     child: DetailListCard(
-                                      keyword: 'Brand',
-                                      value: productDetail.brandName,
+                                      keyword: 'Brand'.tr(),
+                                      value: productDetail!.brandName,
                                     ),
                                   ),
                                   Visibility(
-                                    visible: productDetail.createdAt.isNotEmpty,
+                                    visible: productDetail!.createdAt.isNotEmpty,
                                     child: DetailListCard(
-                                      keyword: 'Post Date',
-                                      value: productDetail.createdAt,
+                                      keyword: 'Post Date'.tr(),
+                                      value: productDetail!.createdAt,
                                     ),
                                   ),
 
                                   ListTile(
                                     contentPadding: EdgeInsets.all(2),
                                     title: Text(
-                                      'Description',
+                                      'Description'.tr(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    subtitle: Text(productDetail.description),
+                                    subtitle: Text(productDetail!.description),
                                   ),
                                 ])
                     ],
@@ -316,13 +319,12 @@ class _AdminProductDetailPageState extends State<AdminProductDetailPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Contact',
+                'Contact'.tr(),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
               ContactButton(
-                  phoneNumber: shopDetail.phone,
-                  label: 'Number : ${shopDetail.phone}'),
+                  phoneNumber: shopDetail.phone, label: '${shopDetail.phone}'),
               // ContactButton(phoneNumber: '063561156', label: 'Metfone : 063561156'),
               // ContactButton(phoneNumber: '062561155', label: 'Smart : 062561155'),
               SizedBox(height: 40),
@@ -338,7 +340,8 @@ class ContactButton extends StatelessWidget {
   final String phoneNumber;
   final String label;
 
-  const ContactButton({super.key, required this.phoneNumber, required this.label});
+  const ContactButton(
+      {super.key, required this.phoneNumber, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -349,7 +352,7 @@ class ContactButton extends StatelessWidget {
           await launchUrl(phoneUri);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Could not make a call')),
+            SnackBar(content: Text('Could not make a call'.tr())),
           );
         }
       },

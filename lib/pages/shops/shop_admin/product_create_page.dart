@@ -11,6 +11,7 @@ import 'package:ata_new_app/services/body_type_service.dart';
 import 'package:ata_new_app/services/brand_model_service.dart';
 import 'package:ata_new_app/services/brand_service.dart';
 import 'package:ata_new_app/services/category_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ata_new_app/services/product_service.dart';
@@ -204,14 +205,15 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
 
       if (response['success']) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Product created successfully")));
+            SnackBar(content: Text("Product created successfully".tr())));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response['message'])));
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Please complete all fields and upload an image")));
+          content:
+              Text("Please complete all fields and upload an image".tr())));
     }
   }
 
@@ -251,7 +253,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Product"),
+        title: Text("Create Product".tr()),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
@@ -267,17 +269,17 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
               TextFormField(
                 controller: _productNameController,
                 decoration: InputDecoration(
-                  labelText: "Name",
+                  labelText: "Name".tr(),
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400, // Border color when enabled
                     ),
                   ),
-                  hintText: 'Product Name',
+                  hintText: 'Product Name'.tr(),
                 ),
                 validator: (value) =>
-                    value!.isEmpty ? "Enter product name" : null,
+                    value!.isEmpty ? "Enter product name".tr() : null,
               ),
               SizedBox(
                 height: 12,
@@ -294,11 +296,11 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                       color: Colors.grey.shade400, // Border color when enabled
                     ),
                   ),
-                  hintText: 'Example : 25\$',
+                  hintText: "Price \$",
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) =>
-                    value!.isEmpty ? "Enter product price" : null,
+                    value!.isEmpty ? "Enter product price".tr() : null,
               ),
 
               SizedBox(
@@ -320,7 +322,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 DropdownButtonFormField<int>(
                   value: categoryId,
                   decoration: InputDecoration(
-                    labelText: "Select Category",
+                    labelText: "Select Category".tr(),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -353,10 +355,10 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
-                          Text("Other"),
+                          Text("Other".tr()),
                         ],
                       ),
                     ),
@@ -367,7 +369,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                     });
                   },
                   validator: (value) =>
-                      value == null ? "Select a Category" : null,
+                      value == null ? "Select Category".tr() : null,
                 ),
               SizedBox(height: 12),
 
@@ -375,7 +377,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 DropdownButtonFormField<int>(
                   value: bodyTypeId,
                   decoration: InputDecoration(
-                    labelText: "Select Body-Type",
+                    labelText: "Select Body-Type".tr(),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -408,10 +410,10 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
-                          Text("Other"),
+                          Text("Other".tr()),
                         ],
                       ),
                     ),
@@ -423,7 +425,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                   },
                   validator: (value) {
                     if (value == null) {
-                      return "Select a Body-Type"; // Include validation for "Other"
+                      return "Select Body-Type".tr(); // Include validation for "Other"
                     }
                     return null;
                   },
@@ -435,7 +437,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 DropdownButtonFormField<int>(
                   value: brandId,
                   decoration: InputDecoration(
-                    labelText: "Select Brand",
+                    labelText: "Select Brand".tr(),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -468,10 +470,10 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
-                          Text("Other"),
+                          Text("Other".tr()),
                         ],
                       ),
                     ),
@@ -486,7 +488,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                           .toList();
                     });
                   },
-                  validator: (value) => value == null ? "Select a Brand" : null,
+                  validator: (value) => value == null ? "Select Brand".tr() : null,
                 ),
               SizedBox(height: 12),
 
@@ -494,7 +496,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 DropdownButtonFormField<int>(
                   value: brandModelId,
                   decoration: InputDecoration(
-                    labelText: "Select Model",
+                    labelText: "Select Model".tr(),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -527,10 +529,10 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                     DropdownMenuItem<int>(
                       value: -1, // Unique value for "Other"
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.add), // Icon for "Other" option
                           SizedBox(width: 10),
-                          Text("Other"),
+                          Text("Other".tr()),
                         ],
                       ),
                     ),
@@ -540,15 +542,15 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                       brandModelId = value;
                     });
                   },
-                  validator: (value) => value == null ? "Select a Model" : null,
+                  validator: (value) => value == null ? "Select Model".tr() : null,
                 ),
               SizedBox(height: 12),
 
               TextFormField(
                 controller: _productDescriptionController,
                 decoration: InputDecoration(
-                  labelText: "Description",
-                  hintText: 'Product Description',
+                  labelText: "Description".tr(),
+                  hintText: 'Product Description'.tr(),
                   alignLabelWithHint: true,
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -560,7 +562,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 maxLines:
                     4, // Set maxLines to allow multiple lines, adjust as needed
                 validator: (value) =>
-                    value!.isEmpty ? "Enter product description" : null,
+                    value!.isEmpty ? "Enter product description".tr() : null,
               ),
 
               SizedBox(height: 12),
@@ -570,7 +572,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Product Images",
+                    Text("Product Images".tr(),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
                     SizedBox(height: 8),
@@ -589,7 +591,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                                       Icon(Icons.image,
                                           color: Colors.grey.shade400,
                                           size: 50),
-                                      Text('Tap to pick images'),
+                                      Text('Tap to pick images'.tr()),
                                     ],
                                   ),
                                 ),
@@ -615,8 +617,8 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                     TextButton(
                       onPressed: _pickImages,
                       child: Text(_productImages.isEmpty
-                          ? "Upload Images"
-                          : "Add More"),
+                          ? "Upload Images".tr()
+                          : "Add More".tr()),
                     ),
                   ],
                 ),
@@ -628,7 +630,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
               _isLoading
                   ? Center(child: CircularProgressIndicator())
                   : MyElevatedButton(
-                      onPressed: _createProduct, title: 'Create Product')
+                      onPressed: _createProduct, title: 'Create Product'.tr())
             ],
           ),
         ),
