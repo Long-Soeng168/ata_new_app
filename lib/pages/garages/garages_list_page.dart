@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:ata_new_app/components/ProvinceHorizontalList.dart';
 import 'package:ata_new_app/components/buttons/my_elevated_button.dart';
 import 'package:ata_new_app/components/cards/garage_card.dart';
 import 'package:ata_new_app/components/my_filter_option.dart';
@@ -13,8 +14,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class GaragesListPage extends StatefulWidget {
-  const GaragesListPage({super.key, this.expertId});
+  const GaragesListPage({super.key, this.expertId, this.provinceId});
   final int? expertId;
+  final int? provinceId;
 
   @override
   State<GaragesListPage> createState() => _GaragesListPageState();
@@ -34,21 +36,21 @@ class _GaragesListPageState extends State<GaragesListPage> {
 
   String? search;
   int? selectedBrandId;
+  int? selectedProvinceId; // Added province state
 
   final TextEditingController _searchController = TextEditingController();
-
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    if(widget.expertId != null){
-      setState(() {
-        selectedBrandId = widget.expertId;
-      });
-    }
+    // Initialize filters from widget parameters
+    selectedBrandId = widget.expertId;
+    selectedProvinceId = widget.provinceId;
+
     getGarages();
     getBrands();
+
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
               _scrollController.position.maxScrollExtent - 200 &&
@@ -61,13 +63,27 @@ class _GaragesListPageState extends State<GaragesListPage> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _searchController.dispose();
     super.dispose();
+  }
+
+  // Reusable method to reset pagination and show loading
+  void _resetAndFetch() {
+    setState(() {
+      isLoadingGarages = true;
+      currentPage = 1;
+      hasMoreGarages = true;
+    });
+    getGarages();
   }
 
   Future<void> getGarages() async {
     try {
       final fetchedGarages = await GarageService.fetchGarages(
-          page: 1, expertId: selectedBrandId, search: search);
+          page: 1,
+          expertId: selectedBrandId,
+          provinceId: selectedProvinceId, // Added provinceId to service call
+          search: search);
       setState(() {
         garages = fetchedGarages;
         isLoadingGarages = false;
@@ -79,17 +95,13 @@ class _GaragesListPageState extends State<GaragesListPage> {
         isLoadingMore = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to load Data'),
-        ),
+        SnackBar(content: Text('Failed to load Data')),
       );
     }
   }
 
   Future<void> loadMoreGarages() async {
-    if (!hasMoreGarages || isLoadingMore) {
-      return;
-    }
+    if (!hasMoreGarages || isLoadingMore) return;
 
     setState(() {
       isLoadingMore = true;
@@ -97,51 +109,38 @@ class _GaragesListPageState extends State<GaragesListPage> {
 
     try {
       currentPage++;
-      final fetchedGarages =
-          await GarageService.fetchGarages(page: currentPage);
+      final fetchedGarages = await GarageService.fetchGarages(
+          page: currentPage,
+          expertId: selectedBrandId,
+          provinceId: selectedProvinceId, // Keep filters during pagination
+          search: search);
 
       setState(() {
         garages.addAll(fetchedGarages);
         isLoadingMore = false;
+        if (fetchedGarages.isEmpty) {
+          hasMoreGarages = false;
+        }
       });
-
-      if (fetchedGarages.isEmpty) {
-        hasMoreGarages = false;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('No more Data!'),
-          ),
-        );
-      }
     } catch (error) {
       setState(() {
         isLoadingMore = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to load Data'),
-        ),
-      );
     }
   }
 
   Future<void> getBrands() async {
     try {
-      // Fetch Garages outside of setState
       final fetchedBrands = await BrandService.fetchBrands();
-      // Update the state
       setState(() {
         brands = fetchedBrands;
         isLoadingBrands = false;
       });
     } catch (error) {
-      // Handle any errors that occur during the fetch
       setState(() {
         isLoadingBrands = false;
         isLoadingBrandsError = true;
       });
-      // You can also show an error message to the user
-      print('Failed to load Brands: $error');
     }
   }
 
@@ -151,48 +150,37 @@ class _GaragesListPageState extends State<GaragesListPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Theme.of(context).colorScheme.primary,
-        titleSpacing: 0, // Remove default title spacing
+        titleSpacing: 0,
         title: Row(
           children: [
-            // Search bar
             Expanded(
               child: MySearch(
                 placeholder: 'Search...'.tr(),
                 searchController: _searchController,
                 onSearchSubmit: () {
-                  setState(() {
-                    search = _searchController.text;
-                    isLoadingGarages = true;
-                    currentPage = 1;
-                    hasMoreGarages = true;
-                  });
-                  getGarages(); // Refetch with search query
+                  search = _searchController.text;
+                  _resetAndFetch();
                 },
               ),
             ),
-            // Actions without any extra space
             if (isLoadingBrands)
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
-              ),
-            if (!isLoadingBrands)
+                child: SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2)),
+              )
+            else
               IconButton(
-                onPressed: () {
-                  filterModal(context);
-                },
-                icon: Icon(
-                  Icons.filter_list,
-                  size: 32,
-                ),
+                onPressed: () => filterModal(context),
+                icon: Icon(Icons.filter_list, size: 32),
               ),
           ],
         ),
       ),
       body: isLoadingGarages
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
+          ? Center(child: CircularProgressIndicator())
           : garages.isNotEmpty
               ? SafeArea(
                   child: Stack(
@@ -200,12 +188,21 @@ class _GaragesListPageState extends State<GaragesListPage> {
                       CustomScrollView(
                         controller: _scrollController,
                         slivers: [
+                          // Province Filter List
+                          SliverToBoxAdapter(
+                            child: ProvinceHorizontalList(
+                              onProvinceTap: (id) {
+                                selectedProvinceId = id;
+                                _resetAndFetch();
+                              },
+                            ),
+                          ),
                           SliverPadding(
                             padding: EdgeInsets.all(8.0),
                             sliver: SliverGrid(
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, // Number of columns
+                                crossAxisCount: 2,
                                 childAspectRatio: 0.95,
                               ),
                               delegate: SliverChildBuilderDelegate(
@@ -219,12 +216,13 @@ class _GaragesListPageState extends State<GaragesListPage> {
                                     logoUrl: garage.logoUrl,
                                     bannerUrl: garage.bannerUrl,
                                     onTap: () {
-                                      final route = MaterialPageRoute(
-                                        builder: (context) => GarageDetailPage(
-                                          garage: garage,
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              GarageDetailPage(garage: garage),
                                         ),
                                       );
-                                      Navigator.push(context, route);
                                     },
                                   );
                                 },
@@ -232,30 +230,21 @@ class _GaragesListPageState extends State<GaragesListPage> {
                               ),
                             ),
                           ),
+                          // Extra space for the loading indicator at the bottom
+                          if (isLoadingMore)
+                            SliverToBoxAdapter(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child:
+                                    Center(child: CircularProgressIndicator()),
+                              ),
+                            )
                         ],
                       ),
-                      if (isLoadingMore)
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          child: Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              padding: EdgeInsets.all(16),
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                        ),
                     ],
                   ),
                 )
-              : Center(
-                  child: Text('No Data'.tr()),
-                ),
+              : Center(child: Text('No Data'.tr())),
     );
   }
 
@@ -265,7 +254,6 @@ class _GaragesListPageState extends State<GaragesListPage> {
       context: context,
       builder: (context) {
         return SingleChildScrollView(
-          scrollDirection: Axis.vertical,
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16.0),
@@ -273,7 +261,6 @@ class _GaragesListPageState extends State<GaragesListPage> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Example filter options
                 MyFilterOption(
                   title: 'Experts'.tr(),
                   selectedItem: selectedBrandId,
@@ -283,28 +270,20 @@ class _GaragesListPageState extends State<GaragesListPage> {
                       'title': item.name,
                       'image': item.imageUrl,
                     };
-                  }).toList(), // Don't forget to convert it to a List if necessary
-
+                  }).toList(),
                   handleSelect: (selected) {
-                    // print(selected);
                     setState(() {
                       selectedBrandId = selected;
                     });
                   },
                 ),
-
                 SizedBox(height: 28),
                 SizedBox(
                   width: double.infinity,
                   child: MyElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        isLoadingGarages = true;
-                        currentPage = 1;
-                        hasMoreGarages = true;
-                      });
-                      getGarages();
-                      Navigator.pop(context); // Close the bottom sheet
+                      _resetAndFetch();
+                      Navigator.pop(context);
                     },
                     title: 'Filter'.tr(),
                   ),

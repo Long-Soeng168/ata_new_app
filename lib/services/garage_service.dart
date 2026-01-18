@@ -12,13 +12,16 @@ import 'package:image_picker/image_picker.dart';
 
 class GarageService {
   static Future<List<Garage>> fetchGarages(
-      {int? expertId, int? page, String? search}) async {
+      {int? expertId, int? provinceId, int? page, String? search}) async {
     String url = 'https://atech-auto.com/api/garages';
 
     List<String> queryParams = [];
 
     if (expertId != null) {
       queryParams.add('expertId=$expertId');
+    }
+    if (provinceId != null) {
+      queryParams.add('provinceId=$provinceId');
     }
     if (page != null) {
       queryParams.add('page=$page');
@@ -31,7 +34,7 @@ class GarageService {
       url += '?${queryParams.join('&')}';
     }
 
-    // print(url);
+    print(url);
 
     final uri = Uri.parse(url);
     final response = await http.get(uri);

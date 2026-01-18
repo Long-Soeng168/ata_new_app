@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
+import 'package:ata_new_app/components/MainCategoryGrid.dart';
 import 'package:ata_new_app/components/cards/asset_icon_card.dart';
 import 'package:ata_new_app/components/cards/product_card.dart';
 import 'package:ata_new_app/components/cards/video_playlist_card.dart';
@@ -205,68 +206,69 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 8,
             ),
-            Container(
-              height: 140, // Set a fixed height for horizontal ListView
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  AssetIconCard(
-                    icon: 'lib/assets/icons/shop.png',
-                    title: 'Shops'.tr(),
-                    onTap: () {
-                      final route =
-                          MaterialPageRoute(builder: (context) => ShopsPage());
-                      Navigator.push(context, route);
-                    },
-                  ),
-                  AssetIconCard(
-                    icon: 'lib/assets/icons/garage.png',
-                    title: 'Garages'.tr(),
-                    onTap: () {
-                      final route = MaterialPageRoute(
-                          builder: (context) => GaragesPage());
-                      Navigator.push(context, route);
-                    },
-                  ),
-                  AssetIconCard(
-                    icon: 'lib/assets/icons/document.png',
-                    title: 'Documents'.tr(),
-                    onTap: () {
-                      final route = MaterialPageRoute(
-                          builder: (context) => DocumentsPage());
-                      Navigator.push(context, route);
-                    },
-                  ),
-                  AssetIconCard(
-                    icon: 'lib/assets/icons/video.png',
-                    title: 'Videos'.tr(),
-                    onTap: () {
-                      final route = MaterialPageRoute(
-                          builder: (context) => VideoPlayListPage());
-                      Navigator.push(context, route);
-                    },
-                  ),
-                  AssetIconCard(
-                    icon: 'lib/assets/icons/dtc.png',
-                    title: 'DTC'.tr(),
-                    onTap: () {
-                      final route =
-                          MaterialPageRoute(builder: (context) => DtcPage());
-                      Navigator.push(context, route);
-                    },
-                  ),
-                  AssetIconCard(
-                    icon: 'lib/assets/icons/course.png',
-                    title: 'Courses'.tr(),
-                    onTap: () {
-                      final route = MaterialPageRoute(
-                          builder: (context) => CoursesPage());
-                      Navigator.push(context, route);
-                    },
-                  ),
-                ],
-              ),
-            ),
+            MainCategoryGrid(),
+            // Container(
+            //   height: 140, // Set a fixed height for horizontal ListView
+            //   child: ListView(
+            //     scrollDirection: Axis.horizontal,
+            //     children: [
+            //       AssetIconCard(
+            //         icon: 'lib/assets/icons/shop.png',
+            //         title: 'Shops'.tr(),
+            //         onTap: () {
+            //           final route =
+            //               MaterialPageRoute(builder: (context) => ShopsPage());
+            //           Navigator.push(context, route);
+            //         },
+            //       ),
+            //       AssetIconCard(
+            //         icon: 'lib/assets/icons/garage.png',
+            //         title: 'Garages'.tr(),
+            //         onTap: () {
+            //           final route = MaterialPageRoute(
+            //               builder: (context) => GaragesPage());
+            //           Navigator.push(context, route);
+            //         },
+            //       ),
+            //       AssetIconCard(
+            //         icon: 'lib/assets/icons/document.png',
+            //         title: 'Documents'.tr(),
+            //         onTap: () {
+            //           final route = MaterialPageRoute(
+            //               builder: (context) => DocumentsPage());
+            //           Navigator.push(context, route);
+            //         },
+            //       ),
+            //       AssetIconCard(
+            //         icon: 'lib/assets/icons/video.png',
+            //         title: 'Videos'.tr(),
+            //         onTap: () {
+            //           final route = MaterialPageRoute(
+            //               builder: (context) => VideoPlayListPage());
+            //           Navigator.push(context, route);
+            //         },
+            //       ),
+            //       AssetIconCard(
+            //         icon: 'lib/assets/icons/dtc.png',
+            //         title: 'DTC'.tr(),
+            //         onTap: () {
+            //           final route =
+            //               MaterialPageRoute(builder: (context) => DtcPage());
+            //           Navigator.push(context, route);
+            //         },
+            //       ),
+            //       AssetIconCard(
+            //         icon: 'lib/assets/icons/course.png',
+            //         title: 'Courses'.tr(),
+            //         onTap: () {
+            //           final route = MaterialPageRoute(
+            //               builder: (context) => CoursesPage());
+            //           Navigator.push(context, route);
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
             // ========================= End Icon Navigator =========================
 
             // ========================= Start Products =========================

@@ -148,7 +148,7 @@ class GarageCard extends StatelessWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold
                               ),

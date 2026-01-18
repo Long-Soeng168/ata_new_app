@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:ata_new_app/components/ShopHorizontalList.dart';
 import 'package:ata_new_app/components/cards/database_card.dart';
 import 'package:ata_new_app/components/my_list_header.dart';
 import 'package:ata_new_app/components/my_slide_show.dart';
@@ -210,36 +211,37 @@ class _ShopsPageState extends State<ShopsPage> {
                                 SizedBox(
                                   height: 12,
                                 ),
-                                MyListHeader(
-                                  title: 'Categories'.tr(),
-                                  isShowSeeMore: false,
-                                ),
-                                SizedBox(
-                                  height:
-                                      130, // Set a fixed height for horizontal ListView
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: categories.length,
-                                    itemBuilder: (context, index) {
-                                      final category = categories[index];
-                                      return DatabaseCard(
-                                        image: category.imageUrl,
-                                        title: context.locale.languageCode ==
-                                                'km'
-                                            ? category.nameKh
-                                            : category.name,
-                                        onTap: () {
-                                          final route = MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProductsListPage(
-                                                    categoryId: category.id,
-                                                  ));
-                                          Navigator.push(context, route);
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
+                                ShopHorizontalList(),
+                                // MyListHeader(
+                                //   title: 'Categories'.tr(),
+                                //   isShowSeeMore: false,
+                                // ),
+                                // SizedBox(
+                                //   height:
+                                //       130, // Set a fixed height for horizontal ListView
+                                //   child: ListView.builder(
+                                //     scrollDirection: Axis.horizontal,
+                                //     itemCount: categories.length,
+                                //     itemBuilder: (context, index) {
+                                //       final category = categories[index];
+                                //       return DatabaseCard(
+                                //         image: category.imageUrl,
+                                //         title:
+                                //             context.locale.languageCode == 'km'
+                                //                 ? category.nameKh
+                                //                 : category.name,
+                                //         onTap: () {
+                                //           final route = MaterialPageRoute(
+                                //               builder: (context) =>
+                                //                   ProductsListPage(
+                                //                     categoryId: category.id,
+                                //                   ));
+                                //           Navigator.push(context, route);
+                                //         },
+                                //       );
+                                //     },
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
