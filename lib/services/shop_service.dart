@@ -59,7 +59,7 @@ class ShopService {
       id: data['id'],
       name: data['name'] ?? '',
       status: data['status'] ?? '',
-      description: data['short_description'] ?? '',
+      description: data['description'] ?? '',
       address: data['address'] ?? '',
       phone: data['phone'] ?? '',
       logoUrl:
