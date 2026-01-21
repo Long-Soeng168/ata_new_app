@@ -285,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         MyListHeader(
-                          title: 'New Arrivals'.tr(),
+                          title: 'Latest'.tr(),
                           onTap: () {
                             final route = MaterialPageRoute(
                                 builder: (context) => ProductsListPage());

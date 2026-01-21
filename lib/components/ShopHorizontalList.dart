@@ -1,3 +1,6 @@
+import 'package:ata_new_app/components/my_list_header.dart';
+import 'package:ata_new_app/pages/shops/shops_list_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ShopHorizontalList extends StatelessWidget {
@@ -43,22 +46,13 @@ class ShopHorizontalList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // ... Header remains same ...
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Top Shops',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey[900])),
-              TextButton(
-                  onPressed: () => _showAllShops(context),
-                  child: const Text('See All',
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-            ],
-          ),
+        MyListHeader(
+          title: 'Top Shops'.tr(),
+          onTap: () {
+            final route =
+                MaterialPageRoute(builder: (context) => ShopsListPage());
+            Navigator.push(context, route);
+          },
         ),
 
         SizedBox(

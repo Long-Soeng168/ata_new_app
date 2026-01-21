@@ -2,6 +2,7 @@ import 'package:ata_new_app/pages/dtc/dtc_page.dart';
 import 'package:ata_new_app/pages/garages/garages_map_page.dart';
 import 'package:ata_new_app/pages/garages/garages_page.dart';
 import 'package:ata_new_app/pages/shops/products_list_page.dart';
+import 'package:ata_new_app/pages/shops/shops_list_page.dart';
 import 'package:ata_new_app/pages/shops/shops_page.dart';
 import 'package:ata_new_app/pages/trainings/courses/courses_page.dart';
 import 'package:ata_new_app/pages/trainings/documents/documents_page.dart';
@@ -21,49 +22,49 @@ class MainCategoryGrid extends StatelessWidget {
         'page': const ProductsListPage(
           categoryId: 10,
         ),
-        'color': Colors.amber.shade700, // Golden/Deep Orange for Sales
+        'color': Colors.amber.shade200, // Golden/Deep Orange for Sales
       },
       {
         'title': 'Shops'.tr(),
         'icon': 'lib/assets/icons/shop.png',
-        'page': const ShopsPage(),
-        'color': Colors.orange.shade600, // Classic Orange for Shops
+        'page': const ShopsListPage(),
+        'color': Colors.orange.shade200, // Classic Orange for Shops
       },
       {
         'title': 'Garages'.tr(),
         'icon': 'lib/assets/icons/garage.png',
         'page': const GaragesPage(),
-        'color': Colors.blue.shade600, // Primary Blue
+        'color': Colors.blue.shade200, // Primary Blue
       },
       {
-        'title': 'Garages Maps'.tr(),
+        'title': 'Garages Map'.tr(),
         'icon': 'lib/assets/icons/map.png', // Assuming you have a map icon
         'page': const GaragesMapPage(),
-        'color': Colors.cyan.shade700, // Cyan/Teal for Navigation/Maps
+        'color': Colors.cyan.shade200, // Cyan/Teal for Navigation/Maps
       },
       {
         'title': 'Documents'.tr(),
         'icon': 'lib/assets/icons/document.png',
         'page': const DocumentsPage(),
-        'color': Colors.purple.shade500,
+        'color': Colors.purple.shade200,
       },
       {
         'title': 'Videos'.tr(),
         'icon': 'lib/assets/icons/video.png',
         'page': const VideoPlayListPage(),
-        'color': Colors.red.shade600,
+        'color': Colors.red.shade200,
       },
       {
         'title': 'DTC'.tr(),
         'icon': 'lib/assets/icons/dtc.png',
         'page': const DtcPage(),
-        'color': Colors.teal.shade600,
+        'color': Colors.teal.shade200,
       },
       {
         'title': 'Courses'.tr(),
         'icon': 'lib/assets/icons/course.png',
         'page': const CoursesPage(),
-        'color': Colors.indigo.shade600,
+        'color': Colors.indigo.shade200,
       },
     ];
 
@@ -152,8 +153,8 @@ class _CategoryCard extends StatelessWidget {
               color: Colors.blueGrey[900],
               letterSpacing: -0.2,
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            // overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

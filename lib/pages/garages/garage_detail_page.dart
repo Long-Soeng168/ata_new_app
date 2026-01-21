@@ -259,13 +259,14 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                     SizedBox(height: 8.0),
                     Column(children: [
                       // Start Detail
-                      DetailListCard(
-                        keyword: 'Expert'.tr(),
-                        value: widget.garage.expertName,
-                      ),
+                      // DetailListCard(
+                      //   keyword: 'Expert'.tr(),
+                      //   value: widget.garage.expertName,
+                      // ),
                       DetailListCard(
                         keyword: 'Contact'.tr(),
                         value: widget.garage.phone,
+                        isCopyable: true,
                       ),
                       DetailListCard(
                         keyword: 'Address'.tr(),

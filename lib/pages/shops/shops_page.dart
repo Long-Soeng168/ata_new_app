@@ -8,6 +8,7 @@ import 'package:ata_new_app/models/category.dart';
 import 'package:ata_new_app/models/product.dart';
 import 'package:ata_new_app/pages/shops/product_detail_page.dart';
 import 'package:ata_new_app/pages/shops/products_list_page.dart';
+import 'package:ata_new_app/pages/shops/shops_list_page.dart';
 import 'package:ata_new_app/services/category_service.dart';
 import 'package:ata_new_app/services/product_service.dart';
 import 'package:ata_new_app/services/slide_service.dart';
@@ -177,7 +178,7 @@ class _ShopsPageState extends State<ShopsPage> {
           IconButton(
             onPressed: () {
               final route = MaterialPageRoute(
-                builder: (context) => ProductsListPage(),
+                builder: (context) => ShopsListPage(),
               );
               Navigator.push(context, route);
             },
@@ -252,8 +253,13 @@ class _ShopsPageState extends State<ShopsPage> {
                                   height: 12,
                                 ),
                                 MyListHeader(
-                                  title: 'New Arrivals'.tr(),
-                                  isShowSeeMore: false,
+                                  title: 'Latest'.tr(),
+                                  onTap: () {
+                                    final route = MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProductsListPage());
+                                    Navigator.push(context, route);
+                                  },
                                 ),
                               ],
                             ),

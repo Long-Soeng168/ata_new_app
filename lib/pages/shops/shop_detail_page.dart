@@ -333,6 +333,7 @@ class _ShopDetailPageState extends State<ShopDetailPage> {
                       DetailListCard(
                         keyword: 'Contact'.tr(),
                         value: widget.shop.phone,
+                        isCopyable: true,
                       ),
                       DetailListCard(
                         keyword: 'Address'.tr(),

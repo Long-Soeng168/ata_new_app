@@ -10,13 +10,17 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ShopService {
-  static Future<List<Shop>> fetchShops({int? page}) async {
+  static Future<List<Shop>> fetchShops({int? page, String? search}) async {
     String url = 'https://atech-auto.com/api/shops';
 
     List<String> queryParams = [];
 
     if (page != null) {
       queryParams.add('page=$page');
+    }
+
+    if (search != null) {
+      queryParams.add('search=$search');
     }
 
     if (queryParams.isNotEmpty) {
