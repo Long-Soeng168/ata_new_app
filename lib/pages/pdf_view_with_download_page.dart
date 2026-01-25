@@ -37,7 +37,15 @@ class _PdfViewWithDonwloadPageState extends State<PdfViewWithDonwloadPage> {
   Future<void> _downloadAndSavePdf() async {
     try {
       final dir = await getTemporaryDirectory();
-      final file = File('${dir.path}/temp_view.pdf');
+
+      String fileName = Uri.parse(widget.url).pathSegments.last;
+
+      // Safety check: if URL ends in '/', pathSegments.last might be empty
+      if (fileName.isEmpty) {
+        fileName = "document.pdf";
+      }
+      
+      final file = File('${dir.path}/${fileName}');
 
       // Enhanced download with progress tracking
       await Dio().download(
