@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
 import 'package:ata_new_app/components/MainCategoryGrid.dart';
-import 'package:ata_new_app/components/cards/asset_icon_card.dart';
 import 'package:ata_new_app/components/cards/product_card.dart';
 import 'package:ata_new_app/components/cards/video_playlist_card.dart';
 import 'package:ata_new_app/components/language_dropdown.dart';
@@ -11,13 +10,8 @@ import 'package:ata_new_app/components/my_slide_show.dart';
 import 'package:ata_new_app/models/product.dart';
 import 'package:ata_new_app/models/video_playlist.dart';
 import 'package:ata_new_app/pages/app_info/app_info_page.dart';
-import 'package:ata_new_app/pages/dtc/dtc_page.dart';
-import 'package:ata_new_app/pages/garages/garages_page.dart';
 import 'package:ata_new_app/pages/shops/product_detail_page.dart';
 import 'package:ata_new_app/pages/shops/products_list_page.dart';
-import 'package:ata_new_app/pages/shops/shops_page.dart';
-import 'package:ata_new_app/pages/trainings/courses/courses_page.dart';
-import 'package:ata_new_app/pages/trainings/documents/documents_page.dart';
 import 'package:ata_new_app/pages/trainings/videos/video_playlist_detail_page.dart';
 import 'package:ata_new_app/pages/trainings/videos/video_playlist_page.dart';
 import 'package:ata_new_app/services/product_service.dart';
@@ -166,7 +160,7 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           'A-Tech Auto',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -326,7 +320,7 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 height: 50,
                 child: Center(
-                  child: Text('Error Loading Resources'.tr()),
+                  child: Text('Error Loading Products'.tr()),
                 ),
               ),
             ),
@@ -408,7 +402,7 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 height: 50,
                 child: Center(
-                  child: Text('Error Loading Resources'.tr()),
+                  child: Text('Error Loading Videos'.tr()),
                 ),
               ),
             ),

@@ -68,7 +68,7 @@ class _PdfViewPageState extends State<PdfViewPage> {
           'PDF View',
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
-            fontSize: 24,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),

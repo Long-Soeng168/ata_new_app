@@ -1,6 +1,7 @@
 import 'package:ata_new_app/models/garage.dart';
 import 'package:ata_new_app/pages/garages/garage_detail_page.dart';
 import 'package:ata_new_app/services/garage_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -234,9 +235,9 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text(
-          'Garages Map',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        title: Text(
+          'Garages Map'.tr(),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(

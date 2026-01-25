@@ -181,81 +181,82 @@ class _GaragesListPageState extends State<GaragesListPage> {
       ),
       body: isLoadingGarages
           ? Center(child: CircularProgressIndicator())
-          : garages.isNotEmpty
-              ? SafeArea(
-                  child: Stack(
-                    children: [
-                      CustomScrollView(
-                        controller: _scrollController,
-                        slivers: [
-                          // Province Filter List
-                          SliverToBoxAdapter(
-                            child: ProvinceHorizontalList(
-                              // 1. Pass the current state to the component
-                              selectedId: selectedProvinceId,
-                              onProvinceTap: (id) {
-                                setState(() {
-                                  // 2. Logic: If user taps the same province, clear the filter (unselect)
-                                  // If they tap a different one, select that one.
-                                  if (selectedProvinceId == id) {
-                                    selectedProvinceId = null;
-                                  } else {
-                                    selectedProvinceId = id;
-                                  }
-                                });
-                                // 3. Refresh the garage list with the new filter
-                                _resetAndFetch();
-                              },
-                            ),
+          : SafeArea(
+              child: Stack(
+                children: [
+                  CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      // Province Filter List
+                      SliverToBoxAdapter(
+                        child: ProvinceHorizontalList(
+                          // 1. Pass the current state to the component
+                          selectedId: selectedProvinceId,
+                          onProvinceTap: (id) {
+                            setState(() {
+                              // 2. Logic: If user taps the same province, clear the filter (unselect)
+                              // If they tap a different one, select that one.
+                              if (selectedProvinceId == id) {
+                                selectedProvinceId = null;
+                              } else {
+                                selectedProvinceId = id;
+                              }
+                            });
+                            // 3. Refresh the garage list with the new filter
+                            _resetAndFetch();
+                          },
+                        ),
+                      ),
+                      SliverPadding(
+                        padding: EdgeInsets.all(8.0),
+                        sliver: SliverGrid(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.95,
                           ),
-                          SliverPadding(
-                            padding: EdgeInsets.all(8.0),
-                            sliver: SliverGrid(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 0.95,
-                              ),
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) {
-                                  final garage = garages[index];
-                                  return GarageCard(
-                                    id: garage.id,
-                                    name: garage.name,
-                                    address: garage.address,
-                                    expert: garage.expertName,
-                                    logoUrl: garage.logoUrl,
-                                    bannerUrl: garage.bannerUrl,
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              GarageDetailPage(garage: garage),
-                                        ),
-                                      );
-                                    },
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              final garage = garages[index];
+                              return GarageCard(
+                                id: garage.id,
+                                name: garage.name,
+                                address: garage.address,
+                                expert: garage.expertName,
+                                logoUrl: garage.logoUrl,
+                                bannerUrl: garage.bannerUrl,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          GarageDetailPage(garage: garage),
+                                    ),
                                   );
                                 },
-                                childCount: garages.length,
-                              ),
-                            ),
+                              );
+                            },
+                            childCount: garages.length,
                           ),
-                          // Extra space for the loading indicator at the bottom
-                          if (isLoadingMore)
-                            SliverToBoxAdapter(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 20),
-                                child:
-                                    Center(child: CircularProgressIndicator()),
-                              ),
-                            )
-                        ],
+                        ),
                       ),
+                      // Extra space for the loading indicator at the bottom
+                      if (isLoadingMore)
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            child: Center(child: CircularProgressIndicator()),
+                          ),
+                        ),
+                      if (garages.isEmpty)
+                        SliverToBoxAdapter(
+                          child: Center(child: Text('No Data'.tr())),
+                        )
                     ],
                   ),
-                )
-              : Center(child: Text('No Data'.tr())),
+                ],
+              ),
+            ),
     );
   }
 

@@ -1,27 +1,27 @@
 import 'package:ata_new_app/components/cards/folder_card.dart';
-import 'package:ata_new_app/components/cards/folder_download_card.dart';
 import 'package:ata_new_app/config/env.dart';
 import 'package:ata_new_app/models/document.dart';
 import 'package:ata_new_app/pages/app_info/web_view_page.dart';
 import 'package:ata_new_app/pages/auth/login_page.dart';
 import 'package:ata_new_app/pages/main_page.dart';
-import 'package:ata_new_app/pages/pdf_view_page.dart';
-import 'package:ata_new_app/pages/trainings/documents/documents_for_download_page.dart';
+import 'package:ata_new_app/pages/pdf_view_with_download_page.dart';
 import 'package:ata_new_app/services/document_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class DocumentsPage extends StatefulWidget {
-  const DocumentsPage({super.key, this.isShowAppBar = true, this.path = ''});
+class DocumentsForDownloadPage extends StatefulWidget {
+  const DocumentsForDownloadPage(
+      {super.key, this.isShowAppBar = true, this.path = ''});
 
   final bool isShowAppBar;
   final String path;
 
   @override
-  State<DocumentsPage> createState() => _DocumentsPageState();
+  State<DocumentsForDownloadPage> createState() =>
+      _DocumentsForDownloadPageState();
 }
 
-class _DocumentsPageState extends State<DocumentsPage> {
+class _DocumentsForDownloadPageState extends State<DocumentsForDownloadPage> {
   late Document documentObjects =
       Document(folders: [], files: [], status: 'unknown');
   bool isLoadingDocuments = true;
@@ -231,7 +231,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
                   title: Text(
                     widget.path.isNotEmpty
                         ? widget.path.split('~').last
-                        : 'Documents'.tr(),
+                        : 'Documents For Download'.tr(),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -246,7 +246,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
                 children: [
                   // Search input
                   Visibility(
-                    visible: widget.path != 'Documents',
+                    visible: widget.path != 'Documents For Download',
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 18),
@@ -304,7 +304,8 @@ class _DocumentsPageState extends State<DocumentsPage> {
                               name: item.split('/').last,
                               onTap: () {
                                 final route = MaterialPageRoute(
-                                  builder: (context) => DocumentsPage(
+                                  builder: (context) =>
+                                      DocumentsForDownloadPage(
                                     path: item.replaceAll('/', '~'),
                                   ),
                                 );
@@ -330,7 +331,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
                               name: item.split('/').last,
                               onTap: () {
                                 final route = MaterialPageRoute(
-                                  builder: (context) => PdfViewPage(
+                                  builder: (context) => PdfViewWithDonwloadPage(
                                     url: '${Env.basePdfUrl}$item',
                                   ),
                                 );
@@ -341,22 +342,6 @@ class _DocumentsPageState extends State<DocumentsPage> {
                         ),
                       ),
                     ),
-                  Visibility(
-                    visible: !isLoadingDocuments &&
-                        (widget.path == 'Documents' || widget.path == ''),
-                    child: FolderDonwloadCard(
-                      isFolder: true,
-                      name: "For Download".tr(),
-                      onTap: () {
-                        final route = MaterialPageRoute(
-                          builder: (context) => const DocumentsForDownloadPage(
-                            path: 'Documents For Download',
-                          ),
-                        );
-                        Navigator.push(context, route);
-                      },
-                    ),
-                  ),
                 ],
               ),
             ),

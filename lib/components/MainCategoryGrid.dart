@@ -3,7 +3,6 @@ import 'package:ata_new_app/pages/garages/garages_map_page.dart';
 import 'package:ata_new_app/pages/garages/garages_page.dart';
 import 'package:ata_new_app/pages/shops/products_list_page.dart';
 import 'package:ata_new_app/pages/shops/shops_list_page.dart';
-import 'package:ata_new_app/pages/shops/shops_page.dart';
 import 'package:ata_new_app/pages/trainings/courses/courses_page.dart';
 import 'package:ata_new_app/pages/trainings/documents/documents_page.dart';
 import 'package:ata_new_app/pages/trainings/videos/video_playlist_page.dart';

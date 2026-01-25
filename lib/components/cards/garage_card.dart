@@ -70,24 +70,24 @@ class GarageCard extends StatelessWidget {
                                 errorBuilder: (context, error, stackTrace) {
                                   return const ErrorImage(size: 50);
                                 },
-                                loadingBuilder: (BuildContext context,
-                                    Widget child,
-                                    ImageChunkEvent? loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  (loadingProgress
-                                                          .expectedTotalBytes ??
-                                                      1)
-                                              : null,
-                                    ),
-                                  );
-                                },
+                                // loadingBuilder: (BuildContext context,
+                                //     Widget child,
+                                //     ImageChunkEvent? loadingProgress) {
+                                //   if (loadingProgress == null) return child;
+                                //   return Center(
+                                //     child: CircularProgressIndicator(
+                                //       value:
+                                //           loadingProgress.expectedTotalBytes !=
+                                //                   null
+                                //               ? loadingProgress
+                                //                       .cumulativeBytesLoaded /
+                                //                   (loadingProgress
+                                //                           .expectedTotalBytes ??
+                                //                       1)
+                                //               : null,
+                                //     ),
+                                //   );
+                                // },
                               ),
                               Container(
                                 decoration: BoxDecoration(
