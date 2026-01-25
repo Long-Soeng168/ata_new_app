@@ -191,8 +191,19 @@ class _GaragesListPageState extends State<GaragesListPage> {
                           // Province Filter List
                           SliverToBoxAdapter(
                             child: ProvinceHorizontalList(
+                              // 1. Pass the current state to the component
+                              selectedId: selectedProvinceId,
                               onProvinceTap: (id) {
-                                selectedProvinceId = id;
+                                setState(() {
+                                  // 2. Logic: If user taps the same province, clear the filter (unselect)
+                                  // If they tap a different one, select that one.
+                                  if (selectedProvinceId == id) {
+                                    selectedProvinceId = null;
+                                  } else {
+                                    selectedProvinceId = id;
+                                  }
+                                });
+                                // 3. Refresh the garage list with the new filter
                                 _resetAndFetch();
                               },
                             ),

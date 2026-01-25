@@ -66,6 +66,61 @@ class GarageService {
     }
   }
 
+  static Future<List<Garage>> fetchAllGarages(
+      {int? expertId, int? provinceId, int? page, String? search}) async {
+    String url = 'https://atech-auto.com/api/all-garages';
+
+    List<String> queryParams = [];
+
+    if (expertId != null) {
+      queryParams.add('expertId=$expertId');
+    }
+    if (provinceId != null) {
+      queryParams.add('provinceId=$provinceId');
+    }
+    if (page != null) {
+      queryParams.add('page=$page');
+    }
+    if (search != null) {
+      queryParams.add('search=$search');
+    }
+
+    if (queryParams.isNotEmpty) {
+      url += '?${queryParams.join('&')}';
+    }
+
+    print(url);
+
+    final uri = Uri.parse(url);
+    final response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> result = jsonDecode(response.body);
+      List<dynamic> data = result['data'];
+      print(data);
+      return data.map((item) {
+        return Garage(
+          id: item['id'],
+          name: item['name'] ?? '',
+          latitude: item['latitude'] ?? 0,
+          longitude: item['longitude'] ?? 0,
+          phone: item['phone'] ?? '',
+          address: item['address'] ?? '',
+          status: item['status'] ?? '',
+          description: item['description'] ?? '',
+          expertName: item['expert']?['name'] ?? '',
+          expertId: item['expert']?['id'] ?? -1,
+          logoUrl:
+              'https://atech-auto.com/assets/images/garages/thumb/${item['logo']}',
+          bannerUrl:
+              'https://atech-auto.com/assets/images/garages/thumb/${item['banner']}',
+        );
+      }).toList();
+    } else {
+      throw Exception('Failed to load Garages');
+    }
+  }
+
   final String _baseUrl = Env.baseApiUrl;
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 

@@ -39,7 +39,7 @@ class _GaragesMapPageState extends State<GaragesMapPage> {
 
   Future<void> _fetchGarages() async {
     try {
-      final fetchedGarages = await GarageService.fetchGarages(page: 1);
+      final fetchedGarages = await GarageService.fetchAllGarages(page: 1);
       garages = fetchedGarages;
       _setMarkers(garages);
     } catch (e) {

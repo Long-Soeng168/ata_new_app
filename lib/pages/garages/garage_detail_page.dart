@@ -10,6 +10,7 @@ import 'package:ata_new_app/models/garage_post.dart';
 import 'package:ata_new_app/services/garage_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart'; // 1. Added import
 
 class GarageDetailPage extends StatefulWidget {
   const GarageDetailPage({super.key, required this.garage});
@@ -39,10 +40,19 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
     getGaragesPosts();
   }
 
-  // final List<String> imageUrls = [
-  //   'https://thnal.com/assets/images/images/thumb/1724644805cYik37Kni4.jpg',
-  //   'https://thnal.com/assets/images/images/thumb/1724645207ijk4Luu0MV.jpg',
-  // ];
+  // 2. Added Map Launcher Function
+  Future<void> _launchMap() async {
+    final lat = widget.garage.latitude;
+    final lng = widget.garage.longitude;
+    final googleUrl =
+        Uri.parse('https://www.google.com/maps/search/?api=1&query=$lat,$lng');
+
+    if (await canLaunchUrl(googleUrl)) {
+      await launchUrl(googleUrl, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
 
   List<GaragePost> garagesPosts = [];
   bool isLoadingGaragesPosts = true;
@@ -50,21 +60,17 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
 
   Future<void> getGaragesPosts() async {
     try {
-      // Fetch garagesPosts outside of setState
       final fetchedGaragesPosts =
           await GarageService.fetchGaragesPosts(garageId: widget.garage.id);
-      // Update the state
       setState(() {
         garagesPosts = fetchedGaragesPosts;
         isLoadingGaragesPosts = false;
       });
     } catch (error) {
-      // Handle any errors that occur during the fetch
       setState(() {
         isLoadingGaragesPosts = false;
         isLoadingGaragesPostsError = true;
       });
-      // You can also show an error message to the user
       print('Failed to load Garage Post: $error');
     }
   }
@@ -79,26 +85,45 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
         title: Text(
           widget.garage.name,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
+        // 3. Added Map Button in AppBar Actions
+        actions: [
+          if (widget.garage.latitude != null && widget.garage.longitude != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: TextButton.icon(
+                onPressed: _launchMap,
+                icon: const Icon(Icons.location_on_rounded, size: 20),
+                label: Text(
+                  'Map'.tr(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  foregroundColor:
+                      Colors.blueAccent, // Set the text and icon color
+                ),
+              ),
+            ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ========================= Start Images =========================
-            // ========================= Start Slide Show =========================
             AspectRatio(
               aspectRatio: 16 / 9,
               child: MySlideShow(imageUrls: [
                 widget.garage.bannerUrl,
               ]),
             ),
-            // ========================= End Slide Show =========================
             ShopTileCard(
               isShowChevron: false,
               phone: widget.garage.phone,
@@ -106,69 +131,16 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
               address: widget.garage.address,
               imageUrl: widget.garage.logoUrl,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Row(
                   children: [
-                    SizedBox(
-                      width: 8,
-                    ),
-                    // Row(
-                    //   children: [
-                    //     IconButton(
-                    //       onPressed: () {},
-                    //       icon: Icon(
-                    //         Icons.thumb_up_outlined,
-                    //         size: 24,
-                    //         color: Colors.grey,
-                    //       ),
-                    //     ),
-                    //     Text(
-                    //       '2139',
-                    //       maxLines: 1,
-                    //       overflow: TextOverflow.ellipsis,
-                    //       style: TextStyle(
-                    //         fontSize: 16,
-                    //         color: Colors.grey,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    // Container(
-                    //   width: 1,
-                    //   height: 14,
-                    //   margin: EdgeInsets.only(left: 18, right: 8),
-                    //   color: Colors.grey,
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     IconButton(
-                    //       onPressed: () {},
-                    //       icon: Icon(
-                    //         Icons.thumb_down_outlined,
-                    //         size: 24,
-                    //         color: Colors.grey,
-                    //       ),
-                    //     ),
-                    //     Text(
-                    //       '138',
-                    //       maxLines: 1,
-                    //       overflow: TextOverflow.ellipsis,
-                    //       style: TextStyle(
-                    //         fontSize: 16,
-                    //         color: Colors.grey,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
+                    SizedBox(width: 8),
                   ],
                 ),
               ],
             ),
-
-            // ========================= Start Tab =========================
             Row(
               children: [
                 MyTabButton(
@@ -191,11 +163,7 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                 ),
               ],
             ),
-
             SizedBox(height: 8),
-            // ========================= End Tab =========================
-
-            // ========================= Start Product =========================
             if (_selectedTabIndex == 0)
               Column(
                 children: [
@@ -212,16 +180,13 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                           child: Column(
                             children: [
                               ListView.builder(
-                                shrinkWrap:
-                                    true, // Let ListView take only as much space as needed
-                                physics:
-                                    NeverScrollableScrollPhysics(), // Disable its own scrolling if not needed
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
                                 itemCount: garagesPosts.length,
                                 itemBuilder: (context, index) {
                                   final garagePost = garagesPosts[index];
                                   return Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 0), // Spacing between cards
+                                    padding: const EdgeInsets.only(bottom: 0),
                                     child: GaragePostCard(
                                       aspectRatio: 16 / 9,
                                       id: garagePost.id,
@@ -247,9 +212,6 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                   ),
                 ],
               ),
-            // ========================= End Product =========================
-
-            // ========================= Start Detail =========================
             if (_selectedTabIndex == 1)
               Padding(
                 padding: const EdgeInsets.all(8),
@@ -258,11 +220,6 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                   children: [
                     SizedBox(height: 8.0),
                     Column(children: [
-                      // Start Detail
-                      // DetailListCard(
-                      //   keyword: 'Expert'.tr(),
-                      //   value: widget.garage.expertName,
-                      // ),
                       DetailListCard(
                         keyword: 'Contact'.tr(),
                         value: widget.garage.phone,
@@ -272,8 +229,6 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                         keyword: 'Address'.tr(),
                         value: widget.garage.address,
                       ),
-                      // End Detail
-
                       ListTile(
                         contentPadding: EdgeInsets.all(2),
                         title: Text(
@@ -286,7 +241,6 @@ class _GarageDetailPageState extends State<GarageDetailPage> {
                   ],
                 ),
               ),
-            // ========================= End Detail =========================
             SizedBox(height: 40),
           ],
         ),
